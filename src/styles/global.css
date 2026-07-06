@@ -1,10 +1,15 @@
 @import 'tailwindcss';
 @import '@fontsource-variable/inter';
 
+/* Enable class-based dark mode (Tailwind v4 custom variant).
+   The .dark class is toggled on <html> by the no-FOUC script in BaseLayout. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* ===========================================================================
    Web Dev Studio by EUHUB — Design tokens (Tailwind v4 @theme)
-   Light theme. Warm-white surfaces, EU-tech blue + cyan/violet accent,
-   green/amber reserved for status/data indicators only.
+   Light theme (default). Warm-white surfaces, EU-tech blue + cyan/violet
+   accent, green/amber reserved for status/data indicators only.
+   Dark tokens are overridden below under .dark.
    =========================================================================== */
 @theme {
   /* Surfaces */
@@ -58,6 +63,47 @@
 }
 
 /* ===========================================================================
+   Dark theme token overrides
+   Tasteful soft dark — deep slate, not pure black. No neon.
+   Brand blue brightened slightly for contrast on dark surfaces.
+   =========================================================================== */
+.dark {
+  /* Surfaces */
+  --color-canvas: #0b0f1a;
+  --color-surface: #131826;
+  --color-surface-2: #1a2030;
+  --color-surface-3: #232a3d;
+
+  /* Ink / text (inverted) */
+  --color-ink: #e8edf5;
+  --color-ink-2: #c4ccd9;
+  --color-ink-3: #8a94a6;
+  --color-ink-4: #5a6678;
+
+  /* Borders / lines */
+  --color-line: #232a3d;
+  --color-line-strong: #2d3548;
+
+  /* Brand — slightly brighter for dark contrast */
+  --color-brand: #3b6dff;
+  --color-brand-2: #2b5df0;
+  --color-brand-soft: #1a2540;
+
+  /* Accents — slightly brighter for visibility */
+  --color-cyan: #22d4ee;
+  --color-violet: #9b7cff;
+
+  /* Status — slightly brighter */
+  --color-ok: #22c55e;
+  --color-warn: #f59e0b;
+  --color-danger: #ef4444;
+
+  /* Shadows — deeper on dark */
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.2), 0 8px 24px -12px rgb(0 0 0 / 0.4);
+  --shadow-panel: 0 1px 0 rgb(0 0 0 / 0.2), 0 24px 48px -24px rgb(0 0 0 / 0.5);
+}
+
+/* ===========================================================================
    Base
    =========================================================================== */
 html {
@@ -85,6 +131,20 @@ body {
   font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+/* Smooth theme transition — colors ease over 200ms.
+   Only animate color/background/border so layout shifts don't trigger. */
+html.theme-ready,
+html.theme-ready *,
+html.theme-ready *::before,
+html.theme-ready *::after {
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    fill 0.2s ease,
+    stroke 0.2s ease;
 }
 
 /* Visible focus for keyboard users */

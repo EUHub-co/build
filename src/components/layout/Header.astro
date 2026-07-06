@@ -12,6 +12,7 @@
 import Container from '../ui/Container.astro';
 import Button from '../ui/Button.astro';
 import Icon from '../ui/Icon.astro';
+import ThemeToggle from '../ui/ThemeToggle.astro';
 import { site, primaryCta } from '../../content/site';
 ---
 
@@ -49,7 +50,7 @@ import { site, primaryCta } from '../../content/site';
       </nav>
 
       {/* Desktop actions */}
-      <div class="hidden lg:flex items-center gap-4">
+      <div class="hidden lg:flex items-center gap-3">
         <div class="flex items-center gap-3 text-xs">
           {
             site.ecosystemLinks.map((link) => (
@@ -64,6 +65,8 @@ import { site, primaryCta } from '../../content/site';
             ))
           }
         </div>
+        <div class="h-5 w-px bg-line"></div>
+        <ThemeToggle />
         <Button
           href={primaryCta.href}
           size="sm"
@@ -73,16 +76,19 @@ import { site, primaryCta } from '../../content/site';
         </Button>
       </div>
 
-      {/* Mobile menu button */}
-      <button
-        id="mobile-menu-toggle"
-        class="lg:hidden inline-flex items-center justify-center rounded-md p-2 text-ink-2 hover:bg-surface-2"
-        aria-label="Open menu"
-        aria-expanded="false"
-        aria-controls="mobile-menu"
-      >
-        <Icon name="menu" size={24} />
-      </button>
+      {/* Mobile actions: theme toggle + menu button */}
+      <div class="flex lg:hidden items-center gap-1">
+        <ThemeToggle />
+        <button
+          id="mobile-menu-toggle"
+          class="inline-flex items-center justify-center rounded-md p-2 text-ink-2 hover:bg-surface-2"
+          aria-label="Open menu"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+        >
+          <Icon name="menu" size={24} />
+        </button>
+      </div>
     </div>
   </Container>
 
