@@ -1,0 +1,58 @@
+---
+/**
+ * Ecosystem — 4 EUHUB brand cards.
+ * Per plan v3 / Fable B7: positioned BELOW the CTA/form (not before it).
+ * All outbound links open in new tabs.
+ */
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+import Icon from '../ui/Icon.astro';
+import { ecosystem } from '../../content/ecosystem';
+---
+
+<Section id="ecosystem" bg="surface-2">
+  <Container size="xl">
+    <div class="mx-auto max-w-3xl text-center">
+      <h2 class="text-3xl font-bold tracking-tight text-ink md:text-4xl">
+        Part of the EUHUB engineering ecosystem
+      </h2>
+      <p class="mt-4 text-lg text-ink-3">
+        Web Dev Studio is the web engineering unit. The wider ecosystem covers
+        AI, consulting, and community — so your project has depth behind it.
+      </p>
+    </div>
+
+    <div class="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        ecosystem.map((brand) => (
+          <a
+            href={brand.url}
+            target="_blank"
+            rel="noopener"
+            class="group flex flex-col rounded-lg border border-line bg-surface p-6 shadow-card transition-all hover:shadow-panel hover:border-line-strong"
+            data-umami-event="ecosystem_link_click"
+            data-umami-brand={brand.id}
+          >
+            <div class="flex items-center justify-between">
+              <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-soft text-brand">
+                <Icon name="layers" size={20} />
+              </div>
+              <Icon
+                name="external"
+                size={14}
+                class="text-ink-4 transition-colors group-hover:text-brand"
+              />
+            </div>
+            <h3 class="mt-4 text-base font-semibold text-ink">{brand.name}</h3>
+            <div class="mt-1 text-xs font-medium uppercase tracking-wider text-ink-4">
+              {brand.role}
+            </div>
+            <p class="mt-3 flex-1 text-sm leading-relaxed text-ink-3">
+              {brand.description}
+            </p>
+          </a>
+        ))
+      }
+    </div>
+  </Container>
+</Section>

@@ -1,0 +1,62 @@
+---
+/**
+ * Services — 7 service cards with hover interactions (desktop only).
+ * Maps business needs to offers.
+ */
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+import Card from '../ui/Card.astro';
+import Icon from '../ui/Icon.astro';
+import { services } from '../../content/services';
+---
+
+<Section id="services" bg="canvas">
+  <Container size="xl">
+    <div class="mx-auto max-w-3xl text-center">
+      <h2 class="text-3xl font-bold tracking-tight text-ink md:text-4xl">
+        What we build
+      </h2>
+      <p class="mt-4 text-lg text-ink-3">
+        Each service is engineered for a specific business need — not a template
+        filled with your logo.
+      </p>
+    </div>
+
+    <div class="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {
+        services.map((service) => (
+          <a
+            href="#contact"
+            class="group"
+            data-umami-event="service_card_click"
+            data-umami-service={service.id}
+          >
+            <Card hover padding="lg" class="h-full">
+              <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-brand-soft text-brand">
+                <Icon name={service.icon} size={24} />
+              </div>
+              <h3 class="mt-5 text-lg font-semibold text-ink">
+                {service.title}
+              </h3>
+              <p class="mt-2 text-sm leading-relaxed text-ink-3">
+                {service.summary}
+              </p>
+              <ul class="mt-4 space-y-2">
+                {service.includes.map((item) => (
+                  <li class="flex items-center gap-2 text-xs text-ink-3">
+                    <Icon name="check" size={14} class="text-ok" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <div class="mt-5 flex items-center gap-1 text-sm font-medium text-brand opacity-0 transition-opacity group-hover:opacity-100">
+                Request audit
+                <Icon name="arrow-right" size={16} />
+              </div>
+            </Card>
+          </a>
+        ))
+      }
+    </div>
+  </Container>
+</Section>

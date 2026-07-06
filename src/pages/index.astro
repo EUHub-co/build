@@ -2,6 +2,18 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
+import Hero from '../components/sections/Hero.astro';
+import Problem from '../components/sections/Problem.astro';
+import Services from '../components/sections/Services.astro';
+import Differentiation from '../components/sections/Differentiation.astro';
+import Process from '../components/sections/Process.astro';
+import TechStack from '../components/sections/TechStack.astro';
+import ExampleScenarios from '../components/sections/ExampleScenarios.astro';
+import EngagementModels from '../components/sections/EngagementModels.astro';
+import SelfReferentialProof from '../components/sections/SelfReferentialProof.astro';
+import Cta from '../components/sections/Cta.astro';
+import Ecosystem from '../components/sections/Ecosystem.astro';
+import Faq from '../components/sections/Faq.astro';
 import { site } from '../content/site';
 
 const title = site.seo.title;
@@ -11,15 +23,24 @@ const description = site.seo.description;
 <BaseLayout title={title} description={description} path="/">
   <Header />
   <main id="main">
-    <div class="mx-auto max-w-3xl px-6 py-24">
-      <h1 class="text-4xl font-bold tracking-tight text-ink">
-        {site.wordmark}
-        <span class="text-ink-3">{site.tagline}</span>
-      </h1>
-      <p class="mt-4 text-lg text-ink-3">
-        Design system and layout shell verified. Section build in progress.
-      </p>
-    </div>
+    {
+      /* Conversion path: Hero → Problem → Services → Differentiation → Process → Tech Stack → Examples → Pricing → Proof → CTA → Ecosystem → FAQ */
+    }
+    <Hero />
+    <Problem />
+    <Services />
+    <Differentiation />
+    <Process />
+    <TechStack />
+    <ExampleScenarios />
+    <EngagementModels />
+    <SelfReferentialProof />
+    <Cta />
+    {
+      /* Ecosystem is below CTA per Fable B7 — don't create an exit ramp before the form */
+    }
+    <Ecosystem />
+    <Faq />
   </main>
   <Footer />
 </BaseLayout>

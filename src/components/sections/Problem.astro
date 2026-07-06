@@ -1,0 +1,64 @@
+---
+/**
+ * Problem — creates urgency.
+ * "Your website is probably not the real problem. The system behind it is."
+ */
+import Container from '../ui/Container.astro';
+import Icon from '../ui/Icon.astro';
+
+const problems = [
+  'Slow, outdated websites that lose visitors before they read a word',
+  'Weak conversion structure with no clear path from visitor to lead',
+  'No CRM or ERP integration — leads trapped in email threads',
+  'No analytics discipline — decisions made on guesswork',
+  'No automation — manual work repeated until someone quits',
+  'Poor mobile UX on a device most visitors actually use',
+  'Poor SEO foundations — invisible to the people searching for you',
+  'No technical ownership — nobody knows how the site actually works',
+  'No path toward AI integration — stuck while competitors move',
+  'Random plugins and fragile WordPress setups one update from breaking',
+];
+
+const icons = [
+  'clock',
+  'target',
+  'plug',
+  'layout',
+  'refresh',
+  'app',
+  'globe',
+  'lock',
+  'sparkles',
+  'wrench',
+];
+---
+
+<section class="border-b border-line bg-surface-2 py-24 md:py-32">
+  <Container size="lg">
+    <div class="mx-auto max-w-3xl text-center">
+      <h2 class="text-3xl font-bold tracking-tight text-ink md:text-4xl">
+        Your website is probably not the real problem.
+      </h2>
+      <p class="mt-4 text-xl font-medium text-brand">
+        The system behind it is.
+      </p>
+      <p class="mt-6 text-lg leading-relaxed text-ink-3">
+        Most companies don't need a redesign. They need a rebuild of the
+        structure, integrations, and processes that the website is supposed to
+        support. A new coat of paint on a fragile foundation is still a fragile
+        foundation.
+      </p>
+    </div>
+
+    <div class="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+      {
+        problems.map((problem, i) => (
+          <div class="flex flex-col gap-3 rounded-lg border border-line bg-surface p-5">
+            <Icon name={icons[i]} size={20} class="text-ink-4" />
+            <p class="text-sm leading-relaxed text-ink-2">{problem}</p>
+          </div>
+        ))
+      }
+    </div>
+  </Container>
+</section>

@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import Container from '../components/ui/Container.astro';
+import Button from '../components/ui/Button.astro';
+---
+
+<BaseLayout
+  title="Page not found"
+  description="The page you're looking for doesn't exist."
+  path="/404"
+  noindex
+>
+  <Header />
+  <main id="main">
+    <Container size="md">
+      <div
+        class="flex min-h-[50vh] flex-col items-center justify-center py-20 text-center"
+      >
+        <div class="text-6xl font-bold text-ink-4">404</div>
+        <h1 class="mt-4 text-2xl font-bold text-ink">
+          This page doesn't exist.
+        </h1>
+        <p class="mt-2 max-w-md text-sm text-ink-3">
+          The URL may be wrong, or the page may have moved. Try the homepage or
+          request a web audit.
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <Button href="/" size="md">Back to home</Button>
+          <Button href="/#contact" variant="secondary" size="md">
+            Request Web Audit
+          </Button>
+        </div>
+      </div>
+    </Container>
+  </main>
+  <Footer />
+</BaseLayout>

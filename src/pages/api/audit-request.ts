@@ -1,0 +1,282 @@
+import { auditRequestSchema } from '../../lib/validation';
+import {
+  WEBHOOK_URL,
+  WEBHOOK_TOKEN,
+  TURNSTILE_SECRET_KEY,
+} from 'astro:env/server';
+
+/**
+ * Audit Request API endpoint.
+ *
+ * Per plan v3:
+ *  - prerender = false → runs on Cloudflare Workers (workerd runtime)
+ *  - Web-API only: fetch, AbortController, Request/Response
+ *  - Validates input with shared Zod schema
+ *  - Verifies Cloudflare Turnstile token server-side
+ *  - POSTs to WEBHOOK_URL with timeout handling
+ *  - No leaking of webhook internals to the user
+ *  - Security headers on the Response (not covered by _headers for Worker responses)
+ *  - Dev mode: returns success with console warning if WEBHOOK_URL is unset
+ */
+
+export const prerender = false;
+
+// Cloudflare Turnstile verification endpoint
+const TURNSTILE_VERIFY_URL =
+  'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+
+// Webhook timeout (ms)
+const WEBHOOK_TIMEOUT_MS = 8000;
+
+// Rate limiting: simple in-memory counter (per-isolate)
+// NOTE: This is a best-effort layer. The primary rate limiting is a
+// Cloudflare WAF rule scoped to /api/audit-request (configured in dashboard).
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT_WINDOW_MS = 60_000;
+const RATE_LIMIT_MAX = 10;
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+  if (!entry || entry.resetAt < now) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    return true;
+  }
+  entry.count++;
+  return entry.count <= RATE_LIMIT_MAX;
+}
+
+function getClientIp(request: Request): string {
+  const cfConnectingIp = request.headers.get('cf-connecting-ip');
+  if (cfConnectingIp) return cfConnectingIp;
+  const xForwardedFor = request.headers.get('x-forwarded-for');
+  if (xForwardedFor) return xForwardedFor.split(',')[0]!.trim();
+  return 'unknown';
+}
+
+function jsonResponse(body: Record<string, unknown>, status: number): Response {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Content-Type-Options': 'nosniff',
+      'Referrer-Policy': 'strict-origin-when-cross-origin',
+      'X-Frame-Options': 'DENY',
+    },
+  });
+}
+
+async function verifyTurnstile(
+  token: string,
+  secret: string,
+  ip: string,
+): Promise<boolean> {
+  try {
+    const res = await fetch(TURNSTILE_VERIFY_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        secret,
+        response: token,
+        remoteip: ip,
+      }),
+    });
+    const data = (await res.json()) as { success: boolean };
+    return data.success === true;
+  } catch {
+    return false;
+  }
+}
+
+async function postToWebhook(
+  url: string,
+  payload: unknown,
+  token?: string,
+): Promise<Response> {
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  };
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), WEBHOOK_TIMEOUT_MS);
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(payload),
+      signal: controller.signal,
+    });
+    clearTimeout(timeoutId);
+    return response;
+  } catch (err) {
+    clearTimeout(timeoutId);
+    if (err instanceof DOMException && err.name === 'AbortError') {
+      throw new Error('webhook_timeout');
+    }
+    throw err;
+  }
+}
+
+export async function POST(context: {
+  request: Request;
+  locals: Record<string, unknown>;
+}): Promise<Response> {
+  const { request } = context;
+  const ip = getClientIp(request);
+
+  // Rate limit check
+  if (!checkRateLimit(ip)) {
+    return jsonResponse(
+      {
+        error: 'rate_limited',
+        message: 'Too many requests. Please try again later.',
+      },
+      429,
+    );
+  }
+
+  // Parse body
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return jsonResponse(
+      { error: 'invalid_json', message: 'Invalid request body.' },
+      400,
+    );
+  }
+
+  // Validate with shared Zod schema
+  const result = auditRequestSchema.safeParse(body);
+  if (!result.success) {
+    return jsonResponse(
+      {
+        error: 'validation_error',
+        message: 'Please check the form fields and try again.',
+        fields: result.error.issues.map((i) => ({
+          field: i.path[0],
+          message: i.message,
+        })),
+      },
+      422,
+    );
+  }
+
+  const data = result.data;
+
+  // Honeypot check (server-side too)
+  if (data.companyUrl) {
+    // Silently succeed — don't tell the bot it was caught
+    return jsonResponse({ success: true }, 200);
+  }
+
+  // Read secrets via astro:env (type-safe, Cloudflare-compatible)
+  const webhookUrl = WEBHOOK_URL;
+  const webhookToken = WEBHOOK_TOKEN;
+  const turnstileSecret = TURNSTILE_SECRET_KEY;
+
+  // Verify Turnstile (if secret is configured)
+  if (turnstileSecret && data.turnstileToken) {
+    const valid = await verifyTurnstile(
+      data.turnstileToken,
+      turnstileSecret,
+      ip,
+    );
+    if (!valid) {
+      return jsonResponse(
+        {
+          error: 'captcha_failed',
+          message: 'Verification failed. Please try again.',
+        },
+        403,
+      );
+    }
+  }
+
+  // Dev mode: no webhook URL configured
+  if (!webhookUrl) {
+    console.warn(
+      '[audit-request] WEBHOOK_URL not set — returning dev success.',
+    );
+    return jsonResponse(
+      {
+        success: true,
+        dev: true,
+        message: 'Request received (dev mode — no webhook).',
+      },
+      200,
+    );
+  }
+
+  // Build webhook payload (strip internal fields)
+  const webhookPayload = {
+    // Metadata
+    submittedAt: new Date().toISOString(),
+    source: 'web-dev-studio.com',
+    ip,
+
+    // Form data (strip honeypot + turnstile token)
+    name: data.name,
+    email: data.email,
+    projectType: data.projectType,
+    message: data.message,
+    company: data.company || undefined,
+    website: data.website || undefined,
+    companySize: data.companySize || undefined,
+    mainProblem: data.mainProblem || undefined,
+    budget: data.budget || undefined,
+    timeline: data.timeline || undefined,
+    decisionRole: data.decisionRole || undefined,
+  };
+
+  // POST to webhook
+  try {
+    const webhookResponse = await postToWebhook(
+      webhookUrl,
+      webhookPayload,
+      webhookToken,
+    );
+
+    if (!webhookResponse.ok) {
+      console.error(
+        `[audit-request] Webhook returned ${webhookResponse.status}`,
+      );
+      return jsonResponse(
+        {
+          error: 'webhook_error',
+          message:
+            'Something went wrong on our end. Please try again or email us.',
+        },
+        502,
+      );
+    }
+
+    return jsonResponse({ success: true }, 200);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'unknown_error';
+    if (message === 'webhook_timeout') {
+      console.error('[audit-request] Webhook timed out');
+      return jsonResponse(
+        {
+          error: 'webhook_timeout',
+          message:
+            'The request timed out. Please try again or email us directly.',
+        },
+        504,
+      );
+    }
+    console.error('[audit-request] Webhook failed:', message);
+    return jsonResponse(
+      {
+        error: 'webhook_error',
+        message:
+          'Something went wrong on our end. Please try again or email us.',
+      },
+      502,
+    );
+  }
+}

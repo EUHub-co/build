@@ -1,0 +1,72 @@
+---
+/**
+ * Process — 5 steps from audit to launch.
+ * Scroll-triggered reveal (CSS-based; GSAP only if needed, lazy-loaded).
+ */
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+import Icon from '../ui/Icon.astro';
+import { processSteps } from '../../content/process';
+---
+
+<Section id="process" bg="canvas">
+  <Container size="xl">
+    <div class="mx-auto max-w-3xl text-center">
+      <h2 class="text-3xl font-bold tracking-tight text-ink md:text-4xl">
+        From audit to launch without chaos
+      </h2>
+      <p class="mt-4 text-lg text-ink-3">
+        A defined process that reduces risk. You know what happens, when it
+        happens, and what you get at each step.
+      </p>
+    </div>
+
+    {/* Timeline */}
+    <div class="mx-auto mt-16 max-w-4xl">
+      <div class="relative">
+        {/* Vertical line (desktop) */}
+        <div
+          class="absolute left-8 top-0 bottom-0 w-px bg-line md:left-1/2"
+          aria-hidden="true"
+        >
+        </div>
+
+        {
+          processSteps.map((step, i) => (
+            <div
+              class={`relative flex gap-6 pb-12 last:pb-0 md:gap-12 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
+            >
+              {/* Step number */}
+              <div class="relative z-10 flex h-16 w-16 shrink-0 items-center justify-center rounded-full border-2 border-brand bg-surface text-lg font-bold text-brand md:absolute md:left-1/2 md:-translate-x-1/2">
+                {step.step}
+              </div>
+
+              {/* Content */}
+              <div
+                class={`flex-1 md:w-1/2 ${i % 2 === 0 ? 'md:pr-16 md:text-right' : 'md:pl-16'}`}
+              >
+                <h3 class="text-xl font-semibold text-ink">{step.title}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-ink-3">
+                  {step.summary}
+                </p>
+                <div
+                  class={`mt-4 flex flex-wrap gap-2 ${i % 2 === 0 ? 'md:justify-end' : ''}`}
+                >
+                  {step.deliverables.map((d) => (
+                    <span class="inline-flex items-center gap-1 rounded-full border border-line bg-surface-2 px-3 py-1 text-xs text-ink-3">
+                      <Icon name="check" size={12} class="text-ok" />
+                      {d}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Spacer for alternating layout */}
+              <div class="hidden md:block md:w-1/2" />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </Container>
+</Section>

@@ -22,4 +22,49 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+  // Type-safe environment variables via astro:env.
+  // Server secrets are read via `import { X } from 'astro:env/server'`
+  // — never `import.meta.env` for runtime secrets on Cloudflare.
+  env: {
+    schema: {
+      // Server-side secrets (not exposed to client)
+      WEBHOOK_URL: {
+        type: 'string',
+        context: 'server',
+        access: 'secret',
+        optional: true,
+      },
+      WEBHOOK_TOKEN: {
+        type: 'string',
+        context: 'server',
+        access: 'secret',
+        optional: true,
+      },
+      TURNSTILE_SECRET_KEY: {
+        type: 'string',
+        context: 'server',
+        access: 'secret',
+        optional: true,
+      },
+      // Client-exposed (must be access: 'public' for client context)
+      PUBLIC_TURNSTILE_SITE_KEY: {
+        type: 'string',
+        context: 'client',
+        access: 'public',
+        optional: true,
+      },
+      PUBLIC_UMAMI_SCRIPT_URL: {
+        type: 'string',
+        context: 'client',
+        access: 'public',
+        optional: true,
+      },
+      PUBLIC_UMAMI_WEBSITE_ID: {
+        type: 'string',
+        context: 'client',
+        access: 'public',
+        optional: true,
+      },
+    },
+  },
 });

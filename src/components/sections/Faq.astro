@@ -1,0 +1,42 @@
+---
+/**
+ * FAQ — native <details>/<summary> accordion.
+ * Per plan v3: no React island for FAQ; native HTML is accessible by default.
+ * 12 items (10 from prompt + 2 engagement/pricing orientation).
+ */
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+import Icon from '../ui/Icon.astro';
+import { faq } from '../../content/faq';
+---
+
+<Section id="faq" bg="canvas">
+  <Container size="md">
+    <div class="mx-auto max-w-3xl text-center">
+      <h2 class="text-3xl font-bold tracking-tight text-ink md:text-4xl">
+        Frequently asked questions
+      </h2>
+      <p class="mt-4 text-lg text-ink-3">Direct answers. No agency-speak.</p>
+    </div>
+
+    <div class="mt-12 space-y-3">
+      {
+        faq.map((item) => (
+          <details class="group rounded-lg border border-line bg-surface px-6 py-1 shadow-card">
+            <summary class="flex cursor-pointer items-center justify-between gap-4 py-4 font-medium text-ink marker:content-none">
+              <span>{item.question}</span>
+              <Icon
+                name="arrow-right"
+                size={18}
+                class="shrink-0 text-ink-4 transition-transform group-open:rotate-90"
+              />
+            </summary>
+            <div class="pb-5 text-sm leading-relaxed text-ink-3">
+              {item.answer}
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </Container>
+</Section>

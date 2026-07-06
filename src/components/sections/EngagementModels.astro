@@ -1,0 +1,86 @@
+---
+/**
+ * Engagement Models — pricing shapes (not another service list).
+ * Per plan v3 / Fable B6: describes HOW you buy, not WHAT you buy.
+ */
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+import Badge from '../ui/Badge.astro';
+import Icon from '../ui/Icon.astro';
+import Button from '../ui/Button.astro';
+import {
+  engagementModels,
+  pricingOrientationCopy,
+} from '../../content/engagement-models';
+import { primaryCta } from '../../content/site';
+---
+
+<Section id="pricing" bg="surface-2">
+  <Container size="xl">
+    <div class="mx-auto max-w-3xl text-center">
+      <h2 class="text-3xl font-bold tracking-tight text-ink md:text-4xl">
+        How you can work with us
+      </h2>
+      <p class="mt-4 text-lg text-ink-3">
+        {pricingOrientationCopy}
+      </p>
+    </div>
+
+    <div class="mt-16 grid gap-6 lg:grid-cols-3">
+      {
+        engagementModels.map((model, i) => (
+          <div
+            class={`relative flex flex-col rounded-lg border p-8 shadow-card ${
+              i === 1
+                ? 'border-brand bg-surface ring-2 ring-brand/20'
+                : 'border-line bg-surface'
+            }`}
+          >
+            {i === 1 && (
+              <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+                <Badge variant="brand">Most common</Badge>
+              </div>
+            )}
+
+            <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-ink-4">
+              <Icon
+                name={i === 0 ? 'search' : i === 1 ? 'layers' : 'refresh'}
+                size={14}
+                class="text-brand"
+              />
+              {i === 0 ? 'Entry point' : i === 1 ? 'Project' : 'Ongoing'}
+            </div>
+
+            <h3 class="mt-4 text-xl font-bold text-ink">{model.shape}</h3>
+
+            <p class="mt-3 text-sm leading-relaxed text-ink-3">
+              {model.howItWorks}
+            </p>
+
+            <div class="mt-6 border-t border-line pt-6">
+              <div class="text-xs font-medium uppercase tracking-wider text-ink-4">
+                Price orientation
+              </div>
+              <div class="mt-1 text-lg font-bold text-brand">
+                {model.priceOrientation}
+              </div>
+              <div class="mt-2 text-xs text-ink-3">{model.typicalScope}</div>
+            </div>
+
+            <div class="mt-8">
+              <Button
+                href={primaryCta.href}
+                variant={i === 1 ? 'primary' : 'secondary'}
+                size="md"
+                class="w-full"
+                data-umami-event="cta_primary_click"
+              >
+                {i === 0 ? 'Request audit' : 'Start a conversation'}
+              </Button>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </Container>
+</Section>

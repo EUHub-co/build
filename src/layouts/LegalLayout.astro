@@ -1,0 +1,59 @@
+---
+/**
+ * Legal layout — shared by /privacy/, /cookies/, /terms/.
+ * Renders legal content from content/legal.ts with proper heading hierarchy.
+ */
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import Container from '../components/ui/Container.astro';
+import type { LegalContent } from '../content/types';
+
+interface Props {
+  content: LegalContent;
+  path: string;
+}
+
+const { content, path } = Astro.props;
+---
+
+<BaseLayout
+  title={content.title}
+  description={`${content.title} — Web Dev Studio by EUHUB`}
+  path={path}
+  noindex={false}
+>
+  <Header />
+  <main id="main">
+    <div class="border-b border-line bg-surface-2 py-12">
+      <Container size="md">
+        <h1 class="text-3xl font-bold tracking-tight text-ink md:text-4xl">
+          {content.title}
+        </h1>
+        <p class="mt-2 text-sm text-ink-4">
+          Last updated: {content.lastUpdated}
+        </p>
+      </Container>
+    </div>
+    <Container size="md" class="py-12 md:py-16">
+      <div class="space-y-6">
+        {
+          content.body.map((paragraph, i) => (
+            <p
+              class="text-sm leading-relaxed text-ink-2 md:text-base"
+              id={`section-${i}`}
+            >
+              {paragraph}
+            </p>
+          ))
+        }
+      </div>
+      <div class="mt-12 border-t border-line pt-6">
+        <a href="/" class="text-sm font-medium text-brand hover:underline">
+          ← Back to home
+        </a>
+      </div>
+    </Container>
+  </main>
+  <Footer />
+</BaseLayout>
