@@ -8,12 +8,12 @@ per the v3 build plan (Phase 0).
 
 ## 1. Visitor personas
 
-| Persona | Pain | What they need to see | Primary CTA |
-|---|---|---|---|
-| **Founder / owner** | Outdated website, no leads, no technical owner | Credibility, business outcomes, clear first step | Request Web Audit |
-| **Operations manager** | Manual processes, no integrations, fragmented tools | API/integration competence, portals, dashboards | Request Web Audit |
-| **Marketing manager** | Slow site, poor SEO, weak conversion structure | Performance, conversion architecture, analytics | Request Web Audit |
-| **Technical decision-maker** | Fragile stack, no DevOps, no path to AI | Engineering depth, tech stack, architecture | Request Web Audit |
+| Persona                      | Pain                                                | What they need to see                            | Primary CTA       |
+| ---------------------------- | --------------------------------------------------- | ------------------------------------------------ | ----------------- |
+| **Founder / owner**          | Outdated website, no leads, no technical owner      | Credibility, business outcomes, clear first step | Request Web Audit |
+| **Operations manager**       | Manual processes, no integrations, fragmented tools | API/integration competence, portals, dashboards  | Request Web Audit |
+| **Marketing manager**        | Slow site, poor SEO, weak conversion structure      | Performance, conversion architecture, analytics  | Request Web Audit |
+| **Technical decision-maker** | Fragile stack, no DevOps, no path to AI             | Engineering depth, tech stack, architecture      | Request Web Audit |
 
 ---
 
@@ -28,6 +28,7 @@ Visitor → Hero (understand offer) → Problem (urgency) → Services (map need
 ```
 
 Secondary paths (non-form conversions):
+
 - Click ecosystem link → enters EUHUB.AI or EUHUB.CO funnel
 - Click email → direct contact
 - Click service card → deeper engagement with a specific offer
@@ -51,11 +52,11 @@ Ordered from low-friction entry to high-scope engagement:
 
 ## 4. Engagement models (pricing shapes, not another service list)
 
-| Shape | How it works | Price orientation |
-|---|---|---|
-| **Technical Web Audit** | Fixed-price, 1-week diagnostic | €500–€1,500 (one-time) |
-| **Fixed-scope project** | Defined deliverables, agreed timeline | €3,000–€25,000+ (project) |
-| **Monthly retainer** | Maintenance, DevOps, iterations, monitoring | €500–€3,000/month |
+| Shape                   | How it works                                | Price orientation         |
+| ----------------------- | ------------------------------------------- | ------------------------- |
+| **Technical Web Audit** | Fixed-price, 1-week diagnostic              | €500–€1,500 (one-time)    |
+| **Fixed-scope project** | Defined deliverables, agreed timeline       | €3,000–€25,000+ (project) |
+| **Monthly retainer**    | Maintenance, DevOps, iterations, monitoring | €500–€3,000/month         |
 
 ---
 
@@ -73,19 +74,19 @@ Ordered from low-friction entry to high-scope engagement:
 
 ## 6. Measurable events (Umami, cookieless)
 
-| Event name | Trigger | Section |
-|---|---|---|
-| `cta_primary_click` | Click "Request Web Audit" | Hero, CTA section, header |
-| `cta_secondary_click` | Click "View Services" | Hero |
-| `audit_form_start` | First field focus | CTA section |
-| `audit_form_submit_success` | Form returns 200 | CTA section |
-| `audit_form_submit_error` | Form returns error | CTA section |
-| `service_card_click` | Click a service card | Services |
-| `faq_open` | Open a FAQ item | FAQ |
-| `ecosystem_link_click` | Click an EUHUB brand card | Ecosystem |
-| `email_click` | Click mailto link | Footer, CTA error fallback |
-| `scroll_50` | 50% scroll depth | Page-wide |
-| `scroll_90` | 90% scroll depth | Page-wide |
+| Event name                  | Trigger                   | Section                    |
+| --------------------------- | ------------------------- | -------------------------- |
+| `cta_primary_click`         | Click "Request Web Audit" | Hero, CTA section, header  |
+| `cta_secondary_click`       | Click "View Services"     | Hero                       |
+| `audit_form_start`          | First field focus         | CTA section                |
+| `audit_form_submit_success` | Form returns 200          | CTA section                |
+| `audit_form_submit_error`   | Form returns error        | CTA section                |
+| `service_card_click`        | Click a service card      | Services                   |
+| `faq_open`                  | Open a FAQ item           | FAQ                        |
+| `ecosystem_link_click`      | Click an EUHUB brand card | Ecosystem                  |
+| `email_click`               | Click mailto link         | Footer, CTA error fallback |
+| `scroll_50`                 | 50% scroll depth          | Page-wide                  |
+| `scroll_90`                 | 90% scroll depth          | Page-wide                  |
 
 Custom listeners required in `lib/analytics.ts` for:
 `audit_form_start`, `scroll_50`, `scroll_90` (Umami doesn't track these natively).
@@ -124,28 +125,29 @@ Project manager · Other
 
 ## 8. Section-to-conversion mapping
 
-| # | Section | Job |
-|---|---|---|
-| 1 | Header | Navigation + persistent CTA |
-| 2 | Hero | Explain offer + outcome → primary CTA |
-| 3 | Problem | Create urgency ("the system behind it is") |
-| 4 | Services | Map business needs to 7 offers |
-| 5 | Differentiation | Prove engineering-led (5-layer stack) |
-| 6 | Process | Reduce perceived risk (5 steps) |
-| 7 | Tech Stack | Prove engineering depth (categorized grid) |
-| 8 | Example Scenarios | Proof-like context (labelled examples) |
-| 9 | Engagement Models | Pre-qualify on scope/budget (pricing shapes) |
-| 10 | Self-referential proof | Site proves its own performance claims |
-| 11 | CTA + Form | Primary conversion event |
-| 12 | EUHUB Ecosystem | Credibility via parent brands (below CTA, opens new tabs) |
-| 13 | FAQ | Remove residual objections |
-| — | Footer | Legal + ecosystem links + contact |
+| #   | Section                | Job                                                       |
+| --- | ---------------------- | --------------------------------------------------------- |
+| 1   | Header                 | Navigation + persistent CTA                               |
+| 2   | Hero                   | Explain offer + outcome → primary CTA                     |
+| 3   | Problem                | Create urgency ("the system behind it is")                |
+| 4   | Services               | Map business needs to 7 offers                            |
+| 5   | Differentiation        | Prove engineering-led (5-layer stack)                     |
+| 6   | Process                | Reduce perceived risk (5 steps)                           |
+| 7   | Tech Stack             | Prove engineering depth (categorized grid)                |
+| 8   | Example Scenarios      | Proof-like context (labelled examples)                    |
+| 9   | Engagement Models      | Pre-qualify on scope/budget (pricing shapes)              |
+| 10  | Self-referential proof | Site proves its own performance claims                    |
+| 11  | CTA + Form             | Primary conversion event                                  |
+| 12  | EUHUB Ecosystem        | Credibility via parent brands (below CTA, opens new tabs) |
+| 13  | FAQ                    | Remove residual objections                                |
+| —   | Footer                 | Legal + ecosystem links + contact                         |
 
 ---
 
 ## 9. Fallback / error recovery
 
 If the webhook is down or the form submission fails:
+
 - **Primary recovery:** error state shows a direct `mailto:` link with the
   audit request pre-filled in the subject/body.
 - **Optional (deferred):** KV stash the payload on failure + alert. Documented

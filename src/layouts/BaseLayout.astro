@@ -120,12 +120,7 @@ const jsonLd = {
     {/* Umami — cookieless analytics (EU/Frankfurt). Loaded with defer. */}
     {
       umamiScript && umamiId && (
-      <script
-        is:inline
-        src={umamiScript}
-        data-website-id={umamiId}
-        defer
-      />
+        <script is:inline src={umamiScript} data-website-id={umamiId} defer />
       )
     }
 
