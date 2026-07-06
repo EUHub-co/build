@@ -1,0 +1,181 @@
+---
+/**
+ * Header — sticky navigation with accessible mobile menu.
+ * No React island; uses a minimal vanilla script for the mobile toggle.
+ *
+ * Per plan v3:
+ *  - Nav label "Examples" (not "Work" — avoids implying a real portfolio)
+ *  - No SK language switch (dropped until real SK copy exists)
+ *  - Ecosystem links open in new tabs
+ *  - Primary CTA: "Request Web Audit"
+ */
+import Container from '../ui/Container.astro';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+import { site, primaryCta } from '../../content/site';
+---
+
+<header
+  id="site-header"
+  class="sticky top-0 z-50 border-b border-line bg-surface/80 backdrop-blur-md"
+>
+  <Container size="xl">
+    <div class="flex h-16 items-center justify-between gap-4">
+      {/* Wordmark */}
+      <a
+        href="/"
+        class="flex items-baseline gap-1.5 font-bold text-ink hover:text-brand transition-colors"
+        aria-label="Web Dev Studio by EUHUB — home"
+      >
+        <span class="text-lg">{site.wordmark}</span>
+        <span class="text-xs font-medium text-ink-3">{site.tagline}</span>
+      </a>
+
+      {/* Desktop nav */}
+      <nav
+        class="hidden lg:flex items-center gap-6"
+        aria-label="Primary navigation"
+      >
+        {
+          site.nav.map((item) => (
+            <a
+              href={item.href}
+              class="text-sm text-ink-2 hover:text-brand transition-colors"
+            >
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+
+      {/* Desktop actions */}
+      <div class="hidden lg:flex items-center gap-4">
+        <div class="flex items-center gap-3 text-xs">
+          {
+            site.ecosystemLinks.map((link) => (
+              <a
+                href={link.href}
+                target="_blank"
+                rel="noopener"
+                class="text-ink-3 hover:text-brand transition-colors"
+              >
+                {link.label}
+              </a>
+            ))
+          }
+        </div>
+        <Button
+          href={primaryCta.href}
+          size="sm"
+          data-umami-event="cta_primary_click"
+        >
+          {primaryCta.label}
+        </Button>
+      </div>
+
+      {/* Mobile menu button */}
+      <button
+        id="mobile-menu-toggle"
+        class="lg:hidden inline-flex items-center justify-center rounded-md p-2 text-ink-2 hover:bg-surface-2"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <Icon name="menu" size={24} />
+      </button>
+    </div>
+  </Container>
+
+  {/* Mobile menu panel */}
+  <div
+    id="mobile-menu"
+    class="hidden lg:hidden border-t border-line bg-surface"
+  >
+    <Container size="xl">
+      <nav class="flex flex-col gap-1 py-4" aria-label="Mobile navigation">
+        {
+          site.nav.map((item) => (
+            <a
+              href={item.href}
+              class="mobile-nav-link rounded-md px-3 py-2.5 text-base text-ink-2 hover:bg-surface-2 hover:text-brand transition-colors"
+            >
+              {item.label}
+            </a>
+          ))
+        }
+        <div class="mt-2 flex flex-col gap-2 border-t border-line pt-4">
+          {
+            site.ecosystemLinks.map((link) => (
+              <a
+                href={link.href}
+                target="_blank"
+                rel="noopener"
+                class="flex items-center gap-1.5 rounded-md px-3 py-2 text-sm text-ink-3 hover:text-brand"
+              >
+                {link.label}
+                <Icon name="external" size={14} />
+              </a>
+            ))
+          }
+        </div>
+        <div class="mt-3">
+          <Button
+            href={primaryCta.href}
+            size="md"
+            class="w-full"
+            data-umami-event="cta_primary_click"
+          >
+            {primaryCta.label}
+          </Button>
+        </div>
+      </nav>
+    </Container>
+  </div>
+</header>
+
+<script>
+  // Minimal vanilla toggle — no React, no framework dependency.
+  const toggle = document.getElementById('mobile-menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+
+  if (toggle && menu) {
+    const openIcon = toggle.querySelector('svg');
+    let isOpen = false;
+
+    const setMenu = (open: boolean) => {
+      isOpen = open;
+      menu?.classList.toggle('hidden', !open);
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      if (openIcon) {
+        openIcon.style.display = open ? 'none' : 'block';
+        const closeIcon = toggle.querySelector('.close-icon');
+        if (closeIcon) closeIcon.classList.toggle('hidden', !open);
+      }
+    };
+
+    toggle.addEventListener('click', () => setMenu(!isOpen));
+
+    // Close on nav link click
+    menu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => setMenu(false));
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isOpen) {
+        setMenu(false);
+        toggle.focus();
+      }
+    });
+
+    // Close on resize to desktop
+    window.addEventListener(
+      'resize',
+      () => {
+        if (window.innerWidth >= 1024 && isOpen) setMenu(false);
+      },
+      { passive: true },
+    );
+  }
+</script>

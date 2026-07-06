@@ -1,0 +1,29 @@
+---
+/**
+ * Card — glass-style card with thin border, soft shadow, rounded corners.
+ * Premium SaaS aesthetic.
+ */
+interface Props {
+  hover?: boolean;
+  padding?: 'sm' | 'md' | 'lg';
+  class?: string;
+}
+
+const { hover = false, padding = 'md', class: className = '' } = Astro.props;
+
+const padMap = {
+  sm: 'p-4',
+  md: 'p-6',
+  lg: 'p-8',
+};
+
+const hoverClass = hover
+  ? 'transition-all duration-200 hover:shadow-panel hover:border-line-strong'
+  : '';
+---
+
+<div
+  class={`rounded-lg border border-line bg-surface shadow-card ${padMap[padding]} ${hoverClass} ${className}`}
+>
+  <slot />
+</div>

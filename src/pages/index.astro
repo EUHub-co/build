@@ -1,20 +1,25 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import { site } from '../content/site';
 
-const title = 'Web Dev Studio by EUHUB';
-const description =
-  'We build fast, secure, conversion-focused web platforms, web apps, and AI-ready interfaces for European businesses. Engineering-led, GDPR-aware, maintained long-term.';
+const title = site.seo.title;
+const description = site.seo.description;
 ---
 
 <BaseLayout title={title} description={description} path="/">
+  <Header />
   <main id="main">
     <div class="mx-auto max-w-3xl px-6 py-24">
       <h1 class="text-4xl font-bold tracking-tight text-ink">
-        Web Dev Studio by EUHUB
+        {site.wordmark}
+        <span class="text-ink-3">{site.tagline}</span>
       </h1>
       <p class="mt-4 text-lg text-ink-3">
-        Scaffold verified. Full landing page build in progress.
+        Design system and layout shell verified. Section build in progress.
       </p>
     </div>
   </main>
+  <Footer />
 </BaseLayout>

@@ -1,0 +1,36 @@
+---
+/**
+ * Section — semantic <section> wrapper with id (for anchor nav),
+ * vertical padding, and optional background variant.
+ */
+interface Props {
+  id?: string;
+  padding?: 'sm' | 'md' | 'lg';
+  bg?: 'canvas' | 'surface' | 'surface-2' | 'grid';
+  class?: string;
+}
+
+const {
+  id,
+  padding = 'lg',
+  bg = 'canvas',
+  class: className = '',
+} = Astro.props;
+
+const padMap = {
+  sm: 'py-12 md:py-16',
+  md: 'py-16 md:py-24',
+  lg: 'py-24 md:py-32',
+};
+
+const bgMap = {
+  canvas: 'bg-canvas',
+  surface: 'bg-surface',
+  'surface-2': 'bg-surface-2',
+  grid: 'bg-canvas bg-grid',
+};
+---
+
+<section id={id} class={`${padMap[padding]} ${bgMap[bg]} ${className}`}>
+  <slot />
+</section>

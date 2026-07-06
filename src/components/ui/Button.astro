@@ -1,0 +1,65 @@
+---
+/**
+ * Button — primary, secondary, or ghost variant.
+ * Renders as <a> when href is provided, <button> otherwise.
+ */
+interface Props {
+  variant?: 'primary' | 'secondary' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  href?: string;
+  target?: string;
+  rel?: string;
+  type?: 'button' | 'submit';
+  class?: string;
+  'data-umami-event'?: string;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  target,
+  rel,
+  type = 'button',
+  class: className = '',
+  'data-umami-event': umamiEvent,
+} = Astro.props;
+
+const base =
+  'inline-flex items-center justify-center gap-2 rounded-md font-medium transition-all duration-200 focus-visible:outline-2 focus-visible:outline-brand focus-visible:outline-offset-2 disabled:opacity-50 disabled:pointer-events-none';
+
+const variants = {
+  primary:
+    'bg-brand text-white hover:bg-brand-2 shadow-card hover:shadow-panel',
+  secondary:
+    'bg-surface text-ink border border-line-strong hover:border-brand hover:text-brand',
+  ghost: 'text-ink-2 hover:text-brand',
+};
+
+const sizes = {
+  sm: 'text-sm px-4 py-2',
+  md: 'text-base px-5 py-2.5',
+  lg: 'text-base px-6 py-3',
+};
+
+const classes = `${base} ${variants[variant]} ${sizes[size]} ${className}`;
+const attrs = {
+  href,
+  target,
+  rel: rel ?? (target === '_blank' ? 'noopener' : undefined),
+  type: href ? undefined : type,
+  'data-umami-event': umamiEvent,
+};
+---
+
+{
+  href ? (
+    <a class={classes} {...attrs}>
+      <slot />
+    </a>
+  ) : (
+    <button class={classes} {...attrs}>
+      <slot />
+    </button>
+  )
+}
