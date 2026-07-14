@@ -4,8 +4,8 @@
   "description": "Fast, secure, conversion-focused web platforms for European businesses.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f7f8fa",
-  "theme_color": "#1b4dff",
+  "background_color": "#f8fafc",
+  "theme_color": "#006b70",
   "icons": [
     {
       "src": "/favicon.svg",
