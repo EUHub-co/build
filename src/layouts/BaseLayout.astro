@@ -33,7 +33,7 @@ const {
   ogImage = locale === 'sk' ? '/sk/og.png' : '/og.png',
 } = Astro.props;
 
-const siteUrl = Astro.site ?? new URL('https://web-dev-studio.com');
+const siteUrl = Astro.site ?? new URL('https://build.euhub-ai.com');
 const canonical = new URL(path, siteUrl).href;
 const ogImageUrl = new URL(ogImage, siteUrl).href;
 const fullTitle =
@@ -101,30 +101,40 @@ const jsonLd = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#1b4dff" />
+    <meta name="theme-color" content="#006b70" />
     <meta name="generator" content={Astro.generator} />
 
     {
-      /* No-FOUC theme script — runs before paint to set .dark on <html>.
-        Order matters: this must execute before the body renders.
-        localStorage 'theme' takes precedence; falls back to prefers-color-scheme. */
+      /* No-FOUC theme bootstrap — ported from grow (euhub-marketing)'s
+        BaseLayout.astro. Runs before paint to set html[data-theme]
+        synchronously (avoids flash-of-wrong-theme). 'auto' resolves against
+        prefers-color-scheme; 'light'/'dark' are explicit user choices.
+        Mirrored by the equivalent runtime logic in the <script> at the
+        bottom of <body>, which also handles live toggling + persistence —
+        see ThemeSelector.astro for the UI this drives. */
     }
     <script is:inline>
-      (function () {
+      (() => {
+        const storageKey = 'euhub-web-theme';
+        const validModes = new Set(['auto', 'light', 'dark']);
+        let mode = 'auto';
+
         try {
-          var stored = localStorage.getItem('theme');
-          var prefersDark = window.matchMedia(
-            '(prefers-color-scheme: dark)',
-          ).matches;
-          var dark = stored ? stored === 'dark' : prefersDark;
-          if (dark) document.documentElement.classList.add('dark');
-          // Mark ready for smooth transitions after first paint
-          requestAnimationFrame(function () {
-            document.documentElement.classList.add('theme-ready');
-          });
-        } catch (e) {
-          /* localStorage may be unavailable (private mode); ignore */
+          const stored = localStorage.getItem(storageKey);
+          if (stored && validModes.has(stored)) mode = stored;
+        } catch {
+          // Private browsing or storage policy: Auto safely falls back below.
         }
+
+        const prefersDark =
+          typeof window.matchMedia === 'function' &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const resolved =
+          mode === 'auto' ? (prefersDark ? 'dark' : 'light') : mode;
+        const root = document.documentElement;
+        root.dataset.theme = resolved;
+        root.dataset.themeMode = mode;
+        root.style.colorScheme = resolved;
       })();
     </script>
 
@@ -199,11 +209,122 @@ const jsonLd = {
   <body>
     <a
       href="#main"
-      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:rounded-md focus:bg-surface focus:px-4 focus:py-2 focus:shadow-card focus:ring-2 focus:ring-brand"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:rounded-md focus:bg-(--color-surface-raised) focus:px-4 focus:py-2 focus:shadow-card focus:ring-2 focus:ring-(--color-primary-500)"
     >
       Skip to content
     </a>
     <slot />
+
+    {
+      /* Theme toggle runtime — ported from grow (euhub-marketing)'s
+        BaseLayout.astro. Drives any ThemeSelector.astro instance on the
+        page via the data-theme-selector / data-theme-option contract;
+        persists the mode so the pre-paint bootstrap script above picks it
+        up on the next navigation. */
+    }
+    <script is:inline>
+      (function () {
+        var storageKey = 'euhub-web-theme';
+        var validModes = ['auto', 'light', 'dark'];
+        var root = document.documentElement;
+        var mediaQuery =
+          typeof window.matchMedia === 'function'
+            ? window.matchMedia('(prefers-color-scheme: dark)')
+            : null;
+
+        function isValidMode(mode) {
+          return validModes.indexOf(mode) !== -1;
+        }
+
+        function readThemeMode() {
+          var mode = root.dataset.themeMode;
+          return mode && isValidMode(mode) ? mode : 'auto';
+        }
+
+        function resolveTheme(mode) {
+          if (mode === 'auto') {
+            return mediaQuery && mediaQuery.matches ? 'dark' : 'light';
+          }
+          return mode;
+        }
+
+        function syncThemeSelectors(mode) {
+          document
+            .querySelectorAll('[data-theme-option]')
+            .forEach(function (button) {
+              var selected = button.dataset.themeOption === mode;
+              button.setAttribute('aria-checked', String(selected));
+              button.tabIndex = selected ? 0 : -1;
+            });
+        }
+
+        function applyTheme(mode, persist) {
+          var resolved = resolveTheme(mode);
+          root.dataset.themeMode = mode;
+          root.dataset.theme = resolved;
+          root.style.colorScheme = resolved;
+          syncThemeSelectors(mode);
+
+          if (persist) {
+            try {
+              localStorage.setItem(storageKey, mode);
+            } catch (e) {
+              // The current page remains usable when storage is unavailable.
+            }
+          }
+        }
+
+        applyTheme(readThemeMode(), false);
+
+        document.addEventListener('click', function (event) {
+          var target = event.target;
+          if (!(target instanceof Element)) return;
+          var button = target.closest('[data-theme-option]');
+          var mode = button && button.dataset.themeOption;
+          if (!mode || !isValidMode(mode)) return;
+          applyTheme(mode, true);
+        });
+
+        document.addEventListener('keydown', function (event) {
+          var target = event.target;
+          if (!(target instanceof HTMLButtonElement)) return;
+          var selector = target.closest('[data-theme-selector]');
+          if (!selector) return;
+
+          var options = Array.prototype.slice.call(
+            selector.querySelectorAll('[data-theme-option]'),
+          );
+          var index = options.indexOf(target);
+          if (index === -1) return;
+
+          var nextIndex = index;
+          if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+            nextIndex = (index + options.length - 1) % options.length;
+          } else if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+            nextIndex = (index + 1) % options.length;
+          } else if (event.key === 'Home') {
+            nextIndex = 0;
+          } else if (event.key === 'End') {
+            nextIndex = options.length - 1;
+          } else {
+            return;
+          }
+
+          event.preventDefault();
+          var next = options[nextIndex];
+          var mode = next.dataset.themeOption;
+          if (!mode || !isValidMode(mode)) return;
+          applyTheme(mode, true);
+          next.focus();
+        });
+
+        if (mediaQuery) {
+          mediaQuery.addEventListener('change', function () {
+            if (readThemeMode() === 'auto') applyTheme('auto', false);
+          });
+        }
+      })();
+    </script>
 
     {
       /* Scroll-reveal + Umami scroll tracking (minimal vanilla JS, no framework) */
