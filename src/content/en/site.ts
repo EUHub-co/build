@@ -7,7 +7,7 @@ const site: SiteContent = {
     { label: 'Services', href: '#services' },
     { label: 'Examples', href: '#examples' },
     { label: 'Process', href: '#process' },
-    { label: 'Tech Stack', href: '#tech-stack' },
+    { label: 'Tech Stack', href: '#tech' },
     { label: 'Pricing', href: '#pricing' },
     { label: 'FAQ', href: '#faq' },
     { label: 'Contact', href: '#contact' },

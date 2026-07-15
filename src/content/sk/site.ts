@@ -7,7 +7,7 @@ const site: SiteContent = {
     { label: 'Služby', href: '#services' },
     { label: 'Príklady', href: '#examples' },
     { label: 'Proces', href: '#process' },
-    { label: 'Technológie', href: '#tech-stack' },
+    { label: 'Technológie', href: '#tech' },
     { label: 'Cenník', href: '#pricing' },
     { label: 'FAQ', href: '#faq' },
     { label: 'Kontakt', href: '#contact' },

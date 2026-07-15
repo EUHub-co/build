@@ -1,5 +1,7 @@
 import type { TechCategory } from '../types';
 
+const eyebrow = 'Technológie';
+
 const techStack: TechCategory[] = [
   {
     id: 'frontend',
@@ -70,4 +72,4 @@ const techStack: TechCategory[] = [
   },
 ];
 
-export const techStackBundle = { techStack };
+export const techStackBundle = { eyebrow, techStack };
