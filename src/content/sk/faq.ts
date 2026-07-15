@@ -44,7 +44,7 @@ const faq: FaqItem[] = [
   {
     question: 'Ako dlho trvá projekt webu?',
     answer:
-      'Landing page trvá 1–3 týždne. Firemný web 3–8 týždňov. Custom webová aplikácia 6–16 týždňov v závislosti od scopu, integrácií a zložitosti. Časový harmonogram definujeme počas architektúry.',
+      'Landing page trvá pár týždňov. Firemný web 3–8 týždňov. Custom webová aplikácia 6–12 týždňov v závislosti od scopu, integrácií a zložitosti. Časový harmonogram definujeme počas architektúry.',
   },
   {
     question: 'Čo potrebujete od nás na štart?',

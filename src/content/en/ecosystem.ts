@@ -4,12 +4,12 @@ const eyebrow = 'Ecosystem';
 
 const ecosystem: EcosystemBrand[] = [
   {
-    id: 'web-dev-studio',
-    name: 'Web Dev Studio',
-    role: 'This site',
+    id: 'grow-with-euhub',
+    name: 'Grow with EUHUB',
+    role: 'Marketing & growth',
     description:
-      'Websites, landing pages, portals, and web applications. The web engineering and digital product studio inside EUHUB.',
-    // No `url` — this card is self-referential (this site) and must not link out.
+      'Full-funnel marketing systems — paid media, SEO, content, and automation — built by an engineering studio, with GDPR-aware tracking and real attribution.',
+    url: 'https://grow.euhub-ai.com',
   },
   {
     id: 'euhub-ai',

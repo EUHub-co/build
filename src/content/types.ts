@@ -32,6 +32,8 @@ export interface SiteContent {
   contactEmail: string;
   /** Location line */
   location: string;
+  /** Footer bottom-bar copyright line, after "© {year} " */
+  footerRights: string;
   /** SEO defaults */
   seo: {
     title: string;

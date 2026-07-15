@@ -222,6 +222,20 @@ export default function AuditRequestForm({
       noValidate
       className="space-y-4"
     >
+      {/* Header row — "// Web audit request" + reply-time indicator */}
+      <div className="mb-2 flex items-center justify-between gap-4 border-b border-(--color-border-subtle) pb-[18px]">
+        <span className="font-mono text-[11px] tracking-[0.22em] text-primary-500 uppercase">
+          // {t.auditRequestLabel}
+        </span>
+        <span className="flex items-center gap-1.5 font-mono text-[11px] tracking-[0.12em] text-(--color-text-secondary)">
+          <span
+            aria-hidden="true"
+            className="h-[7px] w-[7px] animate-flow-pulse rounded-full bg-primary-500"
+          />
+          {t.replyTime}
+        </span>
+      </div>
+
       {/* Honeypot — hidden from users, visible to bots */}
       <div className="absolute -left-[9999px]" aria-hidden="true">
         <label htmlFor="companyUrl">{t.honeypotLabel}</label>
@@ -234,7 +248,11 @@ export default function AuditRequestForm({
         />
       </div>
 
-      {/* Required fields */}
+      {/* Group 01 — required fields */}
+      <p className="font-mono text-[11px] tracking-[0.2em] text-(--color-text-secondary) uppercase">
+        <span className="text-primary-500">01</span> {t.aboutHeader}
+      </p>
+
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="name" className={labelClass}>
@@ -325,10 +343,10 @@ export default function AuditRequestForm({
         {errors.message && <p className={errorClass}>{errors.message}</p>}
       </div>
 
-      {/* Optional fields */}
+      {/* Group 02 — optional fields */}
       <div className="border-t border-(--color-border-subtle) pt-4">
-        <p className="text-xs font-medium uppercase tracking-wider text-(--color-text-secondary)">
-          {t.optionalHeader}
+        <p className="font-mono text-[11px] tracking-[0.2em] text-(--color-text-secondary) uppercase">
+          <span className="text-primary-500">02</span> {t.optionalHeader}
         </p>
       </div>
 
@@ -360,7 +378,7 @@ export default function AuditRequestForm({
         </div>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="budget" className={labelClass}>
             {t.budgetLabel}
@@ -398,7 +416,9 @@ export default function AuditRequestForm({
             ))}
           </select>
         </div>
+      </div>
 
+      <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="decisionRole" className={labelClass}>
             {t.decisionRoleLabel}
@@ -417,19 +437,19 @@ export default function AuditRequestForm({
             ))}
           </select>
         </div>
-      </div>
 
-      <div>
-        <label htmlFor="companySize" className={labelClass}>
-          {t.companySizeLabel}
-        </label>
-        <input
-          id="companySize"
-          name="companySize"
-          type="text"
-          placeholder={t.companySizePlaceholder}
-          className={inputClass('companySize')}
-        />
+        <div>
+          <label htmlFor="companySize" className={labelClass}>
+            {t.companySizeLabel}
+          </label>
+          <input
+            id="companySize"
+            name="companySize"
+            type="text"
+            placeholder={t.companySizePlaceholder}
+            className={inputClass('companySize')}
+          />
+        </div>
       </div>
 
       <div>
@@ -482,11 +502,11 @@ export default function AuditRequestForm({
         </div>
       )}
 
-      {/* Submit button */}
+      {/* Submit button — pill shape, matching every other primary CTA (Button.astro) */}
       <button
         type="submit"
         disabled={state === 'submitting'}
-        className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-primary-500 px-6 py-3.5 text-base font-semibold text-(--color-text-on-primary) shadow-card transition-all duration-200 hover:bg-primary-600 hover:shadow-raised disabled:opacity-60 disabled:pointer-events-none"
+        className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary-500 px-6 py-3.5 text-base font-semibold text-(--color-text-on-primary) shadow-(--shadow-glow-primary) transition-transform duration-300 ease-(--ease-emphasis) hover:-translate-y-0.5 disabled:pointer-events-none disabled:opacity-60"
       >
         {state === 'submitting' ? t.submittingButton : t.submitButton}
         {state !== 'submitting' && (

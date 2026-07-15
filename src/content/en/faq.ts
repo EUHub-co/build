@@ -44,7 +44,7 @@ const faq: FaqItem[] = [
   {
     question: 'How long does a website project take?',
     answer:
-      'A landing page takes 1–3 weeks. A business website takes 3–8 weeks. A custom web application takes 6–16 weeks depending on scope, integrations, and complexity. We define the timeline during architecture.',
+      'A landing page takes a couple of weeks. A business website takes 3–8 weeks. A custom web application takes 6–12 weeks depending on scope, integrations, and complexity. We define the timeline during architecture.',
   },
   {
     question: 'What do you need from us to start?',

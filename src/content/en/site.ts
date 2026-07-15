@@ -8,7 +8,6 @@ const site: SiteContent = {
     { label: 'Examples', href: '#examples' },
     { label: 'Process', href: '#process' },
     { label: 'Tech Stack', href: '#tech' },
-    { label: 'Pricing', href: '#pricing' },
     { label: 'FAQ', href: '#faq' },
     { label: 'Contact', href: '#contact' },
   ],
@@ -18,6 +17,7 @@ const site: SiteContent = {
   ],
   contactEmail: 'hello@euhub-ai.com',
   location: 'Slovakia · European Union',
+  footerRights: 'Web Dev Studio by EUHUB · EU-based · GDPR-aware',
   seo: {
     title: 'Web Dev Studio by EUHUB',
     description:

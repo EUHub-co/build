@@ -25,6 +25,10 @@
   --color-border-subtle: rgb(13 14 21 / 10%);
   --color-border-default: rgb(13 14 21 / 16%);
 
+  /* Glass/frosted panel (contact form card) — ported from grow's tokens */
+  --color-glass-border: rgb(255 255 255 / 40%);
+  --color-glass-bg: rgb(255 255 255 / 60%);
+
   /* Text */
   --color-text-primary: #0f172a;
   --color-text-secondary: #475569;
@@ -159,6 +163,9 @@ html[data-theme='dark'] {
   --color-surface-sunken: #171922;
   --color-border-subtle: rgb(255 255 255 / 5%);
   --color-border-default: rgb(255 255 255 / 10%);
+
+  --color-glass-border: rgb(255 255 255 / 14%);
+  --color-glass-bg: rgb(24 29 36 / 78%);
 
   --color-text-primary: #ffffff;
   --color-text-secondary: #a1a1aa;

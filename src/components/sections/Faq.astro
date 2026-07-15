@@ -6,7 +6,7 @@
  */
 import Container from '../ui/Container.astro';
 import Section from '../ui/Section.astro';
-import Icon from '../ui/Icon.astro';
+import Eyebrow from '../ui/Eyebrow.astro';
 import { getContent } from '../../lib/i18n';
 import type { Locale } from '../../content/types';
 
@@ -20,6 +20,7 @@ const { faq } = getContent(locale).faq;
 <Section id="faq" bg="canvas">
   <Container size="md">
     <div class="mx-auto max-w-3xl text-center" data-reveal>
+      <Eyebrow index={10} label="FAQ" class="mb-4" />
       <h2
         class="text-3xl font-bold tracking-tight text-(--color-text-primary) md:text-4xl"
       >
@@ -36,11 +37,12 @@ const { faq } = getContent(locale).faq;
           <details class="group rounded-lg border border-(--color-border-subtle) bg-surface-raised px-6 py-1 shadow-card">
             <summary class="flex cursor-pointer items-center justify-between gap-4 py-4 font-medium text-(--color-text-primary) marker:content-none">
               <span>{item.question}</span>
-              <Icon
-                name="arrow-right"
-                size={18}
-                class="shrink-0 text-(--color-text-secondary) transition-transform group-open:rotate-90"
-              />
+              <span
+                class="mt-0.5 shrink-0 font-mono text-xl text-primary-500 transition-transform group-open:rotate-45"
+                aria-hidden="true"
+              >
+                +
+              </span>
             </summary>
             <div class="pb-5 text-sm leading-relaxed text-(--color-text-secondary)">
               {item.answer}

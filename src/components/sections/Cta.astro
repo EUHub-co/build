@@ -8,6 +8,7 @@
 import Container from '../ui/Container.astro';
 import Section from '../ui/Section.astro';
 import Icon from '../ui/Icon.astro';
+import Eyebrow from '../ui/Eyebrow.astro';
 import AuditRequestForm from '../forms/AuditRequestForm.tsx';
 import { getContent } from '../../lib/i18n';
 import type { Locale } from '../../content/types';
@@ -21,9 +22,10 @@ const { site } = getContent(locale).site;
 
 <Section id="contact" bg="surface-2" padding="lg">
   <Container size="xl">
-    <div class="grid gap-12 lg:grid-cols-2 lg:gap-16">
+    <div class="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
       {/* Copy side */}
       <div>
+        <Eyebrow index={11} label="Contact" class="mb-4" />
         <h2
           class="text-3xl font-bold tracking-tight text-(--color-text-primary) md:text-4xl"
         >
@@ -72,10 +74,10 @@ const { site } = getContent(locale).site;
       </div>
 
       {/* Form side */}
-      <div class="lg:pl-8">
+      <div>
         <div
           id="audit-form-container"
-          class="rounded-xl border border-(--color-border-subtle) bg-surface-raised p-6 shadow-raised md:p-8"
+          class="rounded-xl border border-(--color-glass-border) bg-(--color-glass-bg) p-6 shadow-raised backdrop-blur-md md:p-8"
         >
           <AuditRequestForm
             turnstileSiteKey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY}
