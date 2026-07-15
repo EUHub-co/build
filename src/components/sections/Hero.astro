@@ -9,11 +9,15 @@
  * pairs the pitch with a small panel of build-quality metrics (Lighthouse,
  * JS payload, TTFB, LCP) rather than marketing-style stats. Build's own
  * headline, subheadline, CTAs, and trust line are unchanged.
+ *
+ * Eyebrow uses the shared `Eyebrow` component (sitewide "NN // Label"
+ * numbered pattern, index 1 here); the secondary CTA is a plain link-action
+ * (label + trailing arrow), not a boxed button.
  */
 import Container from '../ui/Container.astro';
 import Section from '../ui/Section.astro';
 import Button from '../ui/Button.astro';
-import Badge from '../ui/Badge.astro';
+import Eyebrow from '../ui/Eyebrow.astro';
 import Icon from '../ui/Icon.astro';
 import { getContent } from '../../lib/i18n';
 import type { Locale } from '../../content/types';
@@ -24,6 +28,17 @@ interface Props {
 const { locale = 'en' } = Astro.props;
 const { primaryCta, secondaryCta, trustLine, heroStats } =
   getContent(locale).site;
+
+/**
+ * No content file carries this eyebrow (SiteContent has no field for it) —
+ * this is new copy from the numbered-eyebrow pass, so it gets a real SK
+ * translation (mirroring Differentiation's "The stack" -> "Vrstvy systému")
+ * rather than being left English-only.
+ */
+const heroEyebrow =
+  locale === 'sk'
+    ? 'Webové inžinierske štúdio · EUHUB'
+    : 'Web engineering studio · EUHUB';
 ---
 
 <Section bg="canvas" padding="lg" class="relative overflow-hidden">
@@ -41,18 +56,20 @@ const { primaryCta, secondaryCta, trustLine, heroStats } =
   >
   </div>
 
-  <Container size="xl" class="relative grid gap-12 lg:grid-cols-[1.5fr_0.5fr]">
+  <Container size="xl" class="relative grid gap-14 lg:grid-cols-[1.5fr_0.5fr]">
     <div>
-      <Badge variant="brand">
-        <Icon name="zap" size={12} />
-        Web engineering studio · EUHUB
-      </Badge>
+      <Eyebrow index={1} label={heroEyebrow} />
 
       <h1
         class="mt-6 text-4xl font-bold leading-tight tracking-tight text-(--color-text-primary) md:text-5xl lg:text-[2.75rem]"
       >
-        Premium websites, web apps, and AI-ready interfaces for European
-        businesses.
+        Premium websites, web apps, and{' '}
+        <span
+          class="bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent"
+        >
+          AI-ready interfaces
+        </span>{' '}
+        for European businesses.
       </h1>
 
       <p
@@ -63,7 +80,7 @@ const { primaryCta, secondaryCta, trustLine, heroStats } =
         with performance, security, and business logic built in from day one.
       </p>
 
-      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+      <div class="mt-8 flex flex-col gap-5 sm:flex-row sm:items-center">
         <Button
           href={primaryCta.href}
           size="lg"
@@ -72,14 +89,18 @@ const { primaryCta, secondaryCta, trustLine, heroStats } =
           {primaryCta.label}
           <Icon name="arrow-right" size={18} />
         </Button>
-        <Button
+        <a
           href={secondaryCta.href}
-          variant="secondary"
-          size="lg"
+          class="group inline-flex items-center gap-2 text-lg font-medium text-(--color-text-primary) transition-colors hover:text-primary-500"
           data-umami-event="cta_secondary_click"
         >
           {secondaryCta.label}
-        </Button>
+          <Icon
+            name="arrow-right"
+            size={16}
+            class="transition-transform group-hover:translate-x-1"
+          />
+        </a>
       </div>
 
       <p

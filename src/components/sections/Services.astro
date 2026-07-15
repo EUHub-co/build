@@ -2,11 +2,17 @@
 /**
  * Services — 7 service cards with hover interactions (desktop only).
  * Maps business needs to offers.
+ *
+ * Eyebrow is "03 // What we build" (index 3, matching this section's
+ * position in the render order); the H2 is the "Each service is
+ * engineered..." sentence with no separate lead paragraph, per spec. Each
+ * card leads with a mono "NN // Tag" index label instead of an icon box.
  */
 import Container from '../ui/Container.astro';
 import Section from '../ui/Section.astro';
 import Card from '../ui/Card.astro';
 import Icon from '../ui/Icon.astro';
+import Eyebrow from '../ui/Eyebrow.astro';
 import { getContent } from '../../lib/i18n';
 import type { Locale } from '../../content/types';
 
@@ -14,26 +20,27 @@ interface Props {
   locale?: Locale;
 }
 const { locale = 'en' } = Astro.props;
-const { services } = getContent(locale).services;
+const { eyebrow, services } = getContent(locale).services;
 ---
 
 <Section id="services" bg="canvas">
   <Container size="xl">
     <div class="mx-auto max-w-3xl text-center" data-reveal>
+      <Eyebrow index={3} label={eyebrow} class="mb-4" />
       <h2
         class="text-3xl font-bold tracking-tight text-(--color-text-primary) md:text-4xl"
       >
-        What we build
-      </h2>
-      <p class="mt-4 text-lg text-(--color-text-secondary)">
         Each service is engineered for a specific business need — not a template
         filled with your logo.
-      </p>
+      </h2>
     </div>
 
-    <div class="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-reveal>
+    <div
+      class="mt-16 grid grid-cols-[repeat(auto-fit,minmax(340px,1fr))] gap-6"
+      data-reveal
+    >
       {
-        services.map((service) => (
+        services.map((service, i) => (
           <a
             href="#contact"
             class="group"
@@ -41,10 +48,10 @@ const { services } = getContent(locale).services;
             data-umami-service={service.id}
           >
             <Card hover padding="lg" class="h-full">
-              <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary-50 text-primary-500">
-                <Icon name={service.icon} size={24} />
-              </div>
-              <h3 class="mt-5 text-lg font-semibold text-(--color-text-primary)">
+              <p class="font-mono text-sm font-semibold tracking-[0.1em] text-primary-500 uppercase">
+                {String(i + 1).padStart(2, '0')} // {service.tag}
+              </p>
+              <h3 class="mt-4 text-lg font-semibold text-(--color-text-primary)">
                 {service.title}
               </h3>
               <p class="mt-2 text-sm leading-relaxed text-(--color-text-secondary)">

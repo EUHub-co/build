@@ -42,7 +42,7 @@ const tertiaryCta: NavItem = {
 };
 
 const trustLine =
-  'Sídlo na Slovensku. Postavené pre firmy v EÚ. GDPR-aware v základe.';
+  'Sídlo na Slovensku · Postavené pre firmy v EÚ · GDPR-aware v základe';
 
 const heroStats: HeroStat[] = [
   { label: 'Lighthouse', value: '95+ / 100' },

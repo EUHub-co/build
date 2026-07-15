@@ -42,7 +42,7 @@ const tertiaryCta: NavItem = {
 };
 
 const trustLine =
-  'Based in Slovakia. Built for EU businesses. GDPR-aware by default.';
+  'Based in Slovakia · Built for EU businesses · GDPR-aware by default';
 
 const heroStats: HeroStat[] = [
   { label: 'Lighthouse', value: '95+ / 100' },
