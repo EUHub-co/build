@@ -1,4 +1,4 @@
-import type { SiteContent, NavItem } from '../types';
+import type { SiteContent, NavItem, HeroStat } from '../types';
 
 const site: SiteContent = {
   wordmark: 'Web Dev Studio',
@@ -7,8 +7,7 @@ const site: SiteContent = {
     { label: 'Služby', href: '#services' },
     { label: 'Príklady', href: '#examples' },
     { label: 'Proces', href: '#process' },
-    { label: 'Technológie', href: '#tech-stack' },
-    { label: 'Cenník', href: '#pricing' },
+    { label: 'Technológie', href: '#tech' },
     { label: 'FAQ', href: '#faq' },
     { label: 'Kontakt', href: '#contact' },
   ],
@@ -18,6 +17,7 @@ const site: SiteContent = {
   ],
   contactEmail: 'hello@euhub-ai.com',
   location: 'Slovensko · Európska únia',
+  footerRights: 'Web Dev Studio by EUHUB · Sídlo v EÚ · GDPR-aware',
   seo: {
     title: 'Web Dev Studio by EUHUB',
     description:
@@ -42,7 +42,14 @@ const tertiaryCta: NavItem = {
 };
 
 const trustLine =
-  'Sídlo na Slovensku. Postavené pre firmy v EÚ. GDPR-aware v základe.';
+  'Sídlo na Slovensku · Postavené pre firmy v EÚ · GDPR-aware v základe';
+
+const heroStats: HeroStat[] = [
+  { label: 'Lighthouse', value: '95+ / 100' },
+  { label: 'Veľkosť JS', value: '< 50 KB' },
+  { label: 'TTFB', value: '< 100 ms' },
+  { label: 'LCP', value: '< 1.5 s' },
+];
 
 export const siteBundle = {
   site,
@@ -50,4 +57,5 @@ export const siteBundle = {
   secondaryCta,
   tertiaryCta,
   trustLine,
+  heroStats,
 };

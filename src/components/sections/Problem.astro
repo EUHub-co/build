@@ -2,60 +2,57 @@
 /**
  * Problem — creates urgency.
  * "Your website is probably not the real problem. The system behind it is."
+ *
+ * Tiles follow the README's authoritative numbered-index format: a mono
+ * 2-digit primary-colored index (01-10) + H3 title + separate muted body
+ * sentence — no icons.
  */
 import Container from '../ui/Container.astro';
-import Icon from '../ui/Icon.astro';
+import Eyebrow from '../ui/Eyebrow.astro';
+import { getContent } from '../../lib/i18n';
+import type { Locale } from '../../content/types';
 
-const problems = [
-  'Slow, outdated websites that lose visitors before they read a word',
-  'Weak conversion structure with no clear path from visitor to lead',
-  'No CRM or ERP integration — leads trapped in email threads',
-  'No analytics discipline — decisions made on guesswork',
-  'No automation — manual work repeated until someone quits',
-  'Poor mobile UX on a device most visitors actually use',
-  'Poor SEO foundations — invisible to the people searching for you',
-  'No technical ownership — nobody knows how the site actually works',
-  'No path toward AI integration — stuck while competitors move',
-  'Random plugins and fragile WordPress setups one update from breaking',
-];
-
-const icons = [
-  'clock',
-  'target',
-  'plug',
-  'layout',
-  'refresh',
-  'app',
-  'globe',
-  'lock',
-  'sparkles',
-  'wrench',
-];
+interface Props {
+  locale?: Locale;
+}
+const { locale = 'en' } = Astro.props;
+const { eyebrow, problems } = getContent(locale).problem;
 ---
 
-<section class="border-b border-line bg-surface-2 py-24 md:py-32">
+<section
+  class="border-b border-(--color-border-subtle) bg-surface-sunken py-24 md:py-32"
+>
   <Container size="lg">
     <div class="mx-auto max-w-3xl text-center" data-reveal>
-      <h2 class="text-3xl font-bold tracking-tight text-ink md:text-4xl">
-        Your website is probably not the real problem.
+      <Eyebrow index={2} label={eyebrow} class="mb-4" />
+      <h2
+        class="font-heading text-h2 font-bold tracking-tight text-(--color-text-primary)"
+      >
+        Your website is probably not the real problem. The system behind it is.
       </h2>
-      <p class="mt-4 text-xl font-medium text-brand">
-        The system behind it is.
-      </p>
-      <p class="mt-6 text-lg leading-relaxed text-ink-3">
+      <p class="mt-6 text-lead leading-relaxed text-(--color-text-secondary)">
         Most companies don't need a redesign. They need a rebuild of the
-        structure, integrations, and processes that the website is supposed to
+        structure, integrations, and processes the website is supposed to
         support. A new coat of paint on a fragile foundation is still a fragile
         foundation.
       </p>
     </div>
 
-    <div class="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+    <div
+      class="mt-16 grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-4"
+    >
       {
         problems.map((problem, i) => (
-          <div class="flex flex-col gap-3 rounded-lg border border-line bg-surface p-5">
-            <Icon name={icons[i]} size={20} class="text-ink-4" />
-            <p class="text-sm leading-relaxed text-ink-2">{problem}</p>
+          <div class="flex flex-col gap-3 rounded-lg border border-(--color-border-subtle) bg-surface-raised p-5">
+            <p class="font-mono text-sm font-semibold text-primary-500">
+              {String(i + 1).padStart(2, '0')}
+            </p>
+            <h3 class="font-heading text-base font-semibold text-(--color-text-primary)">
+              {problem.title}
+            </h3>
+            <p class="text-sm leading-relaxed text-(--color-text-secondary)">
+              {problem.body}
+            </p>
           </div>
         ))
       }

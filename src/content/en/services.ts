@@ -1,9 +1,12 @@
 import type { Service } from '../types';
 
+const eyebrow = 'What we build';
+
 const services: Service[] = [
   {
     id: 'business-websites',
     title: 'Modern business websites',
+    tag: 'Websites',
     summary:
       'Fast, responsive, SEO-ready websites for companies that need credibility and lead generation.',
     includes: [
@@ -17,6 +20,7 @@ const services: Service[] = [
   {
     id: 'landing-pages',
     title: 'Landing pages',
+    tag: 'Landing',
     summary:
       'Conversion-focused campaign pages for services, products, events, and audits.',
     includes: [
@@ -30,6 +34,7 @@ const services: Service[] = [
   {
     id: 'web-apps',
     title: 'Custom web applications',
+    tag: 'Web Apps',
     summary:
       'Internal tools, dashboards, booking systems, portals, and operational interfaces.',
     includes: [
@@ -43,6 +48,7 @@ const services: Service[] = [
   {
     id: 'ai-interfaces',
     title: 'AI-integrated web interfaces',
+    tag: 'AI Interfaces',
     summary:
       'Frontends for AI assistants, RAG systems, automation workflows, and internal copilots.',
     includes: [
@@ -56,6 +62,7 @@ const services: Service[] = [
   {
     id: 'redesign',
     title: 'Website redesign and migration',
+    tag: 'Redesign',
     summary:
       'Rebuild outdated websites into modern, maintainable, high-performance systems.',
     includes: [
@@ -69,6 +76,7 @@ const services: Service[] = [
   {
     id: 'integrations',
     title: 'API and business integrations',
+    tag: 'Integrations',
     summary:
       'CRM, ERP, payment, email, analytics, logistics, and internal database integrations.',
     includes: [
@@ -82,6 +90,7 @@ const services: Service[] = [
   {
     id: 'maintenance',
     title: 'Maintenance and DevOps',
+    tag: 'Care',
     summary:
       'Hosting, CI/CD, monitoring, security updates, backups, and long-term care.',
     includes: [
@@ -94,4 +103,4 @@ const services: Service[] = [
   },
 ];
 
-export const servicesBundle = { services };
+export const servicesBundle = { eyebrow, services };

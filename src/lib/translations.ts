@@ -21,7 +21,12 @@ export interface FormTranslations {
   // Select defaults
   selectProjectType: string;
   selectPlaceholder: string;
-  // Optional section header
+  // Form header row
+  auditRequestLabel: string;
+  replyTime: string;
+  // Group 01 header (required fields)
+  aboutHeader: string;
+  // Group 02 header (optional fields)
   optionalHeader: string;
   // Honeypot
   honeypotLabel: string;
@@ -58,7 +63,10 @@ const en: FormTranslations = {
   companySizePlaceholder: 'e.g. 10–50 employees',
   selectProjectType: 'Select a project type',
   selectPlaceholder: 'Select…',
-  optionalHeader: 'Optional — helps us prepare for your audit',
+  auditRequestLabel: 'Web audit request',
+  replyTime: 'Reply < 24h',
+  aboutHeader: 'About your project',
+  optionalHeader: 'Optional — helps us prepare',
   honeypotLabel: 'Website URL (leave empty)',
   submitButton: 'Request Web Audit',
   submittingButton: 'Sending…',
@@ -91,7 +99,10 @@ const sk: FormTranslations = {
   companySizePlaceholder: 'napr. 10–50 zamestnancov',
   selectProjectType: 'Vyberte typ projektu',
   selectPlaceholder: 'Vyberte…',
-  optionalHeader: 'Voliteľné — pomôže nám pripraviť sa na váš audit',
+  auditRequestLabel: 'Žiadosť o web audit',
+  replyTime: 'Odpoveď < 24h',
+  aboutHeader: 'O vašom projekte',
+  optionalHeader: 'Voliteľné — pomôže nám pripraviť sa',
   honeypotLabel: 'URL webu (nechajte prázdne)',
   submitButton: 'Vyžiadať web audit',
   submittingButton: 'Odosielanie…',

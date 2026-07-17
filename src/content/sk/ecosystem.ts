@@ -1,13 +1,15 @@
 import type { EcosystemBrand } from '../types';
 
+const eyebrow = 'Ekosystém';
+
 const ecosystem: EcosystemBrand[] = [
   {
-    id: 'web-dev-studio',
-    name: 'Web Dev Studio',
-    role: 'Tento web',
+    id: 'grow-with-euhub',
+    name: 'Grow with EUHUB',
+    role: 'Marketing a rast',
     description:
-      'Weby, landing pages, portály a webové aplikácie. Web engineering a digital product studio v rámci EUHUB.',
-    url: 'https://web-dev-studio.com',
+      'Full-funnel marketingové systémy — platená reklama, SEO, obsah a automatizácia — postavené inžinierskym štúdiom, s GDPR-aware trackingom a reálnou atribúciou.',
+    url: 'https://grow.euhub-ai.com',
   },
   {
     id: 'euhub-ai',
@@ -35,4 +37,4 @@ const ecosystem: EcosystemBrand[] = [
   },
 ];
 
-export const ecosystemBundle = { ecosystem };
+export const ecosystemBundle = { eyebrow, ecosystem };

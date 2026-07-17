@@ -1,5 +1,7 @@
 import type { ProcessStep } from '../types';
 
+const eyebrow = 'Proces';
+
 const processSteps: ProcessStep[] = [
   {
     step: 1,
@@ -62,4 +64,4 @@ const processSteps: ProcessStep[] = [
   },
 ];
 
-export const processBundle = { processSteps };
+export const processBundle = { eyebrow, processSteps };

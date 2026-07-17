@@ -4,6 +4,7 @@
  * Fails if any SK key is missing or empty compared to EN.
  */
 import { siteBundle as enSite } from '../src/content/en/site';
+import { problemBundle as enProblem } from '../src/content/en/problem';
 import { servicesBundle as enServices } from '../src/content/en/services';
 import { processBundle as enProcess } from '../src/content/en/process';
 import { techStackBundle as enTechStack } from '../src/content/en/tech-stack';
@@ -13,6 +14,7 @@ import { faqBundle as enFaq } from '../src/content/en/faq';
 import { ecosystemBundle as enEcosystem } from '../src/content/en/ecosystem';
 import { legalBundle as enLegal } from '../src/content/en/legal';
 import { siteBundle as skSite } from '../src/content/sk/site';
+import { problemBundle as skProblem } from '../src/content/sk/problem';
 import { servicesBundle as skServices } from '../src/content/sk/services';
 import { processBundle as skProcess } from '../src/content/sk/process';
 import { techStackBundle as skTechStack } from '../src/content/sk/tech-stack';
@@ -24,6 +26,7 @@ import { legalBundle as skLegal } from '../src/content/sk/legal';
 
 const enBundles = [
   ['site', enSite],
+  ['problem', enProblem],
   ['services', enServices],
   ['process', enProcess],
   ['techStack', enTechStack],
@@ -36,6 +39,7 @@ const enBundles = [
 
 const skBundles = [
   ['site', skSite],
+  ['problem', skProblem],
   ['services', skServices],
   ['process', skProcess],
   ['techStack', skTechStack],

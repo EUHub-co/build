@@ -1,0 +1,53 @@
+---
+import Icon from './Icon.astro';
+
+/**
+ * ThemeSelector — accessible auto/light/dark appearance switcher.
+ * Ported from grow (euhub-marketing)'s ThemeSelector.astro, adapted to
+ * build's own Icon.astro API (`name: string`, no strict IconName union).
+ *
+ * - radiogroup of 3 buttons (monitor/sun/moon), aria-checked reflects state
+ * - Toggling is handled by the shared theme bootstrap script in
+ *   BaseLayout.astro (data-theme-option / data-theme-selector contract) —
+ *   this component only renders the control, it owns no click/keydown logic
+ *   itself so there is a single source of truth for the toggle behavior.
+ * - No FOUC: BaseLayout's inline pre-paint script sets html[data-theme]
+ *   synchronously before first paint.
+ *
+ * Labels are plain English for now — build has no `a11y` content bundle
+ * (unlike grow's `site.a11y.appearance`) to source SK translations from;
+ * the old ThemeToggle this replaces also only ever rendered English
+ * aria-labels regardless of locale, so this preserves that behavior rather
+ * than introducing new i18n content scaffolding as a side effect of a
+ * design-token port.
+ */
+const options = [
+  { mode: 'auto', label: 'Use device appearance', icon: 'monitor' },
+  { mode: 'light', label: 'Use light appearance', icon: 'sun' },
+  { mode: 'dark', label: 'Use dark appearance', icon: 'moon' },
+] as const;
+---
+
+<div
+  class="inline-flex rounded-full border border-(--color-border-subtle) bg-(--color-surface-raised) p-0.5"
+  role="radiogroup"
+  aria-label="Appearance"
+  data-theme-selector
+>
+  {
+    options.map((option) => (
+      <button
+        type="button"
+        class="inline-flex h-8 w-8 items-center justify-center rounded-full text-(--color-text-secondary) transition-colors hover:text-(--color-primary-500) aria-checked:bg-(--color-surface-sunken) aria-checked:text-(--color-primary-500)"
+        role="radio"
+        aria-checked={option.mode === 'auto' ? 'true' : 'false'}
+        aria-label={option.label}
+        title={option.label}
+        tabindex={option.mode === 'auto' ? '0' : '-1'}
+        data-theme-option={option.mode}
+      >
+        <Icon name={option.icon} size={16} />
+      </button>
+    ))
+  }
+</div>

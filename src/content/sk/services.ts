@@ -1,9 +1,12 @@
 import type { Service } from '../types';
 
+const eyebrow = 'Čo staviame';
+
 const services: Service[] = [
   {
     id: 'business-websites',
     title: 'Moderné firemné weby',
+    tag: 'Weby',
     summary:
       'Rýchle, responzívne, SEO-pripravené weby pre firmy, ktoré potrebujú dôveryhodnosť a generovanie leadov.',
     includes: [
@@ -17,6 +20,7 @@ const services: Service[] = [
   {
     id: 'landing-pages',
     title: 'Landing pages',
+    tag: 'Landing',
     summary:
       'Konverzné kampanové stránky pre služby, produkty, eventy a audity.',
     includes: [
@@ -30,6 +34,7 @@ const services: Service[] = [
   {
     id: 'web-apps',
     title: 'Custom webové aplikácie',
+    tag: 'Aplikácie',
     summary:
       'Interné nástroje, dashboardy, rezervačné systémy, portály a operačné rozhrania.',
     includes: [
@@ -43,6 +48,7 @@ const services: Service[] = [
   {
     id: 'ai-interfaces',
     title: 'AI-integrované webové rozhrania',
+    tag: 'AI rozhrania',
     summary:
       'Frontendy pre AI asistentov, RAG systémy, automatizačné workflow a interné copiloty.',
     includes: [
@@ -56,6 +62,7 @@ const services: Service[] = [
   {
     id: 'redesign',
     title: 'Redesign a migrácia webu',
+    tag: 'Redesign',
     summary:
       'Prebudovanie zastaraných webov na moderné, udržiavateľné, výkonné systémy.',
     includes: [
@@ -69,6 +76,7 @@ const services: Service[] = [
   {
     id: 'integrations',
     title: 'API a biznis integrácie',
+    tag: 'Integrácie',
     summary:
       'CRM, ERP, platby, email, analytika, logistika a interné databázové integrácie.',
     includes: [
@@ -82,6 +90,7 @@ const services: Service[] = [
   {
     id: 'maintenance',
     title: 'Údržba a DevOps',
+    tag: 'Starostlivosť',
     summary:
       'Hosting, CI/CD, monitoring, bezpečnostné updaty, backupy a dlhodobá starostlivosť.',
     includes: [
@@ -94,4 +103,4 @@ const services: Service[] = [
   },
 ];
 
-export const servicesBundle = { services };
+export const servicesBundle = { eyebrow, services };

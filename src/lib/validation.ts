@@ -8,127 +8,105 @@ import type { Locale } from '../content/types';
  */
 
 export const projectTypes = [
-  {
-    id: 'audit',
-    label: { en: 'Technical Web Audit', sk: 'Technický web audit' },
-  },
-  { id: 'landing-page', label: { en: 'Landing Page', sk: 'Landing Page' } },
-  {
-    id: 'business-website',
-    label: { en: 'Business Website', sk: 'Firemný web' },
-  },
+  { id: 'new-website', label: { en: 'New website', sk: 'Nový web' } },
   {
     id: 'website-redesign',
-    label: { en: 'Website Redesign', sk: 'Redesign webu' },
+    label: {
+      en: 'Website redesign/migration',
+      sk: 'Redesign/migrácia webu',
+    },
   },
+  { id: 'landing-page', label: { en: 'Landing page', sk: 'Landing page' } },
   {
     id: 'custom-web-app',
-    label: { en: 'Custom Web Application', sk: 'Custom webová aplikácia' },
-  },
-  {
-    id: 'client-portal',
-    label: { en: 'Client Portal', sk: 'Klientsky portál' },
-  },
-  {
-    id: 'internal-dashboard',
-    label: { en: 'Internal Dashboard', sk: 'Interný dashboard' },
+    label: { en: 'Custom web application', sk: 'Custom webová aplikácia' },
   },
   {
     id: 'ai-interface',
     label: {
-      en: 'AI-integrated Web Interface',
-      sk: 'AI-integrované webové rozhranie',
+      en: 'AI-integrated interface',
+      sk: 'AI-integrované rozhranie',
     },
   },
   {
     id: 'api-integration',
-    label: { en: 'API/CRM/ERP Integration', sk: 'API/CRM/ERP integrácia' },
+    label: { en: 'API/business integration', sk: 'API/biznis integrácia' },
   },
   {
     id: 'maintenance-devops',
     label: { en: 'Maintenance/DevOps', sk: 'Údržba/DevOps' },
   },
-  { id: 'not-sure', label: { en: 'Not sure yet', sk: 'Ešce neviem' } },
 ] as const;
 
 export const budgetRanges = [
-  { id: 'under-2500', label: { en: '< €2,500', sk: '< €2,500' } },
-  { id: '2500-5000', label: { en: '€2,500–€5,000', sk: '€2,500–€5,000' } },
-  { id: '5000-10000', label: { en: '€5,000–€10,000', sk: '€5,000–€10,000' } },
+  { id: 'under-3000', label: { en: 'Under €3,000', sk: 'Do €3,000' } },
   {
-    id: '10000-25000',
-    label: { en: '€10,000–€25,000', sk: '€10,000–€25,000' },
+    id: '3000-10000',
+    label: { en: '€3,000–€10,000', sk: '€3,000–€10,000' },
   },
-  { id: 'over-25000', label: { en: '€25,000+', sk: '€25,000+' } },
-  { id: 'not-sure-budget', label: { en: 'Not sure yet', sk: 'Ešce neviem' } },
+  {
+    id: '10000-30000',
+    label: { en: '€10,000–€30,000', sk: '€10,000–€30,000' },
+  },
+  { id: 'over-30000', label: { en: '€30,000+', sk: '€30,000+' } },
 ] as const;
 
 export const timelines = [
   { id: 'asap', label: { en: 'ASAP', sk: 'ASAP' } },
-  { id: 'within-1-month', label: { en: 'Within 1 month', sk: 'Do 1 mesiaca' } },
-  { id: '1-3-months', label: { en: '1–3 months', sk: '1–3 mesiace' } },
-  { id: '3-6-months', label: { en: '3–6 months', sk: '3–6 mesiacov' } },
+  { id: 'within-a-month', label: { en: 'Within a month', sk: 'Do mesiaca' } },
+  { id: 'this-quarter', label: { en: 'This quarter', sk: 'Tento štvrťrok' } },
   {
-    id: 'just-researching',
-    label: { en: 'Just researching', sk: 'Iba prieskum' },
+    id: 'just-exploring',
+    label: { en: 'Just exploring', sk: 'Iba prieskum' },
   },
 ] as const;
 
 export const decisionRoles = [
-  { id: 'owner-founder', label: { en: 'Owner/Founder', sk: 'Owner/Founder' } },
   {
-    id: 'technical',
-    label: { en: 'Technical decision-maker', sk: 'Technický rozhodca' },
+    id: 'founder-owner',
+    label: { en: 'Founder-owner', sk: 'Founder-owner' },
   },
   {
-    id: 'marketing',
-    label: { en: 'Marketing/Growth', sk: 'Marketing/Growth' },
+    id: 'marketing-lead',
+    label: { en: 'Marketing lead', sk: 'Marketing lead' },
   },
-  { id: 'operations', label: { en: 'Operations', sk: 'Operácie' } },
   {
-    id: 'project-manager',
-    label: { en: 'Project manager', sk: 'Project manager' },
+    id: 'product-operations',
+    label: { en: 'Product-operations', sk: 'Product-operations' },
   },
+  { id: 'engineering', label: { en: 'Engineering', sk: 'Engineering' } },
   { id: 'other', label: { en: 'Other', sk: 'Iné' } },
 ] as const;
 
 export const projectTypeIds = [
-  'audit',
-  'landing-page',
-  'business-website',
+  'new-website',
   'website-redesign',
+  'landing-page',
   'custom-web-app',
-  'client-portal',
-  'internal-dashboard',
   'ai-interface',
   'api-integration',
   'maintenance-devops',
-  'not-sure',
 ] as const;
 
 export const budgetRangeIds = [
-  'under-2500',
-  '2500-5000',
-  '5000-10000',
-  '10000-25000',
-  'over-25000',
-  'not-sure-budget',
+  'under-3000',
+  '3000-10000',
+  '10000-30000',
+  'over-30000',
 ] as const;
 
 export const timelineIds = [
   'asap',
-  'within-1-month',
-  '1-3-months',
-  '3-6-months',
-  'just-researching',
+  'within-a-month',
+  'this-quarter',
+  'just-exploring',
 ] as const;
 
 export const decisionRoleIds = [
-  'owner-founder',
-  'technical',
-  'marketing',
-  'operations',
-  'project-manager',
+  'founder-owner',
+  'marketing-lead',
+  'product-operations',
+  'engineering',
   'other',
 ] as const;
 

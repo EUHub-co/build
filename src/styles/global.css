@@ -1,106 +1,219 @@
 @import 'tailwindcss';
-@import '@fontsource-variable/inter';
+@import '@fontsource-variable/plus-jakarta-sans';
+@import '@fontsource-variable/dm-sans';
+@import '@fontsource-variable/jetbrains-mono';
 
-/* Enable class-based dark mode (Tailwind v4 custom variant).
-   The .dark class is toggled on <html> by the no-FOUC script in BaseLayout. */
-@custom-variant dark (&:where(.dark, .dark *));
-
-/* ===========================================================================
-   Web Dev Studio by EUHUB — Design tokens (Tailwind v4 @theme)
-   Light theme (default). Warm-white surfaces, EU-tech blue + cyan/violet
-   accent, green/amber reserved for status/data indicators only.
-   Dark tokens are overridden below under .dark.
-   =========================================================================== */
+/*
+ * Design tokens (redesign/grow-theme — ported from Marketing Studio's
+ * current reskin, see /incubator/web/euhub-marketing/src/styles/global.css).
+ * Tailwind v4 is CSS-first: all tokens live in this @theme block — there is
+ * no tailwind.config.js. The light values are the default; `html[data-theme
+ * ='dark']` below overrides the same semantic tokens.
+ *
+ * The typeface trio (Plus Jakarta Sans headings / DM Sans body / JetBrains
+ * Mono eyebrows+numbers+meta) is shared with grow and deploy: build.,
+ * grow. and deploy.euhub-ai.com are sibling sites and must read as one
+ * family. An earlier pass kept build on Inter as a deliberate deviation —
+ * that has been reverted, since it left `font-heading` unresolved and
+ * `font-mono` silently falling back to system mono (Menlo/Consolas) at every
+ * usage. Only fixed-dark terminal tokens stay build-specific.
+ */
 @theme {
-  /* Surfaces */
-  --color-canvas: #f7f8fa;
-  --color-surface: #ffffff;
-  --color-surface-2: #f1f3f7;
-  --color-surface-3: #e9edf3;
-
-  /* Ink / text */
-  --color-ink: #0b1220;
-  --color-ink-2: #2a3343;
-  --color-ink-3: #5a6678;
-  --color-ink-4: #8a94a6;
-
-  /* Borders / lines */
-  --color-line: #e2e7ee;
-  --color-line-strong: #cfd6e0;
-
-  /* Primary — EU-tech blue */
-  --color-brand: #1b4dff;
-  --color-brand-2: #0b3adf;
-  --color-brand-soft: #e8efff;
-
-  /* Accents */
-  --color-cyan: #06b6d4;
-  --color-violet: #7c5cff;
-
-  /* Status (data indicators only, per prompt) */
-  --color-ok: #16a34a;
-  --color-warn: #d97706;
-  --color-danger: #dc2626;
-
-  /* Typography */
   --font-sans:
-    'Inter Variable', 'Inter', ui-sans-serif, system-ui, -apple-system,
-    'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    'DM Sans Variable', 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-heading:
+    'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', ui-sans-serif, system-ui,
+    sans-serif;
   --font-mono:
-    ui-monospace, 'SF Mono', 'JetBrains Mono', 'Fira Code', monospace;
+    'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, 'SFMono-Regular',
+    monospace;
+
+  /* Surfaces */
+  --color-surface-page: #f8fafc;
+  --color-surface-raised: #ffffff;
+  --color-surface-sunken: #f1f5f9;
+  --color-border-subtle: rgb(13 14 21 / 10%);
+  --color-border-default: rgb(13 14 21 / 16%);
+
+  /* Glass/frosted panel (contact form card) — ported from grow's tokens */
+  --color-glass-border: rgb(255 255 255 / 40%);
+  --color-glass-bg: rgb(255 255 255 / 60%);
+
+  /* Text */
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-on-primary: #ffffff;
+  --color-focus-ring: #006b70;
+
+  /* Primary — teal. Secondary — indigo, used for the hero gradient/glow. */
+  --color-primary-50: #e6f4f4;
+  --color-primary-100: #cce9e9;
+  --color-primary-300: #4d9ea1;
+  --color-primary-500: #006b70;
+  --color-primary-600: #00565a;
+  --color-primary-700: #003b3e;
+  --color-primary-glow: rgb(0 173 181 / 22%);
+
+  --color-secondary-500: #4f46e5;
+  --color-secondary-glow: rgb(99 102 241 / 18%);
+
+  --color-accent-cyan: #1fb6c9;
+  --color-accent-violet: #6e56cf;
+
+  /*
+   * Status only — never decorative. Reserved for form states / badges.
+   * Text tones are darkened from a first pass that measured below WCAG AA
+   * (4.5:1) for normal-size text on their `-bg` pair; these pass with margin.
+   *
+   * --color-status-danger/-danger-bg has no equivalent in grow's palette
+   * (grow only ships success/warning) — derived here the same way: Tailwind's
+   * red-800 (#991b1b) against a custom pale-red -bg tint measures ~7.3:1,
+   * comfortably past AA.
+   */
+  --color-status-success: #166534;
+  --color-status-success-bg: #e6f6ec;
+  --color-status-warning: #92400e;
+  --color-status-warning-bg: #fbf0dd;
+  --color-status-danger: #991b1b;
+  --color-status-danger-bg: #fbe7e7;
+
+  /* Type scale */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+
+  /* Fluid clamps for the page's few large headings/ledes. */
+  --text-h1: clamp(3rem, 5vw + 1rem, 5.125rem);
+  --text-h2: clamp(2rem, 3vw + 1rem, 3rem);
+  --text-lead: clamp(1rem, 1vw + 0.75rem, 1.125rem);
+
+  /*
+   * Sticky header height. Section components that are anchor-navigated must
+   * add `scroll-mt-(--spacing-header-height)` so they don't land underneath
+   * the sticky header. Ported from grow/deploy's `Header.astro` two-tier
+   * pattern (same value, so header height stays consistent across the
+   * EUHUB portfolio).
+   */
+  --spacing-header-height: 4.25rem;
 
   /* Radius */
   --radius-sm: 0.375rem;
-  --radius-md: 0.625rem;
+  --radius-md: 0.5rem;
   --radius-lg: 1rem;
   --radius-xl: 1.5rem;
 
-  /* Shadow — soft, premium SaaS */
+  /* Shadow */
   --shadow-card:
-    0 1px 2px rgb(11 18 32 / 0.04), 0 8px 24px -12px rgb(11 18 32 / 0.12);
-  --shadow-panel:
-    0 1px 0 rgb(11 18 32 / 0.04), 0 24px 48px -24px rgb(11 18 32 / 0.18);
+    0 1px 2px 0 rgb(28 26 23 / 0.04), 0 4px 16px -4px rgb(28 26 23 / 0.08);
+  --shadow-raised: 0 8px 30px -8px rgb(28 26 23 / 0.16);
+  --shadow-glow-primary: 0 0 20px var(--color-primary-glow);
+
+  /* Emphasis easing used by hover lifts (buttons, cards). */
+  --ease-emphasis: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /*
+   * Entrance/loop animations for decorative islands (card fade-ins). The
+   * `prefers-reduced-motion` block below already neutralizes these globally
+   * — no per-usage opt-out needed.
+   */
+  --animate-fade-in-up: fade-in-up 0.6s ease-out both;
+  --animate-flow-pulse: flow-pulse 2s ease-in-out infinite;
 }
 
-/* ===========================================================================
-   Dark theme token overrides
-   Tasteful soft dark — deep slate, not pure black. No neon.
-   Brand blue brightened slightly for contrast on dark surfaces.
-   =========================================================================== */
-.dark {
-  /* Surfaces */
-  --color-canvas: #0b0f1a;
-  --color-surface: #131826;
-  --color-surface-2: #1a2030;
-  --color-surface-3: #232a3d;
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-  /* Ink / text (inverted) */
-  --color-ink: #e8edf5;
-  --color-ink-2: #c4ccd9;
-  --color-ink-3: #8a94a6;
-  --color-ink-4: #5a6678;
+@keyframes flow-pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
 
-  /* Borders / lines */
-  --color-line: #232a3d;
-  --color-line-strong: #2d3548;
+/*
+ * Header wordmark typing effect ("BUILD"), ported from grow's `Header.astro`
+ * pattern (grow's own comment there types "GROW", 4 characters,
+ * `steps(4, end)`, width: 4.2ch — i.e. ~1.05ch per character). Build's
+ * wordmark is "BUILD" (5 characters), so this is scaled to `steps(5, end)` /
+ * width: 5.25ch (5 * 1.05ch) to keep the same per-character reveal cadence.
+ * `steps(N, end)` types one character per step; `infinite alternate` types
+ * in then erases out. Under `prefers-reduced-motion`, the global rule below
+ * forces `animation-iteration-count: 1`, which lands the element on its
+ * 100% keyframe (fully typed, width: 5.25ch) instead of looping — no extra
+ * override needed.
+ */
+@keyframes ds-type {
+  0%,
+  12% {
+    width: 0;
+  }
+  55%,
+  100% {
+    width: 5.25ch;
+  }
+}
 
-  /* Brand — slightly brighter for dark contrast */
-  --color-brand: #3b6dff;
-  --color-brand-2: #2b5df0;
-  --color-brand-soft: #1a2540;
+html[data-theme='dark'] {
+  color-scheme: dark;
 
-  /* Accents — slightly brighter for visibility */
-  --color-cyan: #22d4ee;
-  --color-violet: #9b7cff;
+  --color-surface-page: #0d0e15;
+  --color-surface-raised: #151722;
+  --color-surface-sunken: #171922;
+  --color-border-subtle: rgb(255 255 255 / 5%);
+  --color-border-default: rgb(255 255 255 / 10%);
 
-  /* Status — slightly brighter */
-  --color-ok: #22c55e;
-  --color-warn: #f59e0b;
-  --color-danger: #ef4444;
+  --color-glass-border: rgb(255 255 255 / 14%);
+  --color-glass-bg: rgb(24 29 36 / 78%);
 
-  /* Shadows — deeper on dark */
-  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.2), 0 8px 24px -12px rgb(0 0 0 / 0.4);
-  --shadow-panel: 0 1px 0 rgb(0 0 0 / 0.2), 0 24px 48px -24px rgb(0 0 0 / 0.5);
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #a1a1aa;
+  --color-text-on-primary: #0d0e15;
+  --color-focus-ring: #00e5ff;
+
+  --color-primary-50: #17233d;
+  --color-primary-100: #1d3158;
+  --color-primary-300: #4dd8ea;
+  --color-primary-500: #00e5ff;
+  --color-primary-600: #33eaff;
+  --color-primary-700: #99f4ff;
+  --color-primary-glow: rgb(0 229 255 / 40%);
+
+  --color-secondary-500: #7b61ff;
+  --color-secondary-glow: rgb(123 97 255 / 40%);
+
+  --color-accent-cyan: #65d6e3;
+  --color-accent-violet: #b9a7ff;
+
+  --color-status-success: #7ee0a3;
+  --color-status-success-bg: #143522;
+  --color-status-warning: #f4c27d;
+  --color-status-warning-bg: #3d2c16;
+  --color-status-danger: #f5a3a3;
+  --color-status-danger-bg: #3d1616;
+
+  --shadow-card: 0 1px 2px 0 rgb(0 0 0 / 24%), 0 4px 16px -4px rgb(0 0 0 / 38%);
+  --shadow-raised: 0 8px 30px -8px rgb(0 0 0 / 52%);
+}
+
+html:not([data-theme='dark']) {
+  color-scheme: light;
 }
 
 /* ===========================================================================
@@ -125,33 +238,26 @@ html {
 }
 
 body {
-  background-color: var(--color-canvas);
-  color: var(--color-ink);
+  background-color: var(--color-surface-page);
+  color: var(--color-text-primary);
   font-family: var(--font-sans);
-  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-/* Smooth theme transition — colors ease over 200ms.
-   Only animate color/background/border so layout shifts don't trigger. */
-html.theme-ready,
-html.theme-ready *,
-html.theme-ready *::before,
-html.theme-ready *::after {
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease,
-    fill 0.2s ease,
-    stroke 0.2s ease;
-}
-
-/* Visible focus for keyboard users */
-:where(a, button, select, summary, [tabindex]):focus-visible {
-  outline: 2px solid var(--color-brand);
+/*
+ * Accessibility foundations. Visible focus on every interactive element —
+ * never `outline: none` without a replacement.
+ */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
 }
 
 /* Form fields — modern focus ring, no default browser outline */
@@ -165,48 +271,40 @@ input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
   outline: none;
-  border-color: var(--color-brand);
-  box-shadow: 0 0 0 3px rgb(27 77 255 / 0.12);
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px var(--color-primary-glow);
 }
 
 /* Select — custom arrow, consistent appearance */
 select {
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238a94a6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 0.75rem center;
   background-size: 12px;
   padding-right: 2rem;
 }
 
-/* Dark mode focus ring */
-.dark input:focus-visible,
-.dark textarea:focus-visible,
-.dark select:focus-visible {
-  border-color: var(--color-brand);
-  box-shadow: 0 0 0 3px rgb(59 109 255 / 0.15);
-}
-
 /* Autofill — override browser yellow/blue background */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {
-  -webkit-text-fill-color: var(--color-ink);
-  -webkit-box-shadow: 0 0 0 1000px var(--color-surface) inset;
-  caret-color: var(--color-ink);
+  -webkit-text-fill-color: var(--color-text-primary);
+  -webkit-box-shadow: 0 0 0 1000px var(--color-surface-raised) inset;
+  caret-color: var(--color-text-primary);
 }
 
 /* Selection */
 ::selection {
-  background: var(--color-brand);
-  color: #fff;
+  background: var(--color-primary-500);
+  color: var(--color-text-on-primary);
 }
 
 /* Utility: thin grid overlay for technical backgrounds */
 .bg-grid {
   background-image:
-    linear-gradient(to right, var(--color-line) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--color-line) 1px, transparent 1px);
+    linear-gradient(to right, var(--color-border-subtle) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-border-subtle) 1px, transparent 1px);
   background-size: 48px 48px;
 }
 

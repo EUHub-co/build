@@ -1,0 +1,30 @@
+---
+/**
+ * Eyebrow — numbered mono "kicker" rendered above a section heading, e.g.
+ * "04 // The stack". Matches the "NN // Label" pattern from the "Build
+ * with EUHUB Landing" design spec (ported from grow/euhub-marketing's
+ * `ui/Eyebrow.astro`, same component shape).
+ *
+ * `index` is the section's position in THIS site's actual render order
+ * (see `src/pages/index.astro`), not necessarily the order any design
+ * reference used — keep it a plain integer prop so renumbering is a
+ * one-line change per section, not a string to transcribe by hand.
+ */
+interface Props {
+  index: number;
+  label: string;
+  class?: string;
+}
+
+const { index, label, class: className = '' } = Astro.props;
+const formatted = `${String(index).padStart(2, '0')} // ${label}`;
+---
+
+<p
+  class:list={[
+    'font-mono text-[13px] tracking-[0.25em] text-primary-500 uppercase',
+    className,
+  ]}
+>
+  {formatted}
+</p>

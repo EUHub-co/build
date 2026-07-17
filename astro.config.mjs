@@ -15,7 +15,7 @@ export default defineConfig({
   adapter: node({
     mode: 'standalone',
   }),
-  site: 'https://web-dev-studio.com',
+  site: 'https://build.euhub-ai.com',
   integrations: [
     react(),
     sitemap({
