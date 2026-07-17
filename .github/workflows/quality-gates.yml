@@ -32,13 +32,67 @@ jobs:
           PUBLIC_TURNSTILE_SITE_KEY: 1x00000000000000000000AA
           TURNSTILE_SECRET_KEY: 1x0000000000000000000000000000000AA
 
-      - name: Content guard (no TODO/lorem/placeholder in built HTML)
+      # Ported from grow's (euhub-marketing) content-guard, which solves the
+      # exact problem the old naive `grep -r dist/client/` version had here:
+      # a raw substring grep over the whole dist/ tree (not just rendered
+      # HTML) always false-positived on Tailwind's `::placeholder`/
+      # `placeholder:` CSS and every real `<input placeholder="...">`
+      # attribute - meaning it could never actually pass once any form
+      # existed, and never caught anything real. This strips <script>/
+      # <style>/comments/tags first, so it only checks visible rendered
+      # text, same as grow's implementation.
+      - name: Content guard
         run: |
-          if grep -r -l "TODO\|lorem ipsum\|placeholder" dist/client/ 2>/dev/null; then
-            echo "FAIL: forbidden text found in built HTML"
+          if [ ! -d dist/client ]; then
+            echo "::error::The build did not produce a dist/client directory."
             exit 1
           fi
-          echo "Content guard passed."
+          html_count="$(find dist/client -type f -name '*.html' | wc -l)"
+          if [ "$html_count" -eq 0 ]; then
+            echo "::error::The build did not produce any rendered HTML files."
+            exit 1
+          fi
+          node --input-type=module <<'NODE'
+          import { readFileSync, readdirSync } from 'node:fs';
+          import { join } from 'node:path';
+
+          function htmlFiles(directory) {
+            return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+              const path = join(directory, entry.name);
+              return entry.isDirectory()
+                ? htmlFiles(path)
+                : entry.name.endsWith('.html')
+                  ? [path]
+                  : [];
+            });
+          }
+
+          const files = htmlFiles('dist/client');
+          const markers = /\b(TODO|lorem|placeholder)\b/i;
+          let failed = false;
+
+          for (const file of files) {
+            const html = readFileSync(file, 'utf8');
+            const visibleText = html
+              .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '\n')
+              .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, '\n')
+              .replace(/<!--[\s\S]*?-->/g, '\n')
+              .replace(/<[^>]+>/g, ' ')
+              .replace(/&[^;]+;/g, ' ');
+            const match = visibleText.match(markers);
+
+            if (match && match.index !== undefined) {
+              const line = visibleText.slice(0, match.index).split('\n').length;
+              console.error(`${file}:${line}: rendered marker ${match[0]}`);
+              failed = true;
+            }
+          }
+
+          if (failed) {
+            console.error('::error::Rendered HTML contains TODO, lorem, or placeholder text.');
+            process.exit(1);
+          }
+          NODE
 
   lighthouse:
     name: Lighthouse CI (required gate)
