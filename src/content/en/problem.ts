@@ -9,39 +9,39 @@ const problems: ProblemItem[] = [
   },
   {
     title: 'Weak conversion structure',
-    body: 'No clear path guiding a visitor from click to lead.',
+    body: 'No clear path from visitor to qualified lead.',
   },
   {
-    title: 'No CRM or ERP integration',
-    body: 'Leads trapped in scattered email threads instead of a pipeline.',
+    title: 'No CRM/ERP integration',
+    body: 'Leads trapped in email threads, lost between systems.',
   },
   {
     title: 'No analytics discipline',
-    body: 'Decisions made on guesswork instead of real user data.',
+    body: 'Decisions made on guesswork, not measured data.',
   },
   {
     title: 'No automation',
-    body: 'Manual work repeated by hand until someone quits.',
+    body: 'Manual work repeated until someone quits.',
   },
   {
     title: 'Poor mobile UX',
-    body: 'A broken experience on the device most visitors actually use.',
+    body: 'Broken on the device most of your visitors actually use.',
   },
   {
-    title: 'Poor SEO foundations',
+    title: 'Weak SEO foundations',
     body: 'Invisible to the people already searching for you.',
   },
   {
     title: 'No technical ownership',
-    body: 'Nobody left who actually knows how the site works.',
+    body: 'Nobody knows how the site actually works.',
   },
   {
-    title: 'No path to AI integration',
-    body: 'Stuck on legacy foundations while competitors move ahead.',
+    title: 'No path to AI',
+    body: 'Stuck on manual while competitors move faster.',
   },
   {
-    title: 'Fragile WordPress setups',
-    body: 'Random plugins one update away from breaking the whole site.',
+    title: 'Fragile WordPress',
+    body: 'Random plugins one update away from breaking.',
   },
 ];
 

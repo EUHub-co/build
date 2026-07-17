@@ -4,7 +4,7 @@ const faq: FaqItem[] = [
   {
     question: 'Robíte iba weby?',
     answer:
-      'Nie. Staviame weby, landing pages, custom webové aplikácie, klientské portály, interné dashboardy a AI-integrované rozhrania. Web je často vstupný bod; skutočná práca je systém za ním.',
+      'Nie. Staviame weby, landing pages, custom webové aplikácie, dashboardy, portály a AI-integrované rozhrania — plus integrácie a infraštruktúru, ktorá za nimi stojí.',
   },
   {
     question: 'Môžete postaviť custom web app alebo dashboard?',
@@ -14,7 +14,7 @@ const faq: FaqItem[] = [
   {
     question: 'Môžete integrovať náš CRM/ERP?',
     answer:
-      'Áno. Integrujeme CRM, ERP, platby, email, analytiku, logistiku a interné databázové systémy. Zvládame REST, GraphQL, webhooky a legacy SOAP API keď je potrebné.',
+      'Áno. Integrujeme s CRM, ERP, platobnými, emailovými, analytickými a logistickými systémami cez REST, GraphQL a legacy SOAP, keď je to potrebné — s webhookmi, event flow a poriadnym error handlingom.',
   },
   {
     question: 'Viete pracovať s legacy SOAP API?',
@@ -24,7 +24,7 @@ const faq: FaqItem[] = [
   {
     question: 'Robíte AI funkcie?',
     answer:
-      'Áno. Staviame frontendy pre AI asistentov, RAG systémy, automatizačné workflow a interné copiloty. Implementujeme streaming, human-in-the-loop kontrolu, bezpečné spracovanie dokumentov a model routing s fallbackmi.',
+      'Áno — frontendy pre AI asistentov a RAG systémy, automatizačné workflow a interné copiloty, so streamovanými odpoveďami, bezpečným spracovaním dokumentov a human-in-the-loop kontrolou.',
   },
   {
     question: 'Môžete hostovať a udržiavať web?',
@@ -34,7 +34,7 @@ const faq: FaqItem[] = [
   {
     question: 'Ste GDPR-aware?',
     answer:
-      'Áno. Staviame s GDPR-aware architektúrou, EU data residency opciami, bezpečnými formulármi, role-based prístupom a audit-friendly logovaním pre biznis aplikácie. Analytika je cookieless v základe.',
+      'Áno. GDPR-aware architektúra je štandard: možnosti EU data residency, cookieless analytika tam, kde je to možné, bezpečné formuláre, role-based prístup a audit-friendly logovanie.',
   },
   {
     question: 'Pracujete s firmami mimo Slovenska?',
@@ -44,7 +44,7 @@ const faq: FaqItem[] = [
   {
     question: 'Ako dlho trvá projekt webu?',
     answer:
-      'Landing page trvá pár týždňov. Firemný web 3–8 týždňov. Custom webová aplikácia 6–12 týždňov v závislosti od scopu, integrácií a zložitosti. Časový harmonogram definujeme počas architektúry.',
+      'Cielená landing page vie byť hotová za pár týždňov; kompletný web s integráciami zvyčajne trvá 6–12 týždňov. Diagnostika vám dá konkrétny harmonogram ešte pred začiatkom samotnej stavby.',
   },
   {
     question: 'Čo potrebujete od nás na štart?',

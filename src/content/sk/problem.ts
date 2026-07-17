@@ -9,23 +9,23 @@ const problems: ProblemItem[] = [
   },
   {
     title: 'Slabá konverzná štruktúra',
-    body: 'Žiadna jasná cesta, ktorá by viedla návštevníka od kliknutia k leadu.',
+    body: 'Žiadna jasná cesta od návštevníka ku kvalifikovanému leadu.',
   },
   {
-    title: 'Žiadna CRM či ERP integrácia',
-    body: 'Leady uväznené v roztrúsených emailových vláknach namiesto pipeline.',
+    title: 'Žiadna CRM/ERP integrácia',
+    body: 'Leady uväznené v emailových vláknach, stratené medzi systémami.',
   },
   {
     title: 'Žiadna analytická disciplína',
-    body: 'Rozhodnutia založené na dohadoch namiesto reálnych dát o používateľoch.',
+    body: 'Rozhodnutia založené na dohadoch, nie na meraných dátach.',
   },
   {
     title: 'Žiadna automatizácia',
-    body: 'Manuálna práca opakovaná ručne, kým niekto nedá výpoveď.',
+    body: 'Manuálna práca opakovaná, kým niekto nedá výpoveď.',
   },
   {
     title: 'Slabé mobilné UX',
-    body: 'Nefunkčný zážitok na zariadení, ktoré väčšina návštevníkov reálne používa.',
+    body: 'Nefunkčné na zariadení, ktoré reálne používa väčšina vašich návštevníkov.',
   },
   {
     title: 'Slabé SEO základy',
@@ -33,15 +33,15 @@ const problems: ProblemItem[] = [
   },
   {
     title: 'Žiadne technické vlastníctvo',
-    body: 'Nikto, kto by reálne vedel, ako web funguje.',
+    body: 'Nikto nevie, ako web reálne funguje.',
   },
   {
-    title: 'Žiadna cesta k AI integrácii',
-    body: 'Uviaznutí na zastaraných základoch, kým konkurencia napreduje.',
+    title: 'Žiadna cesta k AI',
+    body: 'Uviaznutí na manuálnej práci, kým konkurencia napreduje rýchlejšie.',
   },
   {
-    title: 'Krehké WordPress riešenia',
-    body: 'Náhodné pluginy, jeden update od zrútenia celého webu.',
+    title: 'Krehký WordPress',
+    body: 'Náhodné pluginy, jeden update od zrútenia.',
   },
 ];
 

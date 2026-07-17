@@ -4,7 +4,7 @@ const faq: FaqItem[] = [
   {
     question: 'Do you only build websites?',
     answer:
-      'No. We build websites, landing pages, custom web applications, client portals, internal dashboards, and AI-integrated interfaces. A website is often the entry point; the real work is the system behind it.',
+      'No. We build websites, landing pages, custom web applications, dashboards, portals, and AI-integrated interfaces — plus the integrations and infrastructure behind them.',
   },
   {
     question: 'Can you build custom web apps or dashboards?',
@@ -14,7 +14,7 @@ const faq: FaqItem[] = [
   {
     question: 'Can you integrate with our CRM/ERP?',
     answer:
-      'Yes. We integrate with CRM, ERP, payment, email, analytics, logistics, and internal database systems. We handle REST, GraphQL, webhooks, and legacy SOAP APIs when required.',
+      'Yes. We integrate with CRM, ERP, payment, email, analytics, and logistics systems over REST, GraphQL, and legacy SOAP where required — with webhooks, event flows, and proper error handling.',
   },
   {
     question: 'Can you work with legacy SOAP APIs?',
@@ -24,7 +24,7 @@ const faq: FaqItem[] = [
   {
     question: 'Do you build AI features?',
     answer:
-      'Yes. We build frontends for AI assistants, RAG systems, automation workflows, and internal copilots. We implement streaming, human-in-the-loop review, secure document handling, and model routing with fallbacks.',
+      'Yes — frontends for AI assistants and RAG systems, automation workflows, and internal copilots, with streaming responses, secure document handling, and human-in-the-loop review.',
   },
   {
     question: 'Can you host and maintain the website?',
@@ -34,7 +34,7 @@ const faq: FaqItem[] = [
   {
     question: 'Are you GDPR-aware?',
     answer:
-      'Yes. We build with GDPR-aware architecture, EU data residency options, secure forms, role-based access, and audit-friendly logging for business applications. Analytics is cookieless by default.',
+      'Yes. GDPR-aware architecture is the default: EU data residency options, cookieless analytics where possible, secure forms, role-based access, and audit-friendly logging.',
   },
   {
     question: 'Do you work with companies outside Slovakia?',
@@ -44,7 +44,7 @@ const faq: FaqItem[] = [
   {
     question: 'How long does a website project take?',
     answer:
-      'A landing page takes a couple of weeks. A business website takes 3–8 weeks. A custom web application takes 6–12 weeks depending on scope, integrations, and complexity. We define the timeline during architecture.',
+      'A focused landing page can ship in a couple of weeks; a full website with integrations typically runs 6–12 weeks. The diagnostic gives you a concrete timeline before any build starts.',
   },
   {
     question: 'What do you need from us to start?',
