@@ -47,6 +47,7 @@ WORKDIR /app
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/package.json ./package.json
 COPY --from=prod-deps /app/node_modules ./node_modules
+COPY server.mjs ./server.mjs
 
 # Cloud Run provides PORT env var (default 8080)
 ENV HOST=0.0.0.0
@@ -55,5 +56,7 @@ ENV NODE_ENV=production
 
 EXPOSE 8080
 
-# The @astrojs/node standalone server entry point
-CMD ["node", "dist/server/entry.mjs"]
+# server.mjs wraps the @astrojs/node standalone handler with a
+# legacy-host 301 (web-dev-studio.com -> build.euhub-ai.com) that fires
+# before static-file serving — see server.mjs for why.
+CMD ["node", "server.mjs"]
