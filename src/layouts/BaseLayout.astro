@@ -20,6 +20,7 @@ import {
   buildWebSiteSchema,
 } from '../lib/seo/schema';
 import type { JsonLdNode, SeoPage } from '../lib/seo/types';
+import { getContent } from '../lib/i18n';
 
 interface Props {
   seo: SeoPage;
@@ -28,6 +29,7 @@ interface Props {
 
 const { seo, schema = [] } = Astro.props;
 const { locale, title, description, noindex = false, ogImage } = seo;
+const { accessibility } = getContent(locale).ui;
 
 const siteUrl = Astro.site ?? new URL('https://build.euhub.co');
 const canonical = new URL(pathFor(seo.paths, locale), siteUrl).href;
@@ -46,10 +48,11 @@ const umamiId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID;
 // Global styles — Tailwind v4 + the Fontsource typefaces (self-hosted)
 import '../styles/global.css';
 
-const pageSchema = [buildOrganizationSchema(locale), buildWebPageSchema(seo)];
-if (pathFor(seo.paths, locale) === '/') {
-  pageSchema.unshift(buildWebSiteSchema(seo));
-}
+const pageSchema = [
+  buildWebSiteSchema(seo),
+  buildOrganizationSchema(locale),
+  buildWebPageSchema(seo),
+];
 const jsonLd = {
   '@context': 'https://schema.org',
   '@graph': [...pageSchema, ...schema],
@@ -149,7 +152,7 @@ const jsonLd = {
       href="#main"
       class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:rounded-md focus:bg-(--color-surface-raised) focus:px-4 focus:py-2 focus:shadow-card focus:ring-2 focus:ring-(--color-primary-500)"
     >
-      Skip to content
+      {accessibility.skipToContent}
     </a>
     <slot />
 

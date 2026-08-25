@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { securityHeaders } from '../../security-headers.mjs';
+import { cacheControlForPath } from '../../server-policy.mjs';
 
 test('defines the required headers once for static and dynamic responses', () => {
   assert.match(
@@ -23,4 +24,17 @@ test('defines the required headers once for static and dynamic responses', () =>
   );
   assert.equal(securityHeaders['Cross-Origin-Opener-Policy'], 'same-origin');
   assert.ok(Object.isFrozen(securityHeaders));
+});
+
+test('assigns immutable caching only to fingerprinted build assets', () => {
+  assert.equal(
+    cacheControlForPath('/_astro/client.DW6xmEpB.js'),
+    'public, max-age=31536000, immutable',
+  );
+  assert.equal(cacheControlForPath('/'), 'public, max-age=0, must-revalidate');
+  assert.equal(
+    cacheControlForPath('/services/business-websites/'),
+    'public, max-age=0, must-revalidate',
+  );
+  assert.equal(cacheControlForPath('/api/audit-request'), 'no-store');
 });

@@ -1,12 +1,14 @@
 # Build with EUHub
 
-Premium web development studio landing page for `web-dev-studio.com`, part of
-the EUHUB engineering ecosystem. Fast, secure, conversion-focused, GDPR-aware.
+Engineering-led website and service catalogue for `build.euhub.co`, part of
+the EUHub ecosystem. It is bilingual, static-first, GDPR-aware, and designed
+for conventional search, answer engines, and AI discovery.
 
 ## Stack
 
 - **Astro 7** — static-first, `output: "static"`, one dynamic API route
-- **GCP Cloud Run** — deployment via `@astrojs/node` (standalone mode)
+- **Azure Container Apps** — primary deployment via `@astrojs/node`
+- **GCP Cloud Run** — manual fallback deployment
 - **React 19** — islands only (form, hero interactive elements)
 - **TypeScript** — strict mode
 - **Tailwind CSS v4** — via `@tailwindcss/vite`
@@ -20,17 +22,20 @@ the EUHUB engineering ecosystem. Fast, secure, conversion-focused, GDPR-aware.
 
 ```bash
 bun install          # install dependencies
-npm run dev          # start dev server
-npm run build        # build to ./dist/
-npm run preview      # preview the built site locally
-npm run check        # type checking (astro check)
-npm run format       # format with Prettier
+bun run dev          # start dev server
+bun run build        # build to ./dist/
+bun run preview      # preview the built site locally
+bun run check        # type checking (astro check)
+bun run verify       # format, types, tests, build, and output/server audits
+bun run audit:lighthouse # 3-run Lighthouse gate across representative routes
+bun run format       # format with Prettier
 ```
 
 ## Environment variables
 
-Copy `.env.example` to `.env` for local development. On GCP Cloud Run,
-secrets are stored in GCP Secret Manager and mounted as env vars at runtime.
+Copy `.env.example` to `.env` for local development. Runtime secrets are
+provided by the deployment platform; public values needed by static output
+must be present at build time.
 
 | Variable                    | Context       | Purpose                           |
 | --------------------------- | ------------- | --------------------------------- |
@@ -50,9 +55,10 @@ secrets are stored in GCP Secret Manager and mounted as env vars at runtime.
 
 ### Static-first
 
-Every page is prerendered to a static asset. Only
-`src/pages/api/audit-request.ts` sets `export const prerender = false` so it
-runs on the Node server (Cloud Run). This keeps:
+Indexable pages are prerendered to static assets. Two routes run on the Node
+server: `src/pages/api/audit-request.ts` handles form submissions and
+`src/pages/sk/[...path].astro` returns a localized HTTP 404 for unmatched
+Slovak URLs. This keeps:
 
 - HTML served as static assets (performance)
 - Sitemap complete (all routes included)
@@ -81,24 +87,36 @@ won't exist in the Cloud Run environment.
 
 ### Security headers
 
-- Set via Astro middleware (`src/middleware.ts`) on all responses
+- Defined once in `security-headers.mjs` and applied by both the Node wrapper
+  and Astro middleware
 - CSP includes Turnstile and Umami domains — update if using a custom Umami domain
-- HSTS intentionally omitted until the canonical domain is live on HTTPS
+- HSTS includes subdomains and preload now that the canonical domain is HTTPS
 - `X-Frame-Options: DENY` (or CSP `frame-ancestors 'none'`)
+- Fingerprinted assets use immutable one-year caching; HTML revalidates
+- The production wrapper compresses eligible responses
 
 ## Deployment
 
-### GCP Cloud Run (via GitHub Actions)
+### Azure Container Apps (primary)
 
-The deploy workflow (`.github/workflows/deploy.yml`) runs on push to `main`:
+The Azure workflow (`.github/workflows/azure-deploy.yml`) runs on every push to
+`main`:
 
-1. Quality gates (format, typecheck, build, content guard)
+1. Quality gates (format, typecheck, tests, build, audits, content guard)
 2. i18n translation completeness check (when SK content changes)
-3. Build Docker container (multi-stage: Bun+Node build, Node slim runtime)
-4. Push to GCP Artifact Registry
-5. Deploy to Cloud Run with secrets from GCP Secret Manager
+3. Blocking Lighthouse and browser smoke tests
+4. Build and push the Docker image to Azure Container Registry
+5. Roll out the image to Azure Container Apps and health-check it
 
-**Required GitHub secrets** (in `prod` environment):
+The `prod` GitHub environment requires the Azure OIDC variables documented at
+the top of the workflow. The audit form and production analytics remain
+deployment configuration concerns; the workflow comments record their current
+status.
+
+### GCP Cloud Run (manual fallback)
+
+`.github/workflows/deploy.yml` is available through `workflow_dispatch` during
+the Azure soak window. Its `prod` environment uses these secrets:
 
 | Secret                            | Purpose                                                 |
 | --------------------------------- | ------------------------------------------------------- |
@@ -129,10 +147,10 @@ gcloud secrets create TURNSTILE_SECRET_KEY --replication-policy=automatic
 echo -n "your-secret" | gcloud secrets versions add TURNSTILE_SECRET_KEY
 ```
 
-### Manual deploy (without GitHub Actions)
+### Local container smoke test
 
 ```bash
-npm run build
+bun run build
 docker build -t euhub-web-dev-studio .
 docker run -p 8080:8080 \
   -e WEBHOOK_URL=... \
@@ -144,11 +162,13 @@ docker run -p 8080:8080 \
 ## Performance targets
 
 - Lighthouse Performance: 95+
-- Lighthouse Accessibility: 95+
-- Lighthouse Best Practices: 95+
-- Lighthouse SEO: 95+
+- Lighthouse Accessibility: 100
+- Lighthouse Best Practices: 100
+- Lighthouse SEO: 100
 
-The site itself is the proof — see the "Self-referential proof" section.
+`lighthouserc.cjs` enforces these thresholds across three runs of four
+representative English and Slovak routes. Performance claims should only be
+published from retained, reproducible production evidence.
 
 ## Accessibility
 
@@ -166,6 +186,10 @@ The site itself is the proof — see the "Self-referential proof" section.
 - `/privacy/` — Privacy Policy
 - `/cookies/` — Cookie Policy
 - `/terms/` — Terms of Service
+- `/services/` — English service index and seven service detail pages
+- `/sk/sluzby/` — Slovak service index and seven service detail pages
+- `/llms.txt` — generated AI-discovery summary
+- `/sitemap.xml` — explicit bilingual sitemap with alternates and last-modified dates
 
 Legal content is interim and must be reviewed by legal counsel against the
 actual deployment (Umami Cloud EU, Cloudflare, webhook host) before launch.
@@ -176,15 +200,16 @@ actual deployment (Umami Cloud EU, Cloudflare, webhook host) before launch.
 src/
   components/
     layout/      # Header, Footer
-    sections/    # 13 landing page sections
+    sections/    # Landing-page sections
+    services/    # Service index and detail renderers
     ui/          # Button, Card, Container, Section, Badge, Icon
     forms/       # AuditRequestForm (React island)
-  content/       # Typed content files (services, process, FAQ, etc.)
+  content/       # Typed bilingual site and service content
   layouts/       # BaseLayout, LegalLayout
-  pages/         # index, 404, privacy, cookies, terms, api/audit-request
+  pages/         # home, services, legal, discovery, sitemap, 404, API
   styles/        # global.css (Tailwind v4 + tokens + scroll-reveal)
-  lib/           # validation.ts, analytics.ts
-public/          # _headers, _redirects, robots.txt, favicon, site.webmanifest
+  lib/           # validation, analytics, and SEO builders
+public/          # robots.txt, icons, manifest, and static metadata assets
 docs/            # Source prompt, reviews, conversion architecture
 ```
 

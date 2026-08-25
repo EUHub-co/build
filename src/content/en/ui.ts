@@ -1,6 +1,16 @@
 import type { UiContent } from '../types';
 
 export const uiBundle: UiContent = {
+  accessibility: {
+    skipToContent: 'Skip to content',
+    primaryNavigation: 'Primary navigation',
+    mobileNavigation: 'Mobile navigation',
+    openMenu: 'Open menu',
+    appearance: 'Appearance',
+    deviceAppearance: 'Use device appearance',
+    lightAppearance: 'Use light appearance',
+    darkAppearance: 'Use dark appearance',
+  },
   hero: {
     eyebrow: 'Web engineering studio · EUHUB',
     heading:
@@ -21,7 +31,30 @@ export const uiBundle: UiContent = {
   services: {
     heading:
       'Each service solves a specific business need — it is not a template filled with your logo.',
-    cardCta: 'Request an audit',
+    cardCta: 'Explore service',
+  },
+  servicePages: {
+    indexEyebrow: 'Web engineering services',
+    indexHeading: 'Choose the engineering scope your business needs.',
+    indexLead:
+      'Seven focused services, each with a clear purpose, delivery boundary and path into the systems behind your website.',
+    definitionEyebrow: 'Direct definition',
+    detailEyebrow: 'Build with EUHub service',
+    problemHeading: 'What this service solves',
+    bestForHeading: 'Best fit',
+    outcomesHeading: 'Expected deliverables',
+    includesHeading: 'What the scope includes',
+    processHeading: 'How delivery works',
+    processLead:
+      'Every engagement follows the same evidence-led path from diagnostic through launch and measured improvement.',
+    faqHeading: 'Questions about this service',
+    allServices: 'View all services',
+    contactHeading: 'Start with a technical diagnostic.',
+    contactLead:
+      'We will identify the highest-value scope, integration risks and evidence required before you commit to a build.',
+    contactCta: 'Request a web audit',
+    homeBreadcrumb: 'Home',
+    servicesBreadcrumb: 'Services',
   },
   differentiation: {
     eyebrow: 'The stack',
@@ -80,6 +113,12 @@ export const uiBundle: UiContent = {
     priceOrientation: 'Price orientation',
     requestAudit: 'Request an audit',
     startConversation: 'Start a conversation',
+    comparisonCaption: 'Engagement model comparison',
+    modelHeading: 'Model',
+    approachHeading: 'How it works',
+    priceHeading: 'Price',
+    scopeHeading: 'Typical scope',
+    actionHeading: 'Next step',
   },
   proof: {
     eyebrow: 'Evidence',

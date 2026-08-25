@@ -24,7 +24,7 @@ const site: SiteContent = {
   seo: {
     title: 'Web Development & AI Interfaces for Europe | EUHub',
     description:
-      'We build fast, secure, conversion-focused web platforms, web apps, and AI-ready interfaces for European businesses. Engineering-led, GDPR-aware, maintained long-term.',
+      'Fast, secure websites, web apps and AI interfaces for European businesses—engineering-led, GDPR-aware and maintained long-term.',
     ogImage: '/og.png',
   },
 };

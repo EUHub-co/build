@@ -47,6 +47,16 @@ export interface SiteContent {
  * translated route from silently inheriting English literals from a layout.
  */
 export interface UiContent {
+  accessibility: {
+    skipToContent: string;
+    primaryNavigation: string;
+    mobileNavigation: string;
+    openMenu: string;
+    appearance: string;
+    deviceAppearance: string;
+    lightAppearance: string;
+    darkAppearance: string;
+  };
   hero: {
     eyebrow: string;
     heading: string;
@@ -59,6 +69,26 @@ export interface UiContent {
   };
   problem: { heading: string; lead: string };
   services: { heading: string; cardCta: string };
+  servicePages: {
+    indexEyebrow: string;
+    indexHeading: string;
+    indexLead: string;
+    definitionEyebrow: string;
+    detailEyebrow: string;
+    problemHeading: string;
+    bestForHeading: string;
+    outcomesHeading: string;
+    includesHeading: string;
+    processHeading: string;
+    processLead: string;
+    faqHeading: string;
+    allServices: string;
+    contactHeading: string;
+    contactLead: string;
+    contactCta: string;
+    homeBreadcrumb: string;
+    servicesBreadcrumb: string;
+  };
   differentiation: {
     eyebrow: string;
     heading: string;
@@ -85,6 +115,12 @@ export interface UiContent {
     priceOrientation: string;
     requestAudit: string;
     startConversation: string;
+    comparisonCaption: string;
+    modelHeading: string;
+    approachHeading: string;
+    priceHeading: string;
+    scopeHeading: string;
+    actionHeading: string;
   };
   proof: { eyebrow: string; heading: string; lead: string; pending: string };
   ecosystem: { heading: string; lead: string; visit: string };

@@ -48,7 +48,7 @@ env:
 
 jobs:
   # EXACT mirror of the repo's own CI gate: the reusable quality-gates.yml
-  # (format, typecheck, build+content-guard, Lighthouse (non-blocking),
+  # (format, typecheck, build+content-guard, blocking Lighthouse,
   # Playwright smoke, SK i18n completeness). Zero invented steps.
   test:
     uses: ./.github/workflows/quality-gates.yml

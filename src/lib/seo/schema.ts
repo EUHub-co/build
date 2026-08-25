@@ -16,11 +16,6 @@ export function buildWebSiteSchema(seo: SeoPage): JsonLdNode {
   };
 }
 
-/**
- * Legal entity details and social accounts stay out of schema until an
- * approved organization fact pack is committed. The displayed brand itself
- * is the only currently supported organizational claim.
- */
 export function buildOrganizationSchema(locale: Locale): JsonLdNode {
   return {
     '@id': organizationId,
@@ -28,7 +23,43 @@ export function buildOrganizationSchema(locale: Locale): JsonLdNode {
     name: 'Build with EUHub',
     url: siteUrl,
     logo: `${siteUrl}favicon.svg`,
+    legalName: 'Engineers Incubator s. r. o.',
+    email: 'hello@euhub-ai.com',
+    taxID: '2121479470',
+    vatID: 'SK2121479470',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Horná 67',
+      addressLocality: 'Banská Bystrica',
+      postalCode: '974 01',
+      addressCountry: 'SK',
+    },
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'sales',
+      email: 'hello@euhub-ai.com',
+      areaServed: 'EU',
+      availableLanguage: ['English', 'Slovak'],
+    },
     inLanguage: locale === 'sk' ? 'sk-SK' : 'en-GB',
+  };
+}
+
+export function buildServiceSchema(input: {
+  name: string;
+  description: string;
+  url: string;
+  locale: Locale;
+}): JsonLdNode {
+  return {
+    '@id': `${input.url}#service`,
+    '@type': 'Service',
+    name: input.name,
+    description: input.description,
+    url: input.url,
+    inLanguage: input.locale === 'sk' ? 'sk-SK' : 'en-GB',
+    areaServed: 'European Union',
+    provider: { '@id': organizationId },
   };
 }
 

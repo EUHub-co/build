@@ -12,41 +12,46 @@ yet support `module.registerHooks` which Astro 7 requires).
 # Install dependencies
 bun install
 
-# Dev server (background mode per AGENTS convention)
-npm run dev
-# or: astro dev --background  (then: astro dev stop / status / logs)
+# Dev server
+bun run dev
 
 # Build (static output to ./dist)
-npm run build
+bun run build
 
 # Preview the built site
-npm run preview
+bun run preview
 
 # Type checking
-npm run check    # astro check
+bun run check    # astro check
+
+# Full deterministic quality gate
+bun run verify
+
+# 3-run Lighthouse gate on representative routes
+bun run audit:lighthouse
 
 # Format
-npm run format         # write
-npm run format:check   # check only
+bun run format         # write
+bun run format:check   # check only
 ```
 
 ### Architecture decisions
 
-- `output: "static"` — every page is prerendered; only `src/pages/api/audit-request.ts` sets `prerender = false` (runs on the Node server).
-- GCP Cloud Run deployment via `@astrojs/node` adapter (standalone mode).
+- `output: "static"` — indexable pages are prerendered. The audit API and the Slovak not-found catch-all are server-rendered.
+- Azure Container Apps is the automatic production target; GCP Cloud Run is a manual fallback.
 - Secrets via `astro:env` (`access: "secret"`) — never `import.meta.env` for runtime secrets.
 - `PUBLIC_` prefix required for client-exposed env vars (Turnstile site key, Umami).
 - Plus Jakarta Sans / DM Sans / JetBrains Mono self-hosted via Fontsource (no
   Google Fonts CDN — GDPR exposure). Shared with grow + deploy.
 - No MDX, no GSAP-global, no 3D. React islands only where interactivity is necessary.
-- Security headers via Astro middleware (`src/middleware.ts`), not a static `_headers` file.
+- Security headers are defined in `security-headers.mjs` and applied by both the Node wrapper and Astro middleware.
 
 ### CI/CD
 
-- **CI** (`ci.yml`): runs on PRs — format, typecheck, build, Lighthouse, Playwright smoke.
-- **Deploy** (`deploy.yml`): runs on push to main — quality gates + i18n check + build container + deploy to Cloud Run.
-- Uses Workload Identity Federation (no long-lived service account keys).
-- Secrets stored in GitHub `prod` environment + GCP Secret Manager.
+- **CI** (`ci.yml`): runs on PRs — format, typecheck, tests, build/output audits, Lighthouse, Playwright smoke, and i18n checks.
+- **Primary deploy** (`azure-deploy.yml`): runs on push to `main` and deploys to Azure Container Apps after the same gates.
+- **Fallback deploy** (`deploy.yml`): manually deploys to GCP Cloud Run.
+- Both platforms use keyless workload identity; deployment configuration lives in the GitHub `prod` environment and the target cloud.
 
 ## Documentation
 

@@ -49,6 +49,7 @@ COPY --from=builder /app/package.json ./package.json
 COPY --from=prod-deps /app/node_modules ./node_modules
 COPY server.mjs ./server.mjs
 COPY security-headers.mjs ./security-headers.mjs
+COPY server-policy.mjs ./server-policy.mjs
 
 # Cloud Run provides PORT env var (default 8080)
 ENV HOST=0.0.0.0

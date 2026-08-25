@@ -6,7 +6,10 @@ import Container from '../../components/ui/Container.astro';
 import Button from '../../components/ui/Button.astro';
 import { seoPaths } from '../../lib/seo/paths';
 
+export const prerender = false;
+
 const locale = 'sk' as const;
+Astro.response.status = 404;
 ---
 
 <BaseLayout
@@ -17,7 +20,7 @@ const locale = 'sk' as const;
     description: 'Stránka, ktorú hľadáte, neexistuje.',
     ogImage: '/sk/og.png' as const,
     pageType: 'website',
-    updatedAt: '2026-08-25',
+    updatedAt: '2026-08-26',
     noindex: true,
   }}
 >

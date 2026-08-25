@@ -72,3 +72,11 @@ export function getAlternateUrls(
     default: new URL(paths.en, siteUrl).href,
   };
 }
+
+export function legalPathsFor(locale: Locale) {
+  return {
+    privacy: pathFor(seoPaths.privacy, locale),
+    cookies: pathFor(seoPaths.cookies, locale),
+    terms: pathFor(seoPaths.terms, locale),
+  } as const;
+}

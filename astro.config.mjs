@@ -1,7 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
-import sitemap from '@astrojs/sitemap';
 import node from '@astrojs/node';
 import tailwindcss from '@tailwindcss/vite';
 
@@ -16,15 +15,7 @@ export default defineConfig({
     mode: 'standalone',
   }),
   site: 'https://build.euhub.co',
-  integrations: [
-    react(),
-    sitemap({
-      i18n: {
-        defaultLocale: 'en',
-        locales: { en: 'en-GB', sk: 'sk-SK' },
-      },
-    }),
-  ],
+  integrations: [react()],
   i18n: {
     locales: ['en', 'sk'],
     defaultLocale: 'en',
@@ -35,6 +26,11 @@ export default defineConfig({
   },
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      // Keep every self-hosted font as a same-origin file. Inlining small
+      // subsets as data: URLs conflicts with the production font-src policy.
+      assetsInlineLimit: 0,
+    },
   },
   // Type-safe environment variables via astro:env.
   // Server secrets are read via `import { X } from 'astro:env/server'`

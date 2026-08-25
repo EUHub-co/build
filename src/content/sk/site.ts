@@ -24,7 +24,7 @@ const site: SiteContent = {
   seo: {
     title: 'Vývoj webov a AI rozhraní pre firmy v EÚ | EUHub',
     description:
-      'Staviame rýchle, bezpečné, konverzné webové platformy, webové aplikácie a AI-ready rozhrania pre európske firmy. Engineering-led, GDPR-aware, dlhodobo udržiavané.',
+      'Rýchle, bezpečné weby, webové aplikácie a AI rozhrania pre európske firmy—technicky precízne, s ohľadom na GDPR a dlhodobou údržbou.',
     ogImage: '/sk/og.png',
   },
 };

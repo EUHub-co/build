@@ -31,6 +31,7 @@ import LanguageSwitch from '../ui/LanguageSwitch.astro';
 import { getContent } from '../../lib/i18n';
 import type { Locale } from '../../content/types';
 import type { LocalizedPaths } from '../../lib/seo/types';
+import { seoPaths } from '../../lib/seo/paths';
 
 interface Props {
   locale?: Locale;
@@ -38,7 +39,10 @@ interface Props {
 }
 const { locale = 'en', paths } = Astro.props;
 const { site, primaryCta, trustLine } = getContent(locale).site;
-const homeHref = paths[locale];
+const { accessibility } = getContent(locale).ui;
+const homeHref = seoPaths.home[locale];
+const navigationHref = (href: string) =>
+  href.startsWith('#') ? `${homeHref}${href}` : href;
 ---
 
 <div
@@ -50,7 +54,7 @@ const homeHref = paths[locale];
     </span>
     <div class="flex items-center gap-2 sm:gap-4">
       <LanguageSwitch locale={locale} paths={paths} />
-      <ThemeSelector />
+      <ThemeSelector locale={locale} />
     </div>
   </Container>
 </div>
@@ -63,7 +67,6 @@ const homeHref = paths[locale];
   >
     <a
       href={homeHref}
-      aria-label="Build with EUHub — home"
       class="flex min-w-0 items-center gap-2.5 whitespace-nowrap justify-self-start"
     >
       <span
@@ -92,13 +95,13 @@ const homeHref = paths[locale];
     </a>
 
     <nav
-      aria-label="Primary navigation"
+      aria-label={accessibility.primaryNavigation}
       class="hidden items-center gap-7 justify-self-center md:flex"
     >
       {
         site.nav.map((item) => (
           <a
-            href={item.href}
+            href={navigationHref(item.href)}
             class="border-b-2 border-transparent pb-1.5 text-sm font-medium text-(--color-text-primary) hover:border-(--color-primary-500) hover:text-(--color-primary-500)"
           >
             {item.label}
@@ -113,7 +116,7 @@ const homeHref = paths[locale];
         so it stays visible/usable on mobile even if JS never runs.
       -->
       <Button
-        href={primaryCta.href}
+        href={navigationHref(primaryCta.href)}
         variant="primary"
         size="sm"
         class="px-2 text-xs sm:px-5 sm:text-sm"
@@ -128,7 +131,7 @@ const homeHref = paths[locale];
         class="inline-flex items-center justify-center rounded-md p-2 md:hidden"
         aria-expanded="false"
         aria-controls="mobile-menu"
-        aria-label="Open menu"
+        aria-label={accessibility.openMenu}
       >
         <Icon name="menu" class="menu-icon-open" />
         <Icon name="close" class="menu-icon-close hidden" />
@@ -142,14 +145,14 @@ const homeHref = paths[locale];
   >
     <Container class="flex flex-col gap-4 py-4">
       <nav
-        aria-label="Mobile navigation"
+        aria-label={accessibility.mobileNavigation}
         class="flex flex-col gap-3"
         data-mobile-nav
       >
         {
           site.nav.map((item) => (
             <a
-              href={item.href}
+              href={navigationHref(item.href)}
               class="text-base font-medium text-(--color-text-primary)"
             >
               {item.label}

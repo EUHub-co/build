@@ -1,0 +1,135 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+import Card from '../ui/Card.astro';
+import Icon from '../ui/Icon.astro';
+import Button from '../ui/Button.astro';
+import { getContent } from '../../lib/i18n';
+import { getServicePages } from '../../content/service-pages';
+import { seoPaths } from '../../lib/seo/paths';
+import { productionSiteUrl } from '../../lib/seo/metadata';
+import type { Locale } from '../../content/types';
+import type { JsonLdNode, SeoPage } from '../../lib/seo/types';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const pages = getServicePages(locale);
+const ui = getContent(locale).ui.servicePages;
+const site = getContent(locale).site.site;
+const seo: SeoPage = {
+  locale,
+  paths: seoPaths.services,
+  title:
+    locale === 'sk'
+      ? 'Služby vývoja webov a aplikácií pre firmy | EUHub'
+      : 'Web Development Services for European Businesses | EUHub',
+  description:
+    locale === 'sk'
+      ? 'Preskúmajte sedem služieb pre weby, aplikácie, AI rozhrania, integrácie, migrácie a dlhodobú technickú prevádzku v EÚ.'
+      : 'Explore seven focused services for websites, web apps, AI interfaces, integrations, migrations and long-term technical ownership in Europe.',
+  ogImage: locale === 'sk' ? '/sk/og.png' : '/og.png',
+  pageType: 'service',
+  updatedAt: '2026-08-26',
+};
+const schema: JsonLdNode = {
+  '@id': `${new URL(seo.paths[locale], productionSiteUrl).href}#services`,
+  '@type': 'ItemList',
+  name: ui.indexHeading,
+  numberOfItems: pages.length,
+  itemListElement: pages.map((page, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: page.title,
+    url: new URL(page.paths[locale], productionSiteUrl).href,
+  })),
+};
+---
+
+<PageLayout seo={seo} schema={[schema]}>
+  <Section bg="grid" padding="lg">
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <p
+          class="font-mono text-xs font-semibold uppercase tracking-widest text-primary-500"
+        >
+          {ui.indexEyebrow}
+        </p>
+        <h1
+          class="mt-5 font-heading text-h1 font-extrabold tracking-tight text-(--color-text-primary)"
+        >
+          {ui.indexHeading}
+        </h1>
+        <p class="mt-6 text-lead leading-relaxed text-(--color-text-secondary)">
+          {ui.indexLead}
+        </p>
+      </div>
+    </Container>
+  </Section>
+
+  <Section bg="canvas" padding="md">
+    <Container>
+      <div class="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-6">
+        {
+          pages.map((page, index) => (
+            <a href={page.paths[locale]} class="group">
+              <Card hover padding="lg" class="h-full">
+                <p class="font-mono text-xs font-semibold uppercase tracking-widest text-primary-500">
+                  {String(index + 1).padStart(2, '0')} // {page.tag}
+                </p>
+                <h2 class="mt-4 font-heading text-xl font-semibold text-(--color-text-primary)">
+                  {page.title}
+                </h2>
+                <p class="mt-3 text-sm leading-relaxed text-(--color-text-secondary)">
+                  {page.summary}
+                </p>
+                <ul class="mt-5 space-y-2">
+                  {page.includes.map((item) => (
+                    <li class="flex items-start gap-2 text-sm text-(--color-text-secondary)">
+                      <Icon
+                        name="check"
+                        size={15}
+                        class="mt-0.5 text-status-success"
+                      />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <span class="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-primary-500">
+                  {getContent(locale).ui.services.cardCta}
+                  <Icon name="arrow-right" size={16} />
+                </span>
+              </Card>
+            </a>
+          ))
+        }
+      </div>
+    </Container>
+  </Section>
+
+  <Section bg="surface-2" padding="md">
+    <Container size="md">
+      <div
+        class="rounded-xl border border-(--color-border-subtle) bg-surface-raised p-8 text-center shadow-card"
+      >
+        <h2 class="font-heading text-2xl font-bold text-(--color-text-primary)">
+          {ui.contactHeading}
+        </h2>
+        <p class="mx-auto mt-4 max-w-2xl text-(--color-text-secondary)">
+          {ui.contactLead}
+        </p>
+        <div class="mt-7">
+          <Button href={`${seoPaths.home[locale]}#contact`} size="md">
+            {ui.contactCta}
+          </Button>
+        </div>
+        <p class="mt-5 text-sm text-(--color-text-secondary)">
+          {site.contactEmail}
+        </p>
+      </div>
+    </Container>
+  </Section>
+</PageLayout>

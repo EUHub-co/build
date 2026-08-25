@@ -10,7 +10,7 @@ on:
 
 jobs:
   quality:
-    name: Format · Typecheck · Build
+    name: Format · Typecheck · Test · Build · Audit
     runs-on: ubuntu-latest
 
     steps:
@@ -27,10 +27,13 @@ jobs:
       - run: bun install --frozen-lockfile
       - run: bun run format:check
       - run: bun run check
+      - run: bun run test
       - run: bun run build
         env:
           PUBLIC_TURNSTILE_SITE_KEY: 1x00000000000000000000AA
           TURNSTILE_SECRET_KEY: 1x0000000000000000000000000000000AA
+      - run: bun run audit:site
+      - run: bun run audit:server
 
       # Ported from grow's (euhub-marketing) content-guard, which solves the
       # exact problem the old naive `grep -r dist/client/` version had here:
@@ -118,17 +121,7 @@ jobs:
           TURNSTILE_SECRET_KEY: 1x0000000000000000000000000000000AA
 
       - name: Run Lighthouse CI
-        run: |
-          npx @lhci/cli@0.15.x autorun \
-            --collect.staticDistDir=dist/client \
-            --collect.numberOfRuns=1 \
-            --assert.preset=lighthouse:recommended \
-            --assert.assertions.performance=0.9 \
-            --assert.assertions.accessibility=0.9 \
-            --assert.assertions.best-practices=0.9 \
-            --assert.assertions.seo=0.9 \
-            --upload.target=temporary-public-storage \
-            || true
+        run: bun run audit:lighthouse
 
   playwright:
     name: Playwright smoke test (required gate)

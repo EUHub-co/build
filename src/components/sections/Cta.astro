@@ -12,6 +12,7 @@ import Eyebrow from '../ui/Eyebrow.astro';
 import AuditRequestForm from '../forms/AuditRequestForm.tsx';
 import { getContent } from '../../lib/i18n';
 import type { Locale } from '../../content/types';
+import { legalPathsFor } from '../../lib/seo/paths';
 
 interface Props {
   locale?: Locale;
@@ -19,6 +20,7 @@ interface Props {
 const { locale = 'en' } = Astro.props;
 const { site } = getContent(locale).site;
 const { contact } = getContent(locale).ui;
+const legalPaths = legalPathsFor(locale);
 ---
 
 <Section id="contact" bg="surface-2" padding="lg">
@@ -80,13 +82,16 @@ const { contact } = getContent(locale).ui;
             turnstileSiteKey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY}
             contactEmail={site.contactEmail}
             locale={locale}
-            client:load
+            client:visible={{ rootMargin: '240px' }}
           />
 
           {/* Privacy notice (Art. 13 point-of-collection) */}
           <p class="mt-4 text-xs leading-relaxed text-(--color-text-secondary)">
             {contact.privacyNotice}{' '}
-            <a href="/privacy/" class="text-primary-500 hover:underline">
+            <a
+              href={legalPaths.privacy}
+              class="text-primary-500 underline underline-offset-2"
+            >
               {contact.privacyLabel}
             </a>
             .

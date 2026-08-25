@@ -1,6 +1,16 @@
 import type { UiContent } from '../types';
 
 export const uiBundle: UiContent = {
+  accessibility: {
+    skipToContent: 'Preskočiť na obsah',
+    primaryNavigation: 'Hlavná navigácia',
+    mobileNavigation: 'Mobilná navigácia',
+    openMenu: 'Otvoriť menu',
+    appearance: 'Vzhľad',
+    deviceAppearance: 'Použiť vzhľad zariadenia',
+    lightAppearance: 'Použiť svetlý vzhľad',
+    darkAppearance: 'Použiť tmavý vzhľad',
+  },
   hero: {
     eyebrow: 'Webové inžinierske štúdio · EUHUB',
     heading:
@@ -21,7 +31,30 @@ export const uiBundle: UiContent = {
   services: {
     heading:
       'Každá služba rieši konkrétnu biznis potrebu — nie je to šablóna doplnená vaším logom.',
-    cardCta: 'Vyžiadať audit',
+    cardCta: 'Preskúmať službu',
+  },
+  servicePages: {
+    indexEyebrow: 'Služby webového inžinierstva',
+    indexHeading: 'Vyberte technický rozsah, ktorý vaša firma potrebuje.',
+    indexLead:
+      'Sedem cielených služieb, každá s jasným účelom, hranicou dodávky a napojením na systémy za vaším webom.',
+    definitionEyebrow: 'Priama definícia',
+    detailEyebrow: 'Služba Build with EUHub',
+    problemHeading: 'Čo táto služba rieši',
+    bestForHeading: 'Pre koho je vhodná',
+    outcomesHeading: 'Očakávané výstupy',
+    includesHeading: 'Čo zahŕňa rozsah',
+    processHeading: 'Ako prebieha dodávka',
+    processLead:
+      'Každý projekt prechádza rovnakou cestou podloženou dôkazmi: od diagnostiky po spustenie a merané zlepšovanie.',
+    faqHeading: 'Otázky k tejto službe',
+    allServices: 'Zobraziť všetky služby',
+    contactHeading: 'Začnite technickou diagnostikou.',
+    contactLead:
+      'Pred záväzkom k buildu identifikujeme najhodnotnejší rozsah, integračné riziká a potrebné dôkazy.',
+    contactCta: 'Vyžiadať web audit',
+    homeBreadcrumb: 'Domov',
+    servicesBreadcrumb: 'Služby',
   },
   differentiation: {
     eyebrow: 'Vrstvy systému',
@@ -80,6 +113,12 @@ export const uiBundle: UiContent = {
     priceOrientation: 'Cenová orientácia',
     requestAudit: 'Vyžiadať audit',
     startConversation: 'Začať konverzáciu',
+    comparisonCaption: 'Porovnanie modelov spolupráce',
+    modelHeading: 'Model',
+    approachHeading: 'Ako funguje',
+    priceHeading: 'Cena',
+    scopeHeading: 'Typický rozsah',
+    actionHeading: 'Ďalší krok',
   },
   proof: {
     eyebrow: 'Dôkazy',

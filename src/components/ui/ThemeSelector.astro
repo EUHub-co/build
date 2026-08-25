@@ -1,5 +1,7 @@
 ---
 import Icon from './Icon.astro';
+import { getContent } from '../../lib/i18n';
+import type { Locale } from '../../content/types';
 
 /**
  * ThemeSelector — accessible auto/light/dark appearance switcher.
@@ -21,17 +23,22 @@ import Icon from './Icon.astro';
  * than introducing new i18n content scaffolding as a side effect of a
  * design-token port.
  */
+interface Props {
+  locale?: Locale;
+}
+const { locale = 'en' } = Astro.props;
+const { accessibility } = getContent(locale).ui;
 const options = [
-  { mode: 'auto', label: 'Use device appearance', icon: 'monitor' },
-  { mode: 'light', label: 'Use light appearance', icon: 'sun' },
-  { mode: 'dark', label: 'Use dark appearance', icon: 'moon' },
+  { mode: 'auto', label: accessibility.deviceAppearance, icon: 'monitor' },
+  { mode: 'light', label: accessibility.lightAppearance, icon: 'sun' },
+  { mode: 'dark', label: accessibility.darkAppearance, icon: 'moon' },
 ] as const;
 ---
 
 <div
   class="inline-flex rounded-full border border-(--color-border-subtle) bg-(--color-surface-raised) p-0.5"
   role="radiogroup"
-  aria-label="Appearance"
+  aria-label={accessibility.appearance}
   data-theme-selector
 >
   {

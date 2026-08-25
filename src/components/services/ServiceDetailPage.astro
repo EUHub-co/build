@@ -1,0 +1,277 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+import Icon from '../ui/Icon.astro';
+import Button from '../ui/Button.astro';
+import type { Locale } from '../../content/types';
+import type { ServicePageContent } from '../../content/service-pages';
+import { getContent } from '../../lib/i18n';
+import { seoPaths } from '../../lib/seo/paths';
+import { pageUrl, productionSiteUrl } from '../../lib/seo/metadata';
+import {
+  buildBreadcrumbSchema,
+  buildFaqSchema,
+  buildServiceSchema,
+} from '../../lib/seo/schema';
+import type { SeoPage } from '../../lib/seo/types';
+
+interface Props {
+  locale: Locale;
+  page: ServicePageContent;
+}
+
+const { locale, page } = Astro.props;
+const content = getContent(locale);
+const ui = content.ui.servicePages;
+const seo: SeoPage = {
+  locale,
+  paths: page.paths,
+  title: page.seoTitle,
+  description: page.seoDescription,
+  ogImage: locale === 'sk' ? '/sk/og.png' : '/og.png',
+  pageType: 'service',
+  updatedAt: page.updatedAt,
+};
+const serviceUrl = pageUrl(seo);
+const homeUrl = new URL(seoPaths.home[locale], productionSiteUrl).href;
+const servicesUrl = new URL(seoPaths.services[locale], productionSiteUrl).href;
+const schema = [
+  buildServiceSchema({
+    name: page.title,
+    description: page.definition,
+    url: serviceUrl,
+    locale,
+  }),
+  buildFaqSchema(page.faq),
+  buildBreadcrumbSchema([
+    { name: ui.homeBreadcrumb, url: homeUrl },
+    { name: ui.servicesBreadcrumb, url: servicesUrl },
+    { name: page.title, url: serviceUrl },
+  ]),
+];
+---
+
+<PageLayout seo={seo} schema={schema}>
+  <Section bg="grid" padding="lg">
+    <Container>
+      <nav
+        aria-label="Breadcrumb"
+        class="mb-8 text-sm text-(--color-text-secondary)"
+      >
+        <ol class="flex flex-wrap items-center gap-2">
+          <li>
+            <a href={seoPaths.home[locale]} class="underline underline-offset-2"
+              >{ui.homeBreadcrumb}</a
+            >
+          </li>
+          <li aria-hidden="true">/</li>
+          <li>
+            <a
+              href={seoPaths.services[locale]}
+              class="underline underline-offset-2">{ui.servicesBreadcrumb}</a
+            >
+          </li>
+          <li aria-hidden="true">/</li>
+          <li aria-current="page">{page.title}</li>
+        </ol>
+      </nav>
+      <div class="max-w-4xl">
+        <p
+          class="font-mono text-xs font-semibold uppercase tracking-widest text-primary-500"
+        >
+          {ui.detailEyebrow}
+        </p>
+        <h1
+          class="mt-5 font-heading text-h1 font-extrabold tracking-tight text-(--color-text-primary)"
+        >
+          {page.title}
+        </h1>
+        <p
+          class="mt-6 max-w-3xl text-lead leading-relaxed text-(--color-text-secondary)"
+        >
+          {page.summary}
+        </p>
+        <div
+          class="mt-8 rounded-lg border border-primary-500/20 bg-primary-50 p-6"
+        >
+          <p
+            class="font-mono text-xs font-semibold uppercase tracking-widest text-primary-500"
+          >
+            {ui.definitionEyebrow}
+          </p>
+          <p class="mt-3 leading-relaxed text-(--color-text-primary)">
+            {page.definition}
+          </p>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section bg="canvas" padding="md">
+    <Container>
+      <div class="grid gap-12 lg:grid-cols-[1.5fr_0.8fr]">
+        <div>
+          <h2
+            class="font-heading text-h2 font-bold tracking-tight text-(--color-text-primary)"
+          >
+            {ui.problemHeading}
+          </h2>
+          <div
+            class="mt-6 space-y-5 text-base leading-relaxed text-(--color-text-secondary)"
+          >
+            {page.body.map((paragraph) => <p>{paragraph}</p>)}
+          </div>
+        </div>
+        <aside class="space-y-6">
+          <div
+            class="rounded-lg border border-(--color-border-subtle) bg-surface-raised p-6 shadow-card"
+          >
+            <h2
+              class="font-heading text-xl font-semibold text-(--color-text-primary)"
+            >
+              {ui.bestForHeading}
+            </h2>
+            <ul class="mt-4 space-y-3">
+              {
+                page.bestFor.map((item) => (
+                  <li class="flex items-start gap-2 text-sm leading-relaxed text-(--color-text-secondary)">
+                    <Icon
+                      name="check"
+                      size={15}
+                      class="mt-0.5 text-status-success"
+                    />
+                    <span>{item}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+          <div
+            class="rounded-lg border border-(--color-border-subtle) bg-surface-raised p-6 shadow-card"
+          >
+            <h2
+              class="font-heading text-xl font-semibold text-(--color-text-primary)"
+            >
+              {ui.outcomesHeading}
+            </h2>
+            <ul class="mt-4 space-y-3">
+              {
+                page.outcomes.map((item) => (
+                  <li class="flex items-start gap-2 text-sm leading-relaxed text-(--color-text-secondary)">
+                    <Icon
+                      name="arrow-right"
+                      size={15}
+                      class="mt-0.5 text-primary-500"
+                    />
+                    <span>{item}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </Container>
+  </Section>
+
+  <Section bg="surface-2" padding="md">
+    <Container>
+      <h2
+        class="font-heading text-h2 font-bold tracking-tight text-(--color-text-primary)"
+      >
+        {ui.includesHeading}
+      </h2>
+      <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          page.includes.map((item) => (
+            <div class="rounded-lg border border-(--color-border-subtle) bg-surface-raised p-5 text-sm font-medium text-(--color-text-primary) shadow-card">
+              {item}
+            </div>
+          ))
+        }
+      </div>
+    </Container>
+  </Section>
+
+  <Section bg="canvas" padding="md">
+    <Container>
+      <div class="max-w-3xl">
+        <h2
+          class="font-heading text-h2 font-bold tracking-tight text-(--color-text-primary)"
+        >
+          {ui.processHeading}
+        </h2>
+        <p class="mt-4 text-lead text-(--color-text-secondary)">
+          {ui.processLead}
+        </p>
+      </div>
+      <ol class="mt-10 grid gap-5 md:grid-cols-5">
+        {
+          content.process.processSteps.map((step) => (
+            <li class="rounded-lg border border-(--color-border-subtle) bg-surface-raised p-5 shadow-card">
+              <span class="font-mono text-sm font-bold text-primary-500">
+                {String(step.step).padStart(2, '0')}
+              </span>
+              <h3 class="mt-3 font-heading text-lg font-semibold text-(--color-text-primary)">
+                {step.title}
+              </h3>
+              <p class="mt-2 text-sm leading-relaxed text-(--color-text-secondary)">
+                {step.summary}
+              </p>
+            </li>
+          ))
+        }
+      </ol>
+    </Container>
+  </Section>
+
+  <Section bg="surface-2" padding="md">
+    <Container size="md">
+      <h2
+        class="text-center font-heading text-h2 font-bold tracking-tight text-(--color-text-primary)"
+      >
+        {ui.faqHeading}
+      </h2>
+      <div class="mt-10 space-y-3">
+        {
+          page.faq.map((item) => (
+            <details class="rounded-lg border border-(--color-border-subtle) bg-surface-raised px-6 py-1 shadow-card">
+              <summary class="cursor-pointer py-4 font-medium text-(--color-text-primary)">
+                <h3 class="inline text-inherit font-inherit">
+                  {item.question}
+                </h3>
+              </summary>
+              <p class="pb-5 text-sm leading-relaxed text-(--color-text-secondary)">
+                {item.answer}
+              </p>
+            </details>
+          ))
+        }
+      </div>
+    </Container>
+  </Section>
+
+  <Section bg="canvas" padding="md">
+    <Container size="md">
+      <div
+        class="rounded-xl border border-primary-500/20 bg-primary-50 p-8 text-center"
+      >
+        <h2 class="font-heading text-2xl font-bold text-(--color-text-primary)">
+          {ui.contactHeading}
+        </h2>
+        <p class="mx-auto mt-4 max-w-2xl text-(--color-text-secondary)">
+          {ui.contactLead}
+        </p>
+        <div class="mt-7 flex flex-wrap justify-center gap-3">
+          <Button href={`${seoPaths.home[locale]}#contact`} size="md"
+            >{ui.contactCta}</Button
+          >
+          <Button href={seoPaths.services[locale]} variant="secondary" size="md"
+            >{ui.allServices}</Button
+          >
+        </div>
+      </div>
+    </Container>
+  </Section>
+</PageLayout>

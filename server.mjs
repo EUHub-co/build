@@ -14,7 +14,9 @@
 // routes bound hostnames to the app), so host-based redirects are the app's
 // job — the legacy hostnames are bound to this same container app.
 import http from 'node:http';
+import compression from 'compression';
 import { securityHeaders } from './security-headers.mjs';
+import { cacheControlForPath } from './server-policy.mjs';
 
 // Must be set before dist/server/entry.mjs is imported: in `standalone` mode
 // that module auto-starts its own http.Server as an import side effect
@@ -28,6 +30,7 @@ const LEGACY_HOSTS = new Set([
   'www.web-dev-studio.com',
   'build.euhub-ai.com',
 ]);
+const compress = compression({ threshold: 1024 });
 
 const server = http.createServer((req, res) => {
   for (const [name, value] of Object.entries(securityHeaders)) {
@@ -36,6 +39,7 @@ const server = http.createServer((req, res) => {
 
   const hostHeader = req.headers.host ?? '';
   const hostname = hostHeader.split(':')[0].toLowerCase();
+  const pathname = new URL(req.url ?? '/', CANONICAL_SITE_URL).pathname;
 
   if (LEGACY_HOSTS.has(hostname)) {
     const target = new URL(req.url ?? '/', CANONICAL_SITE_URL);
@@ -46,7 +50,8 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  astroHandler(req, res);
+  res.setHeader('Cache-Control', cacheControlForPath(pathname));
+  compress(req, res, () => astroHandler(req, res));
 });
 
 const host = process.env.HOST || '0.0.0.0';

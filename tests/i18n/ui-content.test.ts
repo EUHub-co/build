@@ -55,3 +55,29 @@ test('supplies non-empty locale-specific UI values', () => {
   expect(english).not.toEqual(slovak);
   expect(slovak).not.toMatch(/Frequently asked questions|Request an audit/);
 });
+
+test('localizes global accessibility and comparison labels', () => {
+  expect(getContent('en').ui.accessibility).toEqual({
+    skipToContent: 'Skip to content',
+    primaryNavigation: 'Primary navigation',
+    mobileNavigation: 'Mobile navigation',
+    openMenu: 'Open menu',
+    appearance: 'Appearance',
+    deviceAppearance: 'Use device appearance',
+    lightAppearance: 'Use light appearance',
+    darkAppearance: 'Use dark appearance',
+  });
+  expect(getContent('sk').ui.accessibility).toEqual({
+    skipToContent: 'Preskočiť na obsah',
+    primaryNavigation: 'Hlavná navigácia',
+    mobileNavigation: 'Mobilná navigácia',
+    openMenu: 'Otvoriť menu',
+    appearance: 'Vzhľad',
+    deviceAppearance: 'Použiť vzhľad zariadenia',
+    lightAppearance: 'Použiť svetlý vzhľad',
+    darkAppearance: 'Použiť tmavý vzhľad',
+  });
+  expect(getContent('sk').ui.engagement.comparisonCaption).toBe(
+    'Porovnanie modelov spolupráce',
+  );
+});

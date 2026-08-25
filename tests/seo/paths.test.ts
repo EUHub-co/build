@@ -1,5 +1,9 @@
 import { expect, test } from 'vitest';
-import { getAlternateUrls, seoPaths } from '../../src/lib/seo/paths';
+import {
+  getAlternateUrls,
+  legalPathsFor,
+  seoPaths,
+} from '../../src/lib/seo/paths';
 
 test('defines the approved, trailing-slash path pair for every fixed route', () => {
   expect(seoPaths).toMatchObject({
@@ -69,4 +73,17 @@ test('generates reciprocal alternate URLs without a duplicated Slovak prefix', (
   expect(
     getAlternateUrls(seoPaths.home, new URL('https://build.euhub.co')).sk,
   ).not.toContain('/sk/sk/');
+});
+
+test('keeps footer and form legal links in the active locale', () => {
+  expect(legalPathsFor('en')).toEqual({
+    privacy: '/privacy/',
+    cookies: '/cookies/',
+    terms: '/terms/',
+  });
+  expect(legalPathsFor('sk')).toEqual({
+    privacy: '/sk/privacy/',
+    cookies: '/sk/cookies/',
+    terms: '/sk/terms/',
+  });
 });

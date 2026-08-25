@@ -15,12 +15,14 @@ import Icon from '../ui/Icon.astro';
 import Eyebrow from '../ui/Eyebrow.astro';
 import { getContent } from '../../lib/i18n';
 import type { Locale } from '../../content/types';
+import { getServicePages } from '../../content/service-pages';
 
 interface Props {
   locale?: Locale;
 }
 const { locale = 'en' } = Astro.props;
-const { eyebrow, services } = getContent(locale).services;
+const { eyebrow } = getContent(locale).services;
+const services = getServicePages(locale);
 const { services: servicesUi } = getContent(locale).ui;
 ---
 
@@ -42,7 +44,7 @@ const { services: servicesUi } = getContent(locale).ui;
       {
         services.map((service, i) => (
           <a
-            href="#contact"
+            href={service.paths[locale]}
             class="group"
             data-umami-event="service_card_click"
             data-umami-service={service.id}

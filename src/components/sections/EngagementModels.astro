@@ -5,8 +5,6 @@
  */
 import Container from '../ui/Container.astro';
 import Section from '../ui/Section.astro';
-import Badge from '../ui/Badge.astro';
-import Icon from '../ui/Icon.astro';
 import Button from '../ui/Button.astro';
 import { getContent } from '../../lib/i18n';
 import type { Locale } from '../../content/types';
@@ -34,71 +32,72 @@ const { engagement } = getContent(locale).ui;
       </p>
     </div>
 
-    <div class="mt-16 grid gap-6 lg:grid-cols-3">
-      {
-        engagementModels.map((model, i) => (
-          <div
-            class={`relative flex flex-col rounded-lg border p-8 shadow-card ${
-              i === 1
-                ? 'border-primary-500 bg-surface-raised ring-2 ring-primary-500/20'
-                : 'border-(--color-border-subtle) bg-surface-raised'
-            }`}
-          >
-            {i === 1 && (
-              <div class="absolute -top-3 left-1/2 -translate-x-1/2">
-                <Badge variant="brand">{engagement.mostCommon}</Badge>
-              </div>
-            )}
-
-            <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-(--color-text-secondary)">
-              <Icon
-                name={i === 0 ? 'search' : i === 1 ? 'layers' : 'refresh'}
-                size={14}
-                class="text-primary-500"
-              />
-              {i === 0
-                ? engagement.entryPoint
-                : i === 1
-                  ? engagement.project
-                  : engagement.ongoing}
-            </div>
-
-            <h3 class="mt-4 font-heading text-xl font-semibold text-(--color-text-primary)">
-              {model.shape}
-            </h3>
-
-            <p class="mt-3 text-sm leading-relaxed text-(--color-text-secondary)">
-              {model.howItWorks}
-            </p>
-
-            <div class="mt-6 border-t border-(--color-border-subtle) pt-6">
-              <div class="text-xs font-medium uppercase tracking-wider text-(--color-text-secondary)">
-                {engagement.priceOrientation}
-              </div>
-              <div class="mt-1 text-lg font-bold text-primary-500">
-                {model.priceOrientation}
-              </div>
-              <div class="mt-2 text-xs text-(--color-text-secondary)">
-                {model.typicalScope}
-              </div>
-            </div>
-
-            <div class="mt-8">
-              <Button
-                href={primaryCta.href}
-                variant={i === 1 ? 'primary' : 'secondary'}
-                size="md"
-                class="w-full"
-                data-umami-event="cta_primary_click"
-              >
-                {i === 0
-                  ? engagement.requestAudit
-                  : engagement.startConversation}
-              </Button>
-            </div>
-          </div>
-        ))
-      }
+    <div
+      class="mt-16 overflow-x-auto rounded-lg border border-(--color-border-subtle) bg-surface-raised shadow-card"
+    >
+      <table class="w-full min-w-[840px] border-collapse text-left">
+        <caption class="sr-only">{engagement.comparisonCaption}</caption>
+        <thead class="bg-surface-sunken">
+          <tr>
+            {
+              [
+                engagement.modelHeading,
+                engagement.approachHeading,
+                engagement.priceHeading,
+                engagement.scopeHeading,
+                engagement.actionHeading,
+              ].map((heading) => (
+                <th
+                  scope="col"
+                  class="border-b border-(--color-border-subtle) px-5 py-4 text-xs font-semibold uppercase tracking-wider text-(--color-text-secondary)"
+                >
+                  {heading}
+                </th>
+              ))
+            }
+          </tr>
+        </thead>
+        <tbody>
+          {
+            engagementModels.map((model, i) => (
+              <tr class={i === 1 ? 'bg-primary-50' : undefined}>
+                <th
+                  scope="row"
+                  class="border-b border-(--color-border-subtle) px-5 py-5 align-top font-heading text-base font-semibold text-(--color-text-primary)"
+                >
+                  {model.shape}
+                  {i === 1 && (
+                    <span class="mt-1 block font-mono text-[11px] uppercase tracking-wider text-primary-500">
+                      {engagement.mostCommon}
+                    </span>
+                  )}
+                </th>
+                <td class="border-b border-(--color-border-subtle) px-5 py-5 align-top text-sm leading-relaxed text-(--color-text-secondary)">
+                  {model.howItWorks}
+                </td>
+                <td class="border-b border-(--color-border-subtle) px-5 py-5 align-top text-sm font-bold text-primary-500">
+                  {model.priceOrientation}
+                </td>
+                <td class="border-b border-(--color-border-subtle) px-5 py-5 align-top text-sm text-(--color-text-secondary)">
+                  {model.typicalScope}
+                </td>
+                <td class="border-b border-(--color-border-subtle) px-5 py-5 align-top">
+                  <Button
+                    href={primaryCta.href}
+                    variant={i === 1 ? 'primary' : 'secondary'}
+                    size="sm"
+                    data-umami-event="cta_primary_click"
+                  >
+                    {i === 0
+                      ? engagement.requestAudit
+                      : engagement.startConversation}
+                  </Button>
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
     </div>
   </Container>
 </Section>

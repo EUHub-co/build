@@ -40,7 +40,6 @@ const options: { code: Locale; label: string; name: string }[] = [
       <a
         href={paths[option.code]}
         aria-current={option.code === locale ? 'true' : undefined}
-        aria-label={option.name}
         title={option.name}
         data-locale={option.code}
         class="inline-flex h-8 min-w-8 items-center justify-center rounded-full px-2 font-mono text-sm font-medium text-(--color-text-secondary) transition-colors hover:text-primary-500 aria-[current]:bg-(--color-surface-sunken) aria-[current]:font-semibold aria-[current]:text-primary-500"

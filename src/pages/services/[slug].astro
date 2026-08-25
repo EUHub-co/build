@@ -1,0 +1,15 @@
+---
+import ServiceDetailPage from '../../components/services/ServiceDetailPage.astro';
+import { getServicePages } from '../../content/service-pages';
+
+export function getStaticPaths() {
+  return getServicePages('en').map((page) => ({
+    params: { slug: page.paths.en.split('/').filter(Boolean).at(-1) },
+    props: { page },
+  }));
+}
+
+const { page } = Astro.props;
+---
+
+<ServiceDetailPage locale="en" page={page} />
