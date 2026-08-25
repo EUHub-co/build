@@ -1,4 +1,4 @@
-import type { FaqItem, Locale, Service } from './types';
+import type { FaqItem, Locale, Service, ServiceId } from './types';
 import { servicesBundle as englishServices } from './en/services';
 import { servicesBundle as slovakServices } from './sk/services';
 import { seoPaths } from '../lib/seo/paths';
@@ -14,13 +14,26 @@ export interface ServicePageContent extends Service {
   outcomes: string[];
   faq: [FaqItem, FaqItem, FaqItem];
   updatedAt: string;
-  pairApproved: boolean;
+  publicationStatus: ServicePairPublicationStatus;
 }
+
+export type ServicePairPublicationStatus =
+  'pending-native-review' | 'published';
 
 type Detail = Omit<
   ServicePageContent,
-  keyof Service | 'paths' | 'pairApproved'
+  keyof Service | 'paths' | 'publicationStatus'
 >;
+
+const publicationStatusById: Record<ServiceId, ServicePairPublicationStatus> = {
+  'business-websites': 'pending-native-review',
+  'landing-pages': 'pending-native-review',
+  'web-apps': 'pending-native-review',
+  'ai-interfaces': 'pending-native-review',
+  redesign: 'pending-native-review',
+  integrations: 'pending-native-review',
+  maintenance: 'pending-native-review',
+};
 
 const pathsById: Record<Service['id'], LocalizedPaths> = {
   'business-websites': seoPaths.businessWebsites,
@@ -608,8 +621,41 @@ export function getServicePages(locale: Locale): ServicePageContent[] {
     ...service,
     paths: pathsById[service.id],
     ...details[service.id],
-    pairApproved: false,
+    publicationStatus: publicationStatusById[service.id],
   }));
+}
+
+export interface ServicePagePair {
+  en: ServicePageContent;
+  sk: ServicePageContent;
+}
+
+export function getServicePagePairs(): ServicePagePair[] {
+  const slovak = new Map(getServicePages('sk').map((page) => [page.id, page]));
+  return getServicePages('en').map((en) => {
+    const sk = slovak.get(en.id);
+    if (!sk) throw new Error(`Missing Slovak service ${en.id}`);
+    return { en, sk };
+  });
+}
+
+export function getPublishedServicePagePairs(): ServicePagePair[] {
+  return getServicePagePairs().filter(
+    ({ en, sk }) =>
+      en.publicationStatus === 'published' &&
+      sk.publicationStatus === 'published',
+  );
+}
+
+export function isServicePagePublished(page: ServicePageContent): boolean {
+  return page.publicationStatus === 'published';
+}
+
+export function areAllServicePairsPublished(): boolean {
+  const pairs = getServicePagePairs();
+  return (
+    pairs.length > 0 && getPublishedServicePagePairs().length === pairs.length
+  );
 }
 
 export function getServicePageBySlug(

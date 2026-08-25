@@ -6,16 +6,13 @@ import {
   performanceEvidence,
   shouldIndexEvidence,
 } from '../src/content/evidence';
-import { getServicePages } from '../src/content/service-pages';
+import { areAllServicePairsPublished } from '../src/content/service-pages';
 
 const projectRoot = fileURLToPath(new URL('..', import.meta.url));
 const siteRoot = join(projectRoot, 'dist', 'client');
 const issues: string[] = [];
 const indexableCanonicals = new Set<string>();
-const servicePairsApproved = [
-  ...getServicePages('en'),
-  ...getServicePages('sk'),
-].every((page) => page.pairApproved);
+const servicePairsApproved = areAllServicePairsPublished();
 const evidenceApproved = shouldIndexEvidence(performanceEvidence);
 
 async function filesWithExtension(

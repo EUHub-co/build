@@ -5,7 +5,10 @@ import Section from '../ui/Section.astro';
 import Icon from '../ui/Icon.astro';
 import Button from '../ui/Button.astro';
 import type { Locale } from '../../content/types';
-import type { ServicePageContent } from '../../content/service-pages';
+import {
+  isServicePagePublished,
+  type ServicePageContent,
+} from '../../content/service-pages';
 import { getContent } from '../../lib/i18n';
 import { seoPaths } from '../../lib/seo/paths';
 import { pageUrl, productionSiteUrl } from '../../lib/seo/metadata';
@@ -33,7 +36,7 @@ const seo: SeoPage = {
   ogImage: locale === 'sk' ? '/sk/og.png' : '/og.png',
   pageType: 'service',
   updatedAt: page.updatedAt,
-  noindex: !page.pairApproved,
+  noindex: !isServicePagePublished(page),
 };
 const serviceUrl = pageUrl(seo);
 const homeUrl = new URL(seoPaths.home[locale], productionSiteUrl).href;

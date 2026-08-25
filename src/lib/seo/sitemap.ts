@@ -1,5 +1,8 @@
 import type { Locale } from '../../content/types';
-import { getServicePages } from '../../content/service-pages';
+import {
+  areAllServicePairsPublished,
+  getPublishedServicePagePairs,
+} from '../../content/service-pages';
 import { getContent } from '../i18n';
 import { getAlternateUrls, seoPaths } from './paths';
 import { productionSiteUrl } from './metadata';
@@ -20,32 +23,21 @@ interface SitemapPair {
 function getPublishedPairs(): SitemapPair[] {
   const enContent = getContent('en');
   const skContent = getContent('sk');
-  const englishServices = getServicePages('en');
-  const slovakServices = new Map(
-    getServicePages('sk').map((page) => [page.id, page]),
-  );
-  const servicePairs = englishServices.flatMap((english) => {
-    const slovak = slovakServices.get(english.id);
-    if (!slovak || !english.pairApproved || !slovak.pairApproved) return [];
-    return [
-      {
-        paths: english.paths,
-        updatedAt: { en: english.updatedAt, sk: slovak.updatedAt },
-      },
-    ];
-  });
-  const serviceIndexPair =
-    servicePairs.length === englishServices.length
-      ? [
-          {
-            paths: seoPaths.services,
-            updatedAt: {
-              en: enContent.ui.servicePages.indexSeo.updatedAt,
-              sk: skContent.ui.servicePages.indexSeo.updatedAt,
-            },
+  const servicePairs = getPublishedServicePagePairs().map(({ en, sk }) => ({
+    paths: en.paths,
+    updatedAt: { en: en.updatedAt, sk: sk.updatedAt },
+  }));
+  const serviceIndexPair = areAllServicePairsPublished()
+    ? [
+        {
+          paths: seoPaths.services,
+          updatedAt: {
+            en: enContent.ui.servicePages.indexSeo.updatedAt,
+            sk: skContent.ui.servicePages.indexSeo.updatedAt,
           },
-        ]
-      : [];
+        },
+      ]
+    : [];
 
   return [
     {

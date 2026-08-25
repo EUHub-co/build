@@ -6,7 +6,10 @@ import Card from '../ui/Card.astro';
 import Icon from '../ui/Icon.astro';
 import Button from '../ui/Button.astro';
 import { getContent } from '../../lib/i18n';
-import { getServicePages } from '../../content/service-pages';
+import {
+  areAllServicePairsPublished,
+  getServicePages,
+} from '../../content/service-pages';
 import { seoPaths } from '../../lib/seo/paths';
 import { productionSiteUrl } from '../../lib/seo/metadata';
 import type { Locale } from '../../content/types';
@@ -28,7 +31,7 @@ const seo: SeoPage = {
   ogImage: locale === 'sk' ? '/sk/og.png' : '/og.png',
   pageType: 'service',
   updatedAt: ui.indexSeo.updatedAt,
-  noindex: !pages.every((page) => page.pairApproved),
+  noindex: !areAllServicePairsPublished(),
 };
 const schema: JsonLdNode = {
   '@id': `${new URL(seo.paths[locale], productionSiteUrl).href}#services`,

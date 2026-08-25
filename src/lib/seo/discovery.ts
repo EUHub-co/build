@@ -1,27 +1,22 @@
-import { getServicePages } from '../../content/service-pages';
+import {
+  areAllServicePairsPublished,
+  getPublishedServicePagePairs,
+} from '../../content/service-pages';
 import { productionSiteUrl } from './metadata';
 import { seoPaths } from './paths';
 
 export function buildLlmsTxt(): string {
-  const english = getServicePages('en');
-  const slovak = new Map(
-    getServicePages('sk').map((service) => [service.id, service]),
-  );
-  const servicePairsApproved = english.every(
-    (service) =>
-      service.pairApproved && slovak.get(service.id)?.pairApproved === true,
-  );
+  const publishedPairs = getPublishedServicePagePairs();
+  const servicePairsApproved = areAllServicePairsPublished();
   const serviceSections = servicePairsApproved
-    ? english
-        .map((service) => {
-          const sk = slovak.get(service.id);
-          if (!sk) throw new Error(`Missing Slovak service ${service.id}`);
+    ? publishedPairs
+        .map(({ en, sk }) => {
           return [
-            `### ${service.title}`,
+            `### ${en.title}`,
             '',
-            service.definition,
+            en.definition,
             '',
-            `- English: ${new URL(service.paths.en, productionSiteUrl).href}`,
+            `- English: ${new URL(en.paths.en, productionSiteUrl).href}`,
             `- Slovak: ${new URL(sk.paths.sk, productionSiteUrl).href}`,
           ].join('\n');
         })

@@ -1,5 +1,7 @@
 import { expect, test } from 'vitest';
 import {
+  areAllServicePairsPublished,
+  getPublishedServicePagePairs,
   getServicePageBySlug,
   getServicePages,
 } from '../../src/content/service-pages';
@@ -40,9 +42,15 @@ test('resolves locale-specific service slugs without string inference', () => {
 
 test('keeps the bilingual service pair out of search until native review', () => {
   expect(
-    getServicePages('en').every((page) => page.pairApproved === false),
+    getServicePages('en').every(
+      (page) => page.publicationStatus === 'pending-native-review',
+    ),
   ).toBe(true);
   expect(
-    getServicePages('sk').every((page) => page.pairApproved === false),
+    getServicePages('sk').every(
+      (page) => page.publicationStatus === 'pending-native-review',
+    ),
   ).toBe(true);
+  expect(getPublishedServicePagePairs()).toEqual([]);
+  expect(areAllServicePairsPublished()).toBe(false);
 });
