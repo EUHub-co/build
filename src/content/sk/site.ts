@@ -22,7 +22,7 @@ const site: SiteContent = {
   location: 'Slovensko · Európska únia',
   footerRights: 'Build with EUHub · Sídlo v EÚ · GDPR-aware',
   seo: {
-    title: 'Build with EUHub',
+    title: 'Vývoj webov a AI rozhraní pre firmy v EÚ | EUHub',
     description:
       'Staviame rýchle, bezpečné, konverzné webové platformy, webové aplikácie a AI-ready rozhrania pre európske firmy. Engineering-led, GDPR-aware, dlhodobo udržiavané.',
     ogImage: '/sk/og.png',
@@ -47,12 +47,8 @@ const tertiaryCta: NavItem = {
 const trustLine =
   'Sídlo na Slovensku · Postavené pre firmy v EÚ · GDPR-aware v základe';
 
-const heroStats: HeroStat[] = [
-  { label: 'Lighthouse', value: '95+ / 100' },
-  { label: 'Veľkosť JS', value: '< 50 KB' },
-  { label: 'TTFB', value: '< 100 ms' },
-  { label: 'LCP', value: '< 1.5 s' },
-];
+/** Merania zverejňujeme až z overeného záznamu dôkazov. */
+const heroStats: HeroStat[] = [];
 
 export const siteBundle = {
   site,

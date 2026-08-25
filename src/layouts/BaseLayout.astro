@@ -13,42 +13,26 @@
  *  - noindex:     set true on legal placeholder pages during review
  *  - ogImage:     path to OG image (defaults to /og.png or /sk/og.png)
  */
-import type { Locale } from '../content/types';
-import { getAlternatePath } from '../lib/i18n';
+import { getAlternateUrls, pathFor } from '../lib/seo/paths';
+import {
+  buildOrganizationSchema,
+  buildWebPageSchema,
+  buildWebSiteSchema,
+} from '../lib/seo/schema';
+import type { JsonLdNode, SeoPage } from '../lib/seo/types';
 
 interface Props {
-  title: string;
-  description: string;
-  path: string;
-  locale?: Locale;
-  noindex?: boolean;
-  ogImage?: string;
+  seo: SeoPage;
+  schema?: JsonLdNode[];
 }
 
-const {
-  title,
-  description,
-  path,
-  locale = 'en',
-  noindex = false,
-  ogImage = locale === 'sk' ? '/sk/og.png' : '/og.png',
-} = Astro.props;
+const { seo, schema = [] } = Astro.props;
+const { locale, title, description, noindex = false, ogImage } = seo;
 
 const siteUrl = Astro.site ?? new URL('https://build.euhub.co');
-const canonical = new URL(path, siteUrl).href;
+const canonical = new URL(pathFor(seo.paths, locale), siteUrl).href;
 const ogImageUrl = new URL(ogImage, siteUrl).href;
-const fullTitle =
-  title === 'Build with EUHub' ? title : `${title} — Build with EUHub`;
-
-// hreflang alternate URLs
-const alternateEn = new URL(
-  getAlternatePath(new URL(path, siteUrl), 'en'),
-  siteUrl,
-).href;
-const alternateSk = new URL(
-  getAlternatePath(new URL(path, siteUrl), 'sk'),
-  siteUrl,
-).href;
+const alternateUrls = getAlternateUrls(seo.paths, siteUrl);
 
 // Locale-specific metadata
 const htmlLang = locale;
@@ -62,41 +46,13 @@ const umamiId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID;
 // Global styles — Tailwind v4 + the Fontsource typefaces (self-hosted)
 import '../styles/global.css';
 
+const pageSchema = [buildOrganizationSchema(locale), buildWebPageSchema(seo)];
+if (pathFor(seo.paths, locale) === '/') {
+  pageSchema.unshift(buildWebSiteSchema(seo));
+}
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': 'Organization',
-      name: 'Build with EUHub',
-      url: siteUrl.href,
-      logo: new URL('/favicon.svg', siteUrl).href,
-      inLanguage: locale,
-      parentOrganization: {
-        '@type': 'Organization',
-        name: 'EUHUB.CO',
-        url: 'https://euhub.co',
-      },
-      areaServed: 'EU',
-      knowsAbout: [
-        'Web development',
-        'Web applications',
-        'AI-integrated interfaces',
-        'API integration',
-        'DevOps',
-      ],
-    },
-    {
-      '@type': 'ProfessionalService',
-      name: 'Build with EUHub',
-      url: siteUrl.href,
-      areaServed: 'EU',
-      serviceType: 'Web development, web applications, AI-ready interfaces',
-      offers: {
-        '@type': 'Offer',
-        itemOffered: 'Technical Web Audit',
-      },
-    },
-  ],
+  '@graph': [...pageSchema, ...schema],
 };
 ---
 
@@ -144,55 +100,23 @@ const jsonLd = {
       })();
     </script>
 
-    {
-      /*
-      Auto-redirect Slovak browsers to /sk/ (EN pages only). The locale
-      check is done inside the script (via document.documentElement.lang,
-      already set synchronously by the <html lang> attribute above) rather
-      than JSX-gating the <script> tag itself — prettier-plugin-astro can't
-      parse a <script> wrapped in a `{cond && (...)}` expression.
-    */
-    }
-    <script is:inline>
-      (function () {
-        if (document.documentElement.lang !== 'en') return;
-        try {
-          if (location.pathname.startsWith('/sk/')) return;
-          if (localStorage.getItem('i18n-choice')) return;
-          if (new URLSearchParams(location.search).has('no-redirect')) return;
-          var langs = navigator.languages || [navigator.language];
-          var isSk = langs.some(function (l) {
-            return l.toLowerCase().startsWith('sk');
-          });
-          if (isSk) {
-            localStorage.setItem('i18n-choice', 'sk');
-            var skPath =
-              '/sk' + location.pathname + location.search + location.hash;
-            location.replace(skPath);
-          }
-        } catch (e) {
-          /* ignore */
-        }
-      })();
-    </script>
-
     {/* Canonical + robots */}
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
 
     {/* hreflang alternate links */}
-    <link rel="alternate" hreflang="en" href={alternateEn} />
-    <link rel="alternate" hreflang="sk" href={alternateSk} />
-    <link rel="alternate" hreflang="x-default" href={alternateEn} />
+    <link rel="alternate" hreflang="en-GB" href={alternateUrls.en} />
+    <link rel="alternate" hreflang="sk-SK" href={alternateUrls.sk} />
+    <link rel="alternate" hreflang="x-default" href={alternateUrls.default} />
 
     {/* Primary meta */}
-    <title>{fullTitle}</title>
+    <title>{title}</title>
     <meta name="description" content={description} />
 
     {/* Open Graph */}
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Build with EUHub" />
-    <meta property="og:title" content={fullTitle} />
+    <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImageUrl} />
@@ -200,7 +124,7 @@ const jsonLd = {
 
     {/* Twitter / X */}
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
 

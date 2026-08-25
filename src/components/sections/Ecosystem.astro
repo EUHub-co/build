@@ -19,6 +19,7 @@ interface Props {
 }
 const { locale = 'en' } = Astro.props;
 const { eyebrow, ecosystem } = getContent(locale).ecosystem;
+const { ecosystem: ecosystemUi } = getContent(locale).ui;
 ---
 
 <Section id="ecosystem" bg="surface-2">
@@ -28,11 +29,10 @@ const { eyebrow, ecosystem } = getContent(locale).ecosystem;
       <h2
         class="font-heading text-h2 font-bold tracking-tight text-(--color-text-primary)"
       >
-        Part of the EUHUB engineering ecosystem
+        {ecosystemUi.heading}
       </h2>
       <p class="mt-4 text-lead text-(--color-text-secondary)">
-        Build with EUHub is the web engineering unit. The wider ecosystem covers
-        AI, consulting, and community — so your project has depth behind it.
+        {ecosystemUi.lead}
       </p>
     </div>
 
@@ -68,7 +68,8 @@ const { eyebrow, ecosystem } = getContent(locale).ecosystem;
                 {brand.description}
               </p>
               <div class="mt-4 flex items-center gap-1 text-sm font-medium text-primary-500">
-                Visit {brand.name} <span aria-hidden="true">↗</span>
+                {ecosystemUi.visit} {brand.name}{' '}
+                <span aria-hidden="true">↗</span>
               </div>
             </a>
           ) : (

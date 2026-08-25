@@ -1,9 +1,10 @@
 ---
 import LegalLayout from '../../../layouts/LegalLayout.astro';
 import { getContent } from '../../../lib/i18n';
+import { seoPaths } from '../../../lib/seo/paths';
 
 const locale = 'sk' as const;
 const { privacyPolicy } = getContent(locale).legal;
 ---
 
-<LegalLayout content={privacyPolicy} path="/sk/privacy/" locale={locale} />
+<LegalLayout content={privacyPolicy} paths={seoPaths.privacy} locale={locale} />

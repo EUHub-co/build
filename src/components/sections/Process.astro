@@ -15,6 +15,17 @@ interface Props {
 }
 const { locale = 'en' } = Astro.props;
 const { eyebrow, processSteps } = getContent(locale).process;
+const { process } = getContent(locale).ui;
+const processJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: processSteps.map((step) => ({
+    '@type': 'ListItem',
+    position: step.step,
+    name: step.title,
+    description: step.summary,
+  })),
+};
 ---
 
 <Section id="process" bg="canvas">
@@ -24,27 +35,26 @@ const { eyebrow, processSteps } = getContent(locale).process;
       <h2
         class="font-heading text-h2 font-bold tracking-tight text-(--color-text-primary)"
       >
-        From audit to launch without chaos
+        {process.heading}
       </h2>
       <p class="mt-4 text-lead text-(--color-text-secondary)">
-        A defined process that reduces risk. You know what happens, when it
-        happens, and what you get at each step.
+        {process.lead}
       </p>
     </div>
 
     {/* Timeline */}
-    <div class="mx-auto mt-16 max-w-4xl">
-      <div class="relative">
-        {/* Vertical line (desktop) */}
-        <div
-          class="absolute left-8 top-0 bottom-0 w-px bg-(--color-border-subtle) md:left-1/2"
-          aria-hidden="true"
-        >
-        </div>
+    <div class="relative mx-auto mt-16 max-w-4xl">
+      {/* Vertical line (desktop) */}
+      <div
+        class="absolute left-8 top-0 bottom-0 w-px bg-(--color-border-subtle) md:left-1/2"
+        aria-hidden="true"
+      >
+      </div>
 
+      <ol>
         {
           processSteps.map((step, i) => (
-            <div
+            <li
               class={`relative flex gap-6 pb-12 last:pb-0 md:gap-12 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
             >
               {/* Step number */}
@@ -80,10 +90,16 @@ const { eyebrow, processSteps } = getContent(locale).process;
 
               {/* Spacer for alternating layout */}
               <div class="hidden md:block md:w-1/2" />
-            </div>
+            </li>
           ))
         }
-      </div>
+      </ol>
     </div>
   </Container>
 </Section>
+
+<script
+  is:inline
+  type="application/ld+json"
+  set:html={JSON.stringify(processJsonLd)}
+/>

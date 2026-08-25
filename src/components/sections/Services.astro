@@ -21,6 +21,7 @@ interface Props {
 }
 const { locale = 'en' } = Astro.props;
 const { eyebrow, services } = getContent(locale).services;
+const { services: servicesUi } = getContent(locale).ui;
 ---
 
 <Section id="services" bg="canvas">
@@ -30,8 +31,7 @@ const { eyebrow, services } = getContent(locale).services;
       <h2
         class="font-heading text-h2 font-bold tracking-tight text-(--color-text-primary)"
       >
-        Each service is engineered for a specific business need — not a template
-        filled with your logo.
+        {servicesUi.heading}
       </h2>
     </div>
 
@@ -66,7 +66,7 @@ const { eyebrow, services } = getContent(locale).services;
                 ))}
               </ul>
               <div class="mt-5 flex items-center gap-1 text-sm font-medium text-primary-500 opacity-0 transition-opacity group-hover:opacity-100">
-                Request audit
+                {servicesUi.cardCta}
                 <Icon name="arrow-right" size={16} />
               </div>
             </Card>

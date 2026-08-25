@@ -22,7 +22,7 @@ const site: SiteContent = {
   location: 'Slovakia · European Union',
   footerRights: 'Build with EUHub · EU-based · GDPR-aware',
   seo: {
-    title: 'Build with EUHub',
+    title: 'Web Development & AI Interfaces for Europe | EUHub',
     description:
       'We build fast, secure, conversion-focused web platforms, web apps, and AI-ready interfaces for European businesses. Engineering-led, GDPR-aware, maintained long-term.',
     ogImage: '/og.png',
@@ -47,12 +47,8 @@ const tertiaryCta: NavItem = {
 const trustLine =
   'Based in Slovakia · Built for EU businesses · GDPR-aware by default';
 
-const heroStats: HeroStat[] = [
-  { label: 'Lighthouse', value: '95+ / 100' },
-  { label: 'JS payload', value: '< 50 KB' },
-  { label: 'TTFB', value: '< 100 ms' },
-  { label: 'LCP', value: '< 1.5 s' },
-];
+/** Measurements are published only from a verified evidence record. */
+const heroStats: HeroStat[] = [];
 
 export const siteBundle = {
   site,

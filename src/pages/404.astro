@@ -4,18 +4,24 @@ import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import Container from '../components/ui/Container.astro';
 import Button from '../components/ui/Button.astro';
+import { seoPaths } from '../lib/seo/paths';
 
 const locale = 'en' as const;
 ---
 
 <BaseLayout
-  title="Page not found"
-  description="The page you're looking for doesn't exist."
-  path="/404"
-  locale={locale}
-  noindex
+  seo={{
+    locale,
+    paths: seoPaths.notFound,
+    title: 'Page not found | EUHub',
+    description: "The page you're looking for doesn't exist.",
+    ogImage: '/og.png' as const,
+    pageType: 'website',
+    updatedAt: '2026-08-25',
+    noindex: true,
+  }}
 >
-  <Header locale={locale} />
+  <Header locale={locale} paths={seoPaths.notFound} />
   <main id="main">
     <Container size="md">
       <div
@@ -40,5 +46,5 @@ const locale = 'en' as const;
       </div>
     </Container>
   </main>
-  <Footer locale={locale} />
+  <Footer locale={locale} paths={seoPaths.notFound} />
 </BaseLayout>

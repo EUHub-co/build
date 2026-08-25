@@ -17,6 +17,7 @@ interface Props {
 }
 const { locale = 'en' } = Astro.props;
 const { eyebrow, exampleScenarios } = getContent(locale).examples;
+const { examples } = getContent(locale).ui;
 ---
 
 <Section id="examples" bg="canvas">
@@ -27,18 +28,16 @@ const { eyebrow, exampleScenarios } = getContent(locale).examples;
         <h2
           class="font-heading text-h2 font-bold tracking-tight text-(--color-text-primary)"
         >
-          Example project scenarios
+          {examples.heading}
         </h2>
       </div>
       <p class="mt-4 text-lead text-(--color-text-secondary)">
-        Realistic examples of the kinds of problems we solve. Not real client
-        names — labelled as examples until we have permission to publish real
-        work.
+        {examples.lead}
       </p>
       <div class="mt-4 flex justify-center">
         <Badge variant="warn">
           <Icon name="partial-circle" size={12} />
-          Illustrative examples
+          {examples.illustrativeLabel}
         </Badge>
       </div>
     </div>
@@ -58,7 +57,7 @@ const { eyebrow, exampleScenarios } = getContent(locale).examples;
             <div class="px-6 pt-5">
               <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-status-danger">
                 <Icon name="close" size={14} />
-                Problem
+                {examples.problemLabel}
               </div>
               <p class="mt-2 text-sm leading-relaxed text-(--color-text-secondary)">
                 {scenario.problem}
@@ -69,7 +68,7 @@ const { eyebrow, exampleScenarios } = getContent(locale).examples;
             <div class="px-6 pt-5">
               <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-secondary-500">
                 <Icon name="code" size={14} />
-                Solution
+                {examples.solutionLabel}
               </div>
               <p class="mt-2 text-sm leading-relaxed text-(--color-text-secondary)">
                 {scenario.solution}
@@ -80,7 +79,7 @@ const { eyebrow, exampleScenarios } = getContent(locale).examples;
             <div class="mt-auto px-6 pb-6 pt-5">
               <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-status-success">
                 <Icon name="check" size={14} />
-                Result
+                {examples.resultLabel}
               </div>
               <p class="mt-2 text-sm leading-relaxed text-(--color-text-secondary)">
                 {scenario.result}

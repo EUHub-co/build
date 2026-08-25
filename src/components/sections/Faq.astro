@@ -21,6 +21,7 @@ interface Props {
 }
 const { locale = 'en' } = Astro.props;
 const { faq } = getContent(locale).faq;
+const { faq: faqUi } = getContent(locale).ui;
 
 const faqJsonLd = {
   '@context': 'https://schema.org',
@@ -39,14 +40,14 @@ const faqJsonLd = {
 <Section id="faq" bg="canvas">
   <Container size="md">
     <div class="mx-auto max-w-3xl text-center" data-reveal>
-      <Eyebrow index={10} label="FAQ" class="mb-4" />
+      <Eyebrow index={10} label={faqUi.eyebrow} class="mb-4" />
       <h2
         class="font-heading text-h2 font-bold tracking-tight text-(--color-text-primary)"
       >
-        Frequently asked questions
+        {faqUi.heading}
       </h2>
       <p class="mt-4 text-lead text-(--color-text-secondary)">
-        Direct answers. No agency-speak.
+        {faqUi.lead}
       </p>
     </div>
 
@@ -55,7 +56,7 @@ const faqJsonLd = {
         faq.map((item) => (
           <details class="group rounded-lg border border-(--color-border-subtle) bg-surface-raised px-6 py-1 shadow-card">
             <summary class="flex cursor-pointer items-center justify-between gap-4 py-4 font-medium text-(--color-text-primary) marker:content-none">
-              <span>{item.question}</span>
+              <h3 class="text-inherit font-inherit">{item.question}</h3>
               <span
                 class="mt-0.5 shrink-0 font-mono text-xl text-primary-500 transition-transform group-open:rotate-45"
                 aria-hidden="true"

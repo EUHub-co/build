@@ -17,6 +17,7 @@ interface Props {
 }
 const { locale = 'en' } = Astro.props;
 const { eyebrow, problems } = getContent(locale).problem;
+const { problem } = getContent(locale).ui;
 ---
 
 <section
@@ -28,13 +29,10 @@ const { eyebrow, problems } = getContent(locale).problem;
       <h2
         class="font-heading text-h2 font-bold tracking-tight text-(--color-text-primary)"
       >
-        Your website is probably not the real problem. The system behind it is.
+        {problem.heading}
       </h2>
       <p class="mt-6 text-lead leading-relaxed text-(--color-text-secondary)">
-        Most companies don't need a redesign. They need a rebuild of the
-        structure, integrations, and processes the website is supposed to
-        support. A new coat of paint on a fragile foundation is still a fragile
-        foundation.
+        {problem.lead}
       </p>
     </div>
 

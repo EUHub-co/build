@@ -1,0 +1,19 @@
+---
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import type { JsonLdNode, SeoPage } from '../lib/seo/types';
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  seo: SeoPage;
+  schema?: JsonLdNode[];
+}
+
+const { seo, schema = [] } = Astro.props;
+---
+
+<BaseLayout seo={seo} schema={schema}>
+  <Header locale={seo.locale} paths={seo.paths} />
+  <main id="main"><slot /></main>
+  <Footer locale={seo.locale} paths={seo.paths} />
+</BaseLayout>

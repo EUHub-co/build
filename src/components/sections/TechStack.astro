@@ -15,6 +15,7 @@ interface Props {
 }
 const { locale = 'en' } = Astro.props;
 const { eyebrow, techStack } = getContent(locale).techStack;
+const { techStack: techStackUi } = getContent(locale).ui;
 ---
 
 <Section id="tech" bg="surface-2">
@@ -24,11 +25,10 @@ const { eyebrow, techStack } = getContent(locale).techStack;
       <h2
         class="font-heading text-h2 font-bold tracking-tight text-(--color-text-primary)"
       >
-        Built with modern engineering standards
+        {techStackUi.heading}
       </h2>
       <p class="mt-4 text-lead text-(--color-text-secondary)">
-        We choose tools based on what your project needs, not what is trending.
-        Here is the stack we reach for most often.
+        {techStackUi.lead}
       </p>
     </div>
 

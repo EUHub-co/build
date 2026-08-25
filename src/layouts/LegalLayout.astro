@@ -8,14 +8,15 @@ import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import Container from '../components/ui/Container.astro';
 import type { LegalContent, Locale } from '../content/types';
+import type { LocalizedPaths } from '../lib/seo/types';
 
 interface Props {
   content: LegalContent;
-  path: string;
+  paths: LocalizedPaths;
   locale?: Locale;
 }
 
-const { content, path, locale = 'en' } = Astro.props;
+const { content, paths, locale = 'en' } = Astro.props;
 
 const backLink = locale === 'sk' ? '/sk/' : '/';
 const backLabel = locale === 'sk' ? '← Späť na domov' : '← Back to home';
@@ -23,13 +24,17 @@ const updatedLabel = locale === 'sk' ? 'Aktualizované:' : 'Last updated:';
 ---
 
 <BaseLayout
-  title={content.title}
-  description={`${content.title} — Build with EUHub`}
-  path={path}
-  locale={locale}
-  noindex={false}
+  seo={{
+    locale,
+    paths,
+    title: `${content.title} | EUHub`,
+    description: `${content.title} — Build with EUHub`,
+    ogImage: locale === 'sk' ? ('/sk/og.png' as const) : ('/og.png' as const),
+    pageType: 'website',
+    updatedAt: content.lastUpdated,
+  }}
 >
-  <Header locale={locale} />
+  <Header locale={locale} paths={paths} />
   <main id="main">
     <div
       class="border-b border-(--color-border-subtle) bg-surface-sunken py-12"
@@ -69,5 +74,5 @@ const updatedLabel = locale === 'sk' ? 'Aktualizované:' : 'Last updated:';
       </div>
     </Container>
   </main>
-  <Footer locale={locale} />
+  <Footer locale={locale} paths={paths} />
 </BaseLayout>

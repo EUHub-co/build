@@ -30,13 +30,15 @@ import ThemeSelector from '../ui/ThemeSelector.astro';
 import LanguageSwitch from '../ui/LanguageSwitch.astro';
 import { getContent } from '../../lib/i18n';
 import type { Locale } from '../../content/types';
+import type { LocalizedPaths } from '../../lib/seo/types';
 
 interface Props {
   locale?: Locale;
+  paths: LocalizedPaths;
 }
-const { locale = 'en' } = Astro.props;
+const { locale = 'en', paths } = Astro.props;
 const { site, primaryCta, trustLine } = getContent(locale).site;
-const homeHref = locale === 'sk' ? '/sk/' : '/';
+const homeHref = paths[locale];
 ---
 
 <div
@@ -47,7 +49,7 @@ const homeHref = locale === 'sk' ? '/sk/' : '/';
       {trustLine}
     </span>
     <div class="flex items-center gap-2 sm:gap-4">
-      <LanguageSwitch locale={locale} />
+      <LanguageSwitch locale={locale} paths={paths} />
       <ThemeSelector />
     </div>
   </Container>
