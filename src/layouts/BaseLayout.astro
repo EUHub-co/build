@@ -14,6 +14,11 @@
  *  - ogImage:     path to OG image (defaults to /og.png or /sk/og.png)
  */
 import { getAlternateUrls, pathFor } from '../lib/seo/paths';
+import {
+  buildOrganizationSchema,
+  buildWebPageSchema,
+  buildWebSiteSchema,
+} from '../lib/seo/schema';
 import type { JsonLdNode, SeoPage } from '../lib/seo/types';
 
 interface Props {
@@ -41,42 +46,13 @@ const umamiId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID;
 // Global styles — Tailwind v4 + the Fontsource typefaces (self-hosted)
 import '../styles/global.css';
 
+const pageSchema = [buildOrganizationSchema(locale), buildWebPageSchema(seo)];
+if (pathFor(seo.paths, locale) === '/') {
+  pageSchema.unshift(buildWebSiteSchema(seo));
+}
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': 'Organization',
-      name: 'Build with EUHub',
-      url: siteUrl.href,
-      logo: new URL('/favicon.svg', siteUrl).href,
-      inLanguage: locale,
-      parentOrganization: {
-        '@type': 'Organization',
-        name: 'EUHUB.CO',
-        url: 'https://euhub.co',
-      },
-      areaServed: 'EU',
-      knowsAbout: [
-        'Web development',
-        'Web applications',
-        'AI-integrated interfaces',
-        'API integration',
-        'DevOps',
-      ],
-    },
-    {
-      '@type': 'ProfessionalService',
-      name: 'Build with EUHub',
-      url: siteUrl.href,
-      areaServed: 'EU',
-      serviceType: 'Web development, web applications, AI-ready interfaces',
-      offers: {
-        '@type': 'Offer',
-        itemOffered: 'Technical Web Audit',
-      },
-    },
-    ...schema,
-  ],
+  '@graph': [...pageSchema, ...schema],
 };
 ---
 

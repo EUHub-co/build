@@ -1,7 +1,5 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Header from '../../components/layout/Header.astro';
-import Footer from '../../components/layout/Footer.astro';
+import PageLayout from '../../layouts/PageLayout.astro';
 import Hero from '../../components/sections/Hero.astro';
 import Problem from '../../components/sections/Problem.astro';
 import Services from '../../components/sections/Services.astro';
@@ -32,21 +30,17 @@ const seo: SeoPage = {
 };
 ---
 
-<BaseLayout seo={seo}>
-  <Header locale={locale} paths={seo.paths} />
-  <main id="main">
-    <Hero locale={locale} />
-    <Problem locale={locale} />
-    <Services locale={locale} />
-    <Differentiation locale={locale} />
-    <Process locale={locale} />
-    <TechStack locale={locale} />
-    <ExampleScenarios locale={locale} />
-    <EngagementModels locale={locale} />
-    <SelfReferentialProof locale={locale} />
-    <Cta locale={locale} />
-    <Ecosystem locale={locale} />
-    <Faq locale={locale} />
-  </main>
-  <Footer locale={locale} paths={seo.paths} />
-</BaseLayout>
+<PageLayout seo={seo}>
+  <Hero locale={locale} />
+  <Problem locale={locale} />
+  <Services locale={locale} />
+  <Differentiation locale={locale} />
+  <Process locale={locale} />
+  <TechStack locale={locale} />
+  <ExampleScenarios locale={locale} />
+  <EngagementModels locale={locale} />
+  <SelfReferentialProof locale={locale} />
+  <Cta locale={locale} />
+  <Ecosystem locale={locale} />
+  <Faq locale={locale} />
+</PageLayout>
