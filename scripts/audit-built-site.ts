@@ -6,7 +6,11 @@ import {
   performanceEvidence,
   shouldIndexEvidence,
 } from '../src/content/evidence';
-import { areAllServicePairsPublished } from '../src/content/service-pages';
+import {
+  areAllServicePairsPublished,
+  getServicePagePairs,
+  isServicePagePublished,
+} from '../src/content/service-pages';
 
 const projectRoot = fileURLToPath(new URL('..', import.meta.url));
 const siteRoot = join(projectRoot, 'dist', 'client');
@@ -14,6 +18,19 @@ const issues: string[] = [];
 const indexableCanonicals = new Set<string>();
 const servicePairsApproved = areAllServicePairsPublished();
 const evidenceApproved = shouldIndexEvidence(performanceEvidence);
+
+function outputFileForPath(pathname: string): string {
+  return `${pathname.replace(/^\//, '').replace(/\/$/, '')}/index.html`;
+}
+
+const servicePublicationByFile = new Map<string, boolean>([
+  ['services/index.html', servicePairsApproved],
+  ['sk/sluzby/index.html', servicePairsApproved],
+  ...getServicePagePairs().flatMap(({ en, sk }) => [
+    [outputFileForPath(en.paths.en), isServicePagePublished(en)] as const,
+    [outputFileForPath(sk.paths.sk), isServicePagePublished(sk)] as const,
+  ]),
+]);
 
 async function filesWithExtension(
   directory: string,
@@ -34,12 +51,8 @@ for (const file of await filesWithExtension(siteRoot, '.html')) {
   const label = relative(siteRoot, file);
   const $ = load(await readFile(file, 'utf8'));
   const noindex = $('meta[name="robots"][content*="noindex"]').length > 0;
-  const isServiceDocument =
-    label === 'services/index.html' ||
-    label === 'sk/sluzby/index.html' ||
-    label.startsWith('services/') ||
-    label.startsWith('sk/sluzby/');
-  if (isServiceDocument && noindex !== !servicePairsApproved) {
+  const servicePublished = servicePublicationByFile.get(label);
+  if (servicePublished !== undefined && noindex !== !servicePublished) {
     issues.push(`${label}: publication state does not match pair approval`);
   }
   const isEvidenceDocument =
