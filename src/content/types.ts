@@ -83,6 +83,8 @@ export interface UiContent {
     project: string;
     ongoing: string;
     priceOrientation: string;
+    tableCaption: string;
+    tableHeaders: [string, string, string, string, string];
     requestAudit: string;
     startConversation: string;
   };
@@ -92,6 +94,7 @@ export interface UiContent {
     eyebrow: string;
     heading: string;
     lead: string;
+    definition: string;
     auditItems: string[];
     emailLead: string;
     privacyNotice: string;

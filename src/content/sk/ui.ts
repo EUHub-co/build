@@ -78,6 +78,14 @@ export const uiBundle: UiContent = {
     project: 'Projekt',
     ongoing: 'Priebežne',
     priceOrientation: 'Cenová orientácia',
+    tableCaption: 'Modely spolupráce a cenová orientácia',
+    tableHeaders: [
+      'Model',
+      'Ako funguje',
+      'Cenová orientácia',
+      'Typický rozsah',
+      'Ďalší krok',
+    ],
     requestAudit: 'Vyžiadať audit',
     startConversation: 'Začať konverzáciu',
   },
@@ -96,6 +104,8 @@ export const uiBundle: UiContent = {
     eyebrow: 'Kontakt',
     heading: 'Začnite technickým auditom webu.',
     lead: 'Preskúmame váš aktuálny web, pozicioning, rýchlosť, štruktúru, konverznú cestu, integrácie a technické riziká. Dostanete jasný zoznam toho, čo opraviť, čo prestavať a do čoho sa neoplatí investovať.',
+    definition:
+      'Technický audit webu je týždňové posúdenie výkonu webu, základov pre vyhľadávanie, prístupnosti, konverznej cesty, integrácií a technických rizík. Výsledkom je plán podložený dôkazmi, ktorý oddeľuje naliehavé opravy od príležitostí na prestavbu a práce, ktorá nemá zmysel.',
     auditItems: [
       'Východiskový stav výkonu, SEO a prístupnosti',
       'Kontrola konverznej štruktúry a UX',

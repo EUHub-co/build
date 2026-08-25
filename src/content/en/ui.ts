@@ -78,6 +78,14 @@ export const uiBundle: UiContent = {
     project: 'Project',
     ongoing: 'Ongoing',
     priceOrientation: 'Price orientation',
+    tableCaption: 'Engagement and pricing orientation',
+    tableHeaders: [
+      'Model',
+      'How it works',
+      'Price orientation',
+      'Typical scope',
+      'Next step',
+    ],
     requestAudit: 'Request an audit',
     startConversation: 'Start a conversation',
   },
@@ -97,6 +105,8 @@ export const uiBundle: UiContent = {
     eyebrow: 'Contact',
     heading: 'Start with a technical web audit.',
     lead: 'We will review your current website, positioning, speed, structure, conversion flow, integrations, and technical risks. You get a clear list of what to fix, what to rebuild, and what is not worth touching.',
+    definition:
+      'A technical web audit is a one-week review of a website’s performance, search foundations, accessibility, conversion path, integrations, and technical risk. The result is an evidence-backed action plan separating urgent fixes from rebuild opportunities and work that is not worth doing.',
     auditItems: [
       'Performance, SEO, and accessibility baseline',
       'Conversion structure and UX review',
