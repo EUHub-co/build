@@ -54,9 +54,9 @@ export function getContent(locale: Locale): ContentBundle {
 
 export function getAlternatePath(url: URL, targetLocale: Locale): string {
   const path = url.pathname;
+  const stripped = path.replace(/^\/sk(?=\/|$)/, '');
   if (targetLocale === 'sk') {
-    return '/sk' + path;
+    return stripped === '' || stripped === '/' ? '/sk/' : `/sk${stripped}`;
   }
-  const stripped = path.replace(/^\/sk/, '');
   return stripped === '' ? '/' : stripped;
 }

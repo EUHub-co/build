@@ -13,7 +13,10 @@
     "astro": "astro",
     "check": "astro check",
     "typecheck": "astro check",
-    "test": "echo \"TODO: bun test + vitest pool-workers (Phase 9)\" && exit 1",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "audit:site": "bun run scripts/audit-built-site.ts",
+    "verify": "bun run format:check && bun run check && bun run test && bun run build && bun run audit:site",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
@@ -32,13 +35,16 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
+    "@lhci/cli": "0.15.1",
     "@tailwindcss/vite": "4.3.2",
     "@types/react": "19.2.17",
     "@types/react-dom": "19.2.3",
+    "cheerio": "1.2.0",
     "prettier": "^3.9.4",
     "prettier-plugin-astro": "^0.14.1",
     "tailwindcss": "4.3.2",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "vitest": "4.1.11"
   },
   "allowScripts": {}
 }
