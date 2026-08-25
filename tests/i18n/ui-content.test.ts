@@ -80,4 +80,11 @@ test('localizes global accessibility and comparison labels', () => {
   expect(getContent('sk').ui.engagement.comparisonCaption).toBe(
     'Porovnanie modelov spolupráce',
   );
+  expect(getContent('en').ui.servicePages.breadcrumbLabel).toBe('Breadcrumb');
+  expect(getContent('sk').ui.servicePages.breadcrumbLabel).toBe(
+    'Navigačná cesta',
+  );
+  expect(getContent('en').ui.servicePages.indexSeo.updatedAt).toMatch(
+    /^2026-\d{2}-\d{2}$/,
+  );
 });

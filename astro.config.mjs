@@ -6,10 +6,8 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  // Static-first: every page is prerendered to a static asset.
-  // Only `src/pages/api/audit-request.ts` sets `export const prerender = false`
-  // so it runs on the Node server (Cloud Run). This keeps HTML served as
-  // static assets (perf pitch) and the sitemap complete.
+  // Static-first: indexable pages are prerendered to static assets. The audit
+  // API and localized Slovak not-found catch-all run on the Node server.
   output: 'static',
   adapter: node({
     mode: 'standalone',

@@ -39,6 +39,7 @@ export interface SiteContent {
     title: string;
     description: string;
     ogImage: string;
+    updatedAt: string;
   };
 }
 
@@ -70,6 +71,11 @@ export interface UiContent {
   problem: { heading: string; lead: string };
   services: { heading: string; cardCta: string };
   servicePages: {
+    indexSeo: {
+      title: string;
+      description: string;
+      updatedAt: string;
+    };
     indexEyebrow: string;
     indexHeading: string;
     indexLead: string;
@@ -88,6 +94,7 @@ export interface UiContent {
     contactCta: string;
     homeBreadcrumb: string;
     servicesBreadcrumb: string;
+    breadcrumbLabel: string;
   };
   differentiation: {
     eyebrow: string;
@@ -122,7 +129,27 @@ export interface UiContent {
     scopeHeading: string;
     actionHeading: string;
   };
-  proof: { eyebrow: string; heading: string; lead: string; pending: string };
+  proof: {
+    eyebrow: string;
+    heading: string;
+    lead: string;
+    pending: string;
+    detailsCta: string;
+  };
+  evidencePage: {
+    seoTitle: string;
+    seoDescription: string;
+    eyebrow: string;
+    heading: string;
+    lead: string;
+    statusLabel: string;
+    pendingTitle: string;
+    pendingBody: string;
+    methodHeading: string;
+    methodItems: string[];
+    backHome: string;
+    updatedAt: string;
+  };
   ecosystem: { heading: string; lead: string; visit: string };
   contact: {
     eyebrow: string;
@@ -153,8 +180,17 @@ export interface ProblemItem {
   body: string;
 }
 
+export type ServiceId =
+  | 'business-websites'
+  | 'landing-pages'
+  | 'web-apps'
+  | 'ai-interfaces'
+  | 'redesign'
+  | 'integrations'
+  | 'maintenance';
+
 export interface Service {
-  id: string;
+  id: ServiceId;
   title: string;
   /** Short mono index tag rendered as "NN // Tag" (e.g. "Websites") */
   tag: string;

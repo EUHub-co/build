@@ -2,6 +2,7 @@ import { expect, test } from 'vitest';
 import {
   getAlternateUrls,
   legalPathsFor,
+  navigationHrefFor,
   seoPaths,
 } from '../../src/lib/seo/paths';
 
@@ -86,4 +87,10 @@ test('keeps footer and form legal links in the active locale', () => {
     cookies: '/sk/cookies/',
     terms: '/sk/terms/',
   });
+});
+
+test('resolves fragment navigation through the localized homepage', () => {
+  expect(navigationHrefFor('en', '#services')).toBe('/#services');
+  expect(navigationHrefFor('sk', '#services')).toBe('/sk/#services');
+  expect(navigationHrefFor('sk', 'https://euhub.co')).toBe('https://euhub.co');
 });

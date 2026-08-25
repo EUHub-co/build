@@ -37,3 +37,12 @@ test('resolves locale-specific service slugs without string inference', () => {
   );
   expect(getServicePageBySlug('sk', 'business-websites')).toBeUndefined();
 });
+
+test('keeps the bilingual service pair out of search until native review', () => {
+  expect(
+    getServicePages('en').every((page) => page.pairApproved === false),
+  ).toBe(true);
+  expect(
+    getServicePages('sk').every((page) => page.pairApproved === false),
+  ).toBe(true);
+});

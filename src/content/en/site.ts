@@ -26,6 +26,7 @@ const site: SiteContent = {
     description:
       'Fast, secure websites, web apps and AI interfaces for European businesses—engineering-led, GDPR-aware and maintained long-term.',
     ogImage: '/og.png',
+    updatedAt: '2026-08-25',
   },
 };
 

@@ -14,9 +14,13 @@ export interface ServicePageContent extends Service {
   outcomes: string[];
   faq: [FaqItem, FaqItem, FaqItem];
   updatedAt: string;
+  pairApproved: boolean;
 }
 
-type Detail = Omit<ServicePageContent, keyof Service | 'paths'>;
+type Detail = Omit<
+  ServicePageContent,
+  keyof Service | 'paths' | 'pairApproved'
+>;
 
 const pathsById: Record<Service['id'], LocalizedPaths> = {
   'business-websites': seoPaths.businessWebsites,
@@ -604,6 +608,7 @@ export function getServicePages(locale: Locale): ServicePageContent[] {
     ...service,
     paths: pathsById[service.id],
     ...details[service.id],
+    pairApproved: false,
   }));
 }
 

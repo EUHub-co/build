@@ -34,6 +34,12 @@ export const uiBundle: UiContent = {
     cardCta: 'Preskúmať službu',
   },
   servicePages: {
+    indexSeo: {
+      title: 'Služby vývoja webov a aplikácií pre firmy | EUHub',
+      description:
+        'Preskúmajte sedem služieb pre weby, aplikácie, AI rozhrania, integrácie, migrácie a dlhodobú technickú prevádzku v EÚ.',
+      updatedAt: '2026-08-26',
+    },
     indexEyebrow: 'Služby webového inžinierstva',
     indexHeading: 'Vyberte technický rozsah, ktorý vaša firma potrebuje.',
     indexLead:
@@ -55,6 +61,7 @@ export const uiBundle: UiContent = {
     contactCta: 'Vyžiadať web audit',
     homeBreadcrumb: 'Domov',
     servicesBreadcrumb: 'Služby',
+    breadcrumbLabel: 'Navigačná cesta',
   },
   differentiation: {
     eyebrow: 'Vrstvy systému',
@@ -125,6 +132,28 @@ export const uiBundle: UiContent = {
     heading: 'Tento web je dôkaz.',
     lead: 'Technické merania publikujeme len spolu s postupom, dátumom a zdrojovým reportom.',
     pending: 'Produkčné merania čakajú na prvé reprodukovateľné zachytenie.',
+    detailsCta: 'Zobraziť metódu dôkazov',
+  },
+  evidencePage: {
+    seoTitle: 'Reprodukovateľné dôkazy výkonu | EUHub',
+    seoDescription:
+      'Stav publikácie a metóda merania produkčného výkonu Build with EUHub bez nepodložených skóre alebo tvrdení.',
+    eyebrow: 'Dôkazy výkonu',
+    heading: 'Merania publikujeme až po produkčnom zachytení.',
+    lead: 'Táto stránka je riadeným miestom na publikovanie dôkazov výkonu webu build.euhub.co.',
+    statusLabel: 'Stav publikácie',
+    pendingTitle: 'Produkčné meranie čaká na vykonanie',
+    pendingBody:
+      'Zatiaľ nepublikujeme žiadne skóre. Nasadenú revíziu musíme zmerať nižšie uvedenou metódou a uchovať zdrojový report, až potom môže byť táto stránka indexovateľná.',
+    methodHeading: 'Požadovaná metóda merania',
+    methodItems: [
+      'Merať kanonickú produkčnú domovskú stránku, nie lokálny náhľad.',
+      'Spustiť Lighthouse mobile trikrát a uchovať každý zdrojový JSON report.',
+      'Publikovať medián kategórií spolu s dátumom merania a odkazom na report.',
+      'Meranie zopakovať po nasadenej zmene, ktorá môže podstatne ovplyvniť výsledky.',
+    ],
+    backHome: 'Späť na domovskú stránku',
+    updatedAt: '2026-08-26',
   },
   ecosystem: {
     heading: 'Súčasť inžinierskeho ekosystému EUHUB',

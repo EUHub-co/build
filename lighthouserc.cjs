@@ -5,8 +5,8 @@ module.exports = {
       url: [
         'http://localhost/',
         'http://localhost/sk/',
-        'http://localhost/services/',
-        'http://localhost/services/business-websites/',
+        'http://localhost/privacy/',
+        'http://localhost/sk/privacy/',
       ],
       numberOfRuns: 3,
       settings: {

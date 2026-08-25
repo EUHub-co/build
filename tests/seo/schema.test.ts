@@ -3,6 +3,7 @@ import { getContent } from '../../src/lib/i18n';
 import { seoPaths } from '../../src/lib/seo/paths';
 import {
   buildOrganizationSchema,
+  buildItemListSchema,
   buildServiceSchema,
   buildWebPageSchema,
   buildWebSiteSchema,
@@ -29,21 +30,44 @@ test('uses stable site IDs and locale-specific visible metadata', () => {
   expect(webpage.description).toBe(englishHomepage.description);
 });
 
-test('publishes the legal identity already disclosed in the terms', () => {
+test('keeps unapproved legal and authority facts out of organization schema', () => {
   const organization = buildOrganizationSchema('sk');
 
   expect(organization['@id']).toBe('https://build.euhub.co/#organization');
   expect(organization.name).toBe('Build with EUHub');
-  expect(organization.legalName).toBe('Engineers Incubator s. r. o.');
-  expect(organization.email).toBe('hello@euhub-ai.com');
-  expect(organization.address).toMatchObject({
-    '@type': 'PostalAddress',
-    streetAddress: 'Horná 67',
-    addressLocality: 'Banská Bystrica',
-    postalCode: '974 01',
-    addressCountry: 'SK',
+  expect(organization).not.toHaveProperty('legalName');
+  expect(organization).not.toHaveProperty('taxID');
+  expect(organization).not.toHaveProperty('vatID');
+  expect(organization).not.toHaveProperty('address');
+  expect(organization).not.toHaveProperty('contactPoint');
+});
+
+test('models visible delivery steps as an ItemList', () => {
+  const schema = buildItemListSchema('How delivery works', [
+    { name: 'Diagnostic', description: 'Inspect the current system.' },
+    { name: 'Plan', description: 'Define the delivery boundary.' },
+  ]);
+
+  expect(schema).toMatchObject({
+    '@type': 'ItemList',
+    name: 'How delivery works',
+    numberOfItems: 2,
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Diagnostic',
+        description: 'Inspect the current system.',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Plan',
+        description: 'Define the delivery boundary.',
+      },
+    ],
   });
-  expect(organization.vatID).toBe('SK2121479470');
+  expect(schema['@type']).not.toBe('HowTo');
 });
 
 test('models a visible service without inventing ratings or outcomes', () => {

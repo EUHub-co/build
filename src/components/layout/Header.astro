@@ -16,12 +16,7 @@
  * defined but unused rather than deleted (same "leave unused content,
  * don't delete" approach used for deploy's now-dead `site.badge`).
  *
- * Accessibility labels below are plain English literals, not sourced from
- * a `site.a11y` bundle — build has no such bundle (see ThemeSelector.astro,
- * which made the same call for its own labels), and these strings are
- * carried over unchanged from the previous single-tier header rather than
- * inventing new copy or new i18n scaffolding as a side effect of this
- * structural port.
+ * Accessibility labels are sourced from the active locale's typed UI bundle.
  */
 import Container from '../ui/Container.astro';
 import Button from '../ui/Button.astro';
@@ -31,7 +26,7 @@ import LanguageSwitch from '../ui/LanguageSwitch.astro';
 import { getContent } from '../../lib/i18n';
 import type { Locale } from '../../content/types';
 import type { LocalizedPaths } from '../../lib/seo/types';
-import { seoPaths } from '../../lib/seo/paths';
+import { navigationHrefFor, seoPaths } from '../../lib/seo/paths';
 
 interface Props {
   locale?: Locale;
@@ -41,8 +36,6 @@ const { locale = 'en', paths } = Astro.props;
 const { site, primaryCta, trustLine } = getContent(locale).site;
 const { accessibility } = getContent(locale).ui;
 const homeHref = seoPaths.home[locale];
-const navigationHref = (href: string) =>
-  href.startsWith('#') ? `${homeHref}${href}` : href;
 ---
 
 <div
@@ -101,7 +94,7 @@ const navigationHref = (href: string) =>
       {
         site.nav.map((item) => (
           <a
-            href={navigationHref(item.href)}
+            href={navigationHrefFor(locale, item.href)}
             class="border-b-2 border-transparent pb-1.5 text-sm font-medium text-(--color-text-primary) hover:border-(--color-primary-500) hover:text-(--color-primary-500)"
           >
             {item.label}
@@ -116,7 +109,7 @@ const navigationHref = (href: string) =>
         so it stays visible/usable on mobile even if JS never runs.
       -->
       <Button
-        href={navigationHref(primaryCta.href)}
+        href={navigationHrefFor(locale, primaryCta.href)}
         variant="primary"
         size="sm"
         class="px-2 text-xs sm:px-5 sm:text-sm"
@@ -152,7 +145,7 @@ const navigationHref = (href: string) =>
         {
           site.nav.map((item) => (
             <a
-              href={navigationHref(item.href)}
+              href={navigationHrefFor(locale, item.href)}
               class="text-base font-medium text-(--color-text-primary)"
             >
               {item.label}

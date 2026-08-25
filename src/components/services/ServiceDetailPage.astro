@@ -12,6 +12,7 @@ import { pageUrl, productionSiteUrl } from '../../lib/seo/metadata';
 import {
   buildBreadcrumbSchema,
   buildFaqSchema,
+  buildItemListSchema,
   buildServiceSchema,
 } from '../../lib/seo/schema';
 import type { SeoPage } from '../../lib/seo/types';
@@ -32,6 +33,7 @@ const seo: SeoPage = {
   ogImage: locale === 'sk' ? '/sk/og.png' : '/og.png',
   pageType: 'service',
   updatedAt: page.updatedAt,
+  noindex: !page.pairApproved,
 };
 const serviceUrl = pageUrl(seo);
 const homeUrl = new URL(seoPaths.home[locale], productionSiteUrl).href;
@@ -49,6 +51,13 @@ const schema = [
     { name: ui.servicesBreadcrumb, url: servicesUrl },
     { name: page.title, url: serviceUrl },
   ]),
+  buildItemListSchema(
+    ui.processHeading,
+    content.process.processSteps.map((step) => ({
+      name: step.title,
+      description: step.summary,
+    })),
+  ),
 ];
 ---
 
@@ -56,7 +65,7 @@ const schema = [
   <Section bg="grid" padding="lg">
     <Container>
       <nav
-        aria-label="Breadcrumb"
+        aria-label={ui.breadcrumbLabel}
         class="mb-8 text-sm text-(--color-text-secondary)"
       >
         <ol class="flex flex-wrap items-center gap-2">

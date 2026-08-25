@@ -2,27 +2,54 @@ import { readdir, readFile } from 'node:fs/promises';
 import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { load } from 'cheerio';
+import {
+  performanceEvidence,
+  shouldIndexEvidence,
+} from '../src/content/evidence';
+import { getServicePages } from '../src/content/service-pages';
 
 const projectRoot = fileURLToPath(new URL('..', import.meta.url));
 const siteRoot = join(projectRoot, 'dist', 'client');
 const issues: string[] = [];
+const indexableCanonicals = new Set<string>();
+const servicePairsApproved = [
+  ...getServicePages('en'),
+  ...getServicePages('sk'),
+].every((page) => page.pairApproved);
+const evidenceApproved = shouldIndexEvidence(performanceEvidence);
 
-async function htmlFiles(directory: string): Promise<string[]> {
+async function filesWithExtension(
+  directory: string,
+  extension: string,
+): Promise<string[]> {
   const entries = await readdir(directory, { withFileTypes: true });
   const nested = await Promise.all(
     entries.map(async (entry) => {
       const file = join(directory, entry.name);
-      if (entry.isDirectory()) return htmlFiles(file);
-      return entry.isFile() && entry.name.endsWith('.html') ? [file] : [];
+      if (entry.isDirectory()) return filesWithExtension(file, extension);
+      return entry.isFile() && entry.name.endsWith(extension) ? [file] : [];
     }),
   );
   return nested.flat();
 }
 
-for (const file of await htmlFiles(siteRoot)) {
+for (const file of await filesWithExtension(siteRoot, '.html')) {
   const label = relative(siteRoot, file);
   const $ = load(await readFile(file, 'utf8'));
   const noindex = $('meta[name="robots"][content*="noindex"]').length > 0;
+  const isServiceDocument =
+    label === 'services/index.html' ||
+    label === 'sk/sluzby/index.html' ||
+    label.startsWith('services/') ||
+    label.startsWith('sk/sluzby/');
+  if (isServiceDocument && noindex !== !servicePairsApproved) {
+    issues.push(`${label}: publication state does not match pair approval`);
+  }
+  const isEvidenceDocument =
+    label === 'evidence/index.html' || label === 'sk/dokazy/index.html';
+  if (isEvidenceDocument && noindex !== !evidenceApproved) {
+    issues.push(`${label}: publication state does not match evidence approval`);
+  }
   if (noindex) continue;
 
   for (const selector of [
@@ -36,6 +63,7 @@ for (const file of await htmlFiles(siteRoot)) {
   if ($('h1').length !== 1) issues.push(`${label}: expected exactly one h1`);
 
   const canonical = $('link[rel="canonical"]').attr('href') ?? '';
+  indexableCanonicals.add(canonical);
   if (!canonical.startsWith('https://build.euhub.co/')) {
     issues.push(`${label}: canonical is not absolute production URL`);
   }
@@ -129,19 +157,7 @@ for (const file of await htmlFiles(siteRoot)) {
   }
 }
 
-async function cssFiles(directory: string): Promise<string[]> {
-  const entries = await readdir(directory, { withFileTypes: true });
-  const nested = await Promise.all(
-    entries.map(async (entry) => {
-      const file = join(directory, entry.name);
-      if (entry.isDirectory()) return cssFiles(file);
-      return entry.isFile() && entry.name.endsWith('.css') ? [file] : [];
-    }),
-  );
-  return nested.flat();
-}
-
-for (const file of await cssFiles(siteRoot)) {
+for (const file of await filesWithExtension(siteRoot, '.css')) {
   const css = await readFile(file, 'utf8');
   if (/url\(data:font\//.test(css)) {
     issues.push(`${relative(siteRoot, file)}: embeds a font blocked by CSP`);
@@ -149,19 +165,35 @@ for (const file of await cssFiles(siteRoot)) {
 }
 
 const sitemap = await readFile(join(siteRoot, 'sitemap.xml'), 'utf8');
-if ((sitemap.match(/<url>/g) ?? []).length !== 24) {
-  issues.push('sitemap.xml: expected 24 localized URL entries');
+const sitemapUrlCount = (sitemap.match(/<url>/g) ?? []).length;
+const sitemapLocs = new Set(
+  [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]),
+);
+if (sitemapUrlCount !== indexableCanonicals.size) {
+  issues.push(
+    `sitemap.xml: expected ${indexableCanonicals.size} indexable URL entries, found ${sitemapUrlCount}`,
+  );
 }
-if ((sitemap.match(/<lastmod>/g) ?? []).length !== 24) {
+if ((sitemap.match(/<lastmod>/g) ?? []).length !== sitemapUrlCount) {
   issues.push('sitemap.xml: every URL must have approved lastmod data');
 }
-if (!sitemap.includes('/sk/sluzby/firemne-weby/')) {
-  issues.push('sitemap.xml: missing explicit localized service alternate');
+for (const canonical of indexableCanonicals) {
+  if (!sitemapLocs.has(canonical)) {
+    issues.push(`sitemap.xml: missing indexable canonical ${canonical}`);
+  }
+}
+for (const loc of sitemapLocs) {
+  if (!indexableCanonicals.has(loc)) {
+    issues.push(`sitemap.xml: includes non-indexable URL ${loc}`);
+  }
 }
 
 const llms = await readFile(join(siteRoot, 'llms.txt'), 'utf8');
-if (!llms.includes('/services/business-websites/')) {
-  issues.push('llms.txt: missing generated service discovery links');
+if (
+  !indexableCanonicals.has('https://build.euhub.co/services/') &&
+  llms.includes('https://build.euhub.co/services/')
+) {
+  issues.push('llms.txt: exposes service links before publication approval');
 }
 
 if (issues.length) {

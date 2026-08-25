@@ -23,25 +23,24 @@ export function buildOrganizationSchema(locale: Locale): JsonLdNode {
     name: 'Build with EUHub',
     url: siteUrl,
     logo: `${siteUrl}favicon.svg`,
-    legalName: 'Engineers Incubator s. r. o.',
-    email: 'hello@euhub-ai.com',
-    taxID: '2121479470',
-    vatID: 'SK2121479470',
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: 'Horná 67',
-      addressLocality: 'Banská Bystrica',
-      postalCode: '974 01',
-      addressCountry: 'SK',
-    },
-    contactPoint: {
-      '@type': 'ContactPoint',
-      contactType: 'sales',
-      email: 'hello@euhub-ai.com',
-      areaServed: 'EU',
-      availableLanguage: ['English', 'Slovak'],
-    },
     inLanguage: locale === 'sk' ? 'sk-SK' : 'en-GB',
+  };
+}
+
+export function buildItemListSchema(
+  name: string,
+  items: Array<{ name: string; description: string }>,
+): JsonLdNode {
+  return {
+    '@type': 'ItemList',
+    name,
+    numberOfItems: items.length,
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      description: item.description,
+    })),
   };
 }
 

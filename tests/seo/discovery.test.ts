@@ -1,13 +1,16 @@
 import { expect, test } from 'vitest';
 import { buildLlmsTxt } from '../../src/lib/seo/discovery';
 
-test('generates AI discovery links from the active bilingual service records', () => {
+test('generates discovery links only from approved bilingual records', () => {
   const text = buildLlmsTxt();
 
   expect(text).toContain('# Build with EUHub');
-  expect(text).toContain('https://build.euhub.co/services/');
-  expect(text).toContain('https://build.euhub.co/services/business-websites/');
-  expect(text).toContain('https://build.euhub.co/sk/sluzby/firemne-weby/');
-  expect(text.match(/^### /gm)).toHaveLength(7);
+  expect(text).not.toContain('https://build.euhub.co/services/');
+  expect(text).not.toContain('/services/business-websites/');
+  expect(text).not.toContain('/sk/sluzby/firemne-weby/');
+  expect(text.match(/^### /gm)).toBeNull();
+  expect(text).toContain('pending native-language approval');
+  expect(text).not.toContain('Engineers Incubator');
+  expect(text).not.toContain('Horná 67');
   expect(text).not.toMatch(/award-winning|certified expert|trusted by \d+/i);
 });

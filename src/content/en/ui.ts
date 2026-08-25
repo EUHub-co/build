@@ -34,6 +34,12 @@ export const uiBundle: UiContent = {
     cardCta: 'Explore service',
   },
   servicePages: {
+    indexSeo: {
+      title: 'Web Development Services for European Businesses | EUHub',
+      description:
+        'Explore seven focused services for websites, web apps, AI interfaces, integrations, migrations and long-term technical ownership in Europe.',
+      updatedAt: '2026-08-26',
+    },
     indexEyebrow: 'Web engineering services',
     indexHeading: 'Choose the engineering scope your business needs.',
     indexLead:
@@ -55,6 +61,7 @@ export const uiBundle: UiContent = {
     contactCta: 'Request a web audit',
     homeBreadcrumb: 'Home',
     servicesBreadcrumb: 'Services',
+    breadcrumbLabel: 'Breadcrumb',
   },
   differentiation: {
     eyebrow: 'The stack',
@@ -126,6 +133,28 @@ export const uiBundle: UiContent = {
     lead: 'We publish technical measurements only with their method, date, and raw report.',
     pending:
       'Production measurements are pending their first reproducible capture.',
+    detailsCta: 'View evidence method',
+  },
+  evidencePage: {
+    seoTitle: 'Reproducible Performance Evidence | EUHub',
+    seoDescription:
+      'The publication status and capture method for Build with EUHub production performance evidence, without unsupported scores or claims.',
+    eyebrow: 'Performance evidence',
+    heading: 'Measurements are published only after production capture.',
+    lead: 'This page is the controlled publication surface for performance evidence about build.euhub.co.',
+    statusLabel: 'Publication status',
+    pendingTitle: 'Production capture pending',
+    pendingBody:
+      'No score is published yet. The deployed revision must be measured with the method below and its raw report retained before this page becomes indexable.',
+    methodHeading: 'Required capture method',
+    methodItems: [
+      'Measure the canonical production homepage, not a local preview.',
+      'Run Lighthouse mobile three times and retain every raw JSON report.',
+      'Publish the median category scores with the capture date and report link.',
+      'Repeat the capture when a deployed change could materially affect results.',
+    ],
+    backHome: 'Back to homepage',
+    updatedAt: '2026-08-26',
   },
   ecosystem: {
     heading: 'Part of the EUHUB engineering ecosystem',

@@ -7,20 +7,30 @@ export function buildLlmsTxt(): string {
   const slovak = new Map(
     getServicePages('sk').map((service) => [service.id, service]),
   );
-  const serviceSections = english
-    .map((service) => {
-      const sk = slovak.get(service.id);
-      if (!sk) throw new Error(`Missing Slovak service ${service.id}`);
-      return [
-        `### ${service.title}`,
-        '',
-        service.definition,
-        '',
-        `- English: ${new URL(service.paths.en, productionSiteUrl).href}`,
-        `- Slovak: ${new URL(sk.paths.sk, productionSiteUrl).href}`,
-      ].join('\n');
-    })
-    .join('\n\n');
+  const servicePairsApproved = english.every(
+    (service) =>
+      service.pairApproved && slovak.get(service.id)?.pairApproved === true,
+  );
+  const serviceSections = servicePairsApproved
+    ? english
+        .map((service) => {
+          const sk = slovak.get(service.id);
+          if (!sk) throw new Error(`Missing Slovak service ${service.id}`);
+          return [
+            `### ${service.title}`,
+            '',
+            service.definition,
+            '',
+            `- English: ${new URL(service.paths.en, productionSiteUrl).href}`,
+            `- Slovak: ${new URL(sk.paths.sk, productionSiteUrl).href}`,
+          ].join('\n');
+        })
+        .join('\n\n')
+    : 'Bilingual service pages are pending native-language approval and are not included in search discovery yet.';
+  const serviceCanonicalLinks = servicePairsApproved
+    ? `- English services: ${new URL(seoPaths.services.en, productionSiteUrl).href}
+- Slovak services: ${new URL(seoPaths.services.sk, productionSiteUrl).href}`
+    : '';
 
   return `# Build with EUHub
 
@@ -30,8 +40,7 @@ export function buildLlmsTxt(): string {
 
 - English home: ${new URL(seoPaths.home.en, productionSiteUrl).href}
 - Slovak home: ${new URL(seoPaths.home.sk, productionSiteUrl).href}
-- English services: ${new URL(seoPaths.services.en, productionSiteUrl).href}
-- Slovak services: ${new URL(seoPaths.services.sk, productionSiteUrl).href}
+${serviceCanonicalLinks}
 
 ## Services
 
@@ -39,7 +48,7 @@ ${serviceSections}
 
 ## Organization
 
-Build with EUHub is operated by Engineers Incubator s. r. o., Horná 67, 974 01 Banská Bystrica, Slovakia, and is part of the EUHUB group. We work in English and Slovak with businesses across the European Union.
+Build with EUHub is the web engineering unit in the EUHUB ecosystem. We work with businesses across the European Union.
 
 ## Related EUHUB properties
 

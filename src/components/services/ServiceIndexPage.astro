@@ -23,17 +23,12 @@ const site = getContent(locale).site.site;
 const seo: SeoPage = {
   locale,
   paths: seoPaths.services,
-  title:
-    locale === 'sk'
-      ? 'Služby vývoja webov a aplikácií pre firmy | EUHub'
-      : 'Web Development Services for European Businesses | EUHub',
-  description:
-    locale === 'sk'
-      ? 'Preskúmajte sedem služieb pre weby, aplikácie, AI rozhrania, integrácie, migrácie a dlhodobú technickú prevádzku v EÚ.'
-      : 'Explore seven focused services for websites, web apps, AI interfaces, integrations, migrations and long-term technical ownership in Europe.',
+  title: ui.indexSeo.title,
+  description: ui.indexSeo.description,
   ogImage: locale === 'sk' ? '/sk/og.png' : '/og.png',
   pageType: 'service',
-  updatedAt: '2026-08-26',
+  updatedAt: ui.indexSeo.updatedAt,
+  noindex: !pages.every((page) => page.pairApproved),
 };
 const schema: JsonLdNode = {
   '@id': `${new URL(seo.paths[locale], productionSiteUrl).href}#services`,

@@ -80,3 +80,7 @@ export function legalPathsFor(locale: Locale) {
     terms: pathFor(seoPaths.terms, locale),
   } as const;
 }
+
+export function navigationHrefFor(locale: Locale, href: string): string {
+  return href.startsWith('#') ? `${seoPaths.home[locale]}${href}` : href;
+}

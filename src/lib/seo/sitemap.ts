@@ -1,5 +1,6 @@
 import type { Locale } from '../../content/types';
 import { getServicePages } from '../../content/service-pages';
+import { getContent } from '../i18n';
 import { getAlternateUrls, seoPaths } from './paths';
 import { productionSiteUrl } from './metadata';
 import type { LocalizedPaths } from './types';
@@ -11,25 +12,82 @@ interface SitemapEntry {
   alternates: ReturnType<typeof getAlternateUrls>;
 }
 
-const fixedPairs: Array<{ paths: LocalizedPaths; updatedAt: string }> = [
-  { paths: seoPaths.home, updatedAt: '2026-08-26' },
-  { paths: seoPaths.services, updatedAt: '2026-08-26' },
-  ...getServicePages('en').map((page) => ({
-    paths: page.paths,
-    updatedAt: page.updatedAt,
-  })),
-  { paths: seoPaths.privacy, updatedAt: '2026-07-13' },
-  { paths: seoPaths.cookies, updatedAt: '2026-07-13' },
-  { paths: seoPaths.terms, updatedAt: '2026-07-13' },
-];
+interface SitemapPair {
+  paths: LocalizedPaths;
+  updatedAt: Record<Locale, string>;
+}
+
+function getPublishedPairs(): SitemapPair[] {
+  const enContent = getContent('en');
+  const skContent = getContent('sk');
+  const englishServices = getServicePages('en');
+  const slovakServices = new Map(
+    getServicePages('sk').map((page) => [page.id, page]),
+  );
+  const servicePairs = englishServices.flatMap((english) => {
+    const slovak = slovakServices.get(english.id);
+    if (!slovak || !english.pairApproved || !slovak.pairApproved) return [];
+    return [
+      {
+        paths: english.paths,
+        updatedAt: { en: english.updatedAt, sk: slovak.updatedAt },
+      },
+    ];
+  });
+  const serviceIndexPair =
+    servicePairs.length === englishServices.length
+      ? [
+          {
+            paths: seoPaths.services,
+            updatedAt: {
+              en: enContent.ui.servicePages.indexSeo.updatedAt,
+              sk: skContent.ui.servicePages.indexSeo.updatedAt,
+            },
+          },
+        ]
+      : [];
+
+  return [
+    {
+      paths: seoPaths.home,
+      updatedAt: {
+        en: enContent.site.site.seo.updatedAt,
+        sk: skContent.site.site.seo.updatedAt,
+      },
+    },
+    ...serviceIndexPair,
+    ...servicePairs,
+    {
+      paths: seoPaths.privacy,
+      updatedAt: {
+        en: enContent.legal.privacyPolicy.lastUpdated,
+        sk: skContent.legal.privacyPolicy.lastUpdated,
+      },
+    },
+    {
+      paths: seoPaths.cookies,
+      updatedAt: {
+        en: enContent.legal.cookiePolicy.lastUpdated,
+        sk: skContent.legal.cookiePolicy.lastUpdated,
+      },
+    },
+    {
+      paths: seoPaths.terms,
+      updatedAt: {
+        en: enContent.legal.terms.lastUpdated,
+        sk: skContent.legal.terms.lastUpdated,
+      },
+    },
+  ];
+}
 
 export function getSitemapEntries(): SitemapEntry[] {
-  return fixedPairs.flatMap(({ paths, updatedAt }) => {
+  return getPublishedPairs().flatMap(({ paths, updatedAt }) => {
     const alternates = getAlternateUrls(paths, productionSiteUrl);
     return (['en', 'sk'] as const).map((locale) => ({
       locale,
       loc: new URL(paths[locale], productionSiteUrl).href,
-      lastmod: updatedAt,
+      lastmod: updatedAt[locale],
       alternates,
     }));
   });

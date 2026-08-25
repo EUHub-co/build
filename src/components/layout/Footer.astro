@@ -13,8 +13,7 @@ import LanguageSwitch from '../ui/LanguageSwitch.astro';
 import { getContent } from '../../lib/i18n';
 import type { Locale } from '../../content/types';
 import type { LocalizedPaths } from '../../lib/seo/types';
-import { legalPathsFor } from '../../lib/seo/paths';
-import { seoPaths } from '../../lib/seo/paths';
+import { legalPathsFor, navigationHrefFor } from '../../lib/seo/paths';
 
 interface Props {
   locale?: Locale;
@@ -25,9 +24,6 @@ const { site } = getContent(locale).site;
 const { ecosystem } = getContent(locale).ecosystem;
 const { footer } = getContent(locale).ui;
 const legalPaths = legalPathsFor(locale);
-const homeHref = seoPaths.home[locale];
-const navigationHref = (href: string) =>
-  href.startsWith('#') ? `${homeHref}${href}` : href;
 
 const year = new Date().getFullYear();
 ---
@@ -65,7 +61,7 @@ const year = new Date().getFullYear();
             site.nav.map((item) => (
               <li>
                 <a
-                  href={navigationHref(item.href)}
+                  href={navigationHrefFor(locale, item.href)}
                   class="text-sm text-(--color-text-secondary) hover:text-primary-500 transition-colors"
                 >
                   {item.label}

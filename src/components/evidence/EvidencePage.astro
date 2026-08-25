@@ -1,0 +1,99 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+import Button from '../ui/Button.astro';
+import {
+  performanceEvidence,
+  shouldIndexEvidence,
+} from '../../content/evidence';
+import type { Locale } from '../../content/types';
+import { getContent } from '../../lib/i18n';
+import { seoPaths } from '../../lib/seo/paths';
+import type { SeoPage } from '../../lib/seo/types';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const ui = getContent(locale).ui.evidencePage;
+const verified = shouldIndexEvidence(performanceEvidence);
+const seo: SeoPage = {
+  locale,
+  paths: seoPaths.evidence,
+  title: ui.seoTitle,
+  description: ui.seoDescription,
+  ogImage: locale === 'sk' ? '/sk/og.png' : '/og.png',
+  pageType: 'website',
+  updatedAt: ui.updatedAt,
+  noindex: !verified,
+};
+---
+
+<PageLayout seo={seo}>
+  <Section bg="grid" padding="lg">
+    <Container size="md">
+      <p
+        class="font-mono text-xs font-semibold uppercase tracking-widest text-primary-500"
+      >
+        {ui.eyebrow}
+      </p>
+      <h1
+        class="mt-5 font-heading text-h1 font-extrabold tracking-tight text-(--color-text-primary)"
+      >
+        {ui.heading}
+      </h1>
+      <p class="mt-6 text-lead text-(--color-text-secondary)">{ui.lead}</p>
+    </Container>
+  </Section>
+
+  <Section bg="canvas" padding="md">
+    <Container size="md">
+      <div
+        class="rounded-xl border border-(--color-border-subtle) bg-surface-raised p-8 shadow-card"
+      >
+        <p
+          class="font-mono text-xs font-semibold uppercase tracking-widest text-primary-500"
+        >
+          {ui.statusLabel}
+        </p>
+        {
+          performanceEvidence.status === 'pending' && (
+            <>
+              <h2 class="mt-4 font-heading text-2xl font-bold text-(--color-text-primary)">
+                {ui.pendingTitle}
+              </h2>
+              <p class="mt-4 leading-relaxed text-(--color-text-secondary)">
+                {ui.pendingBody}
+              </p>
+            </>
+          )
+        }
+      </div>
+
+      <h2
+        class="mt-12 font-heading text-h2 font-bold text-(--color-text-primary)"
+      >
+        {ui.methodHeading}
+      </h2>
+      <ol class="mt-6 space-y-4">
+        {
+          ui.methodItems.map((item, index) => (
+            <li class="flex gap-4 rounded-lg border border-(--color-border-subtle) bg-surface-raised p-5 text-(--color-text-secondary)">
+              <span class="font-mono font-bold text-primary-500">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <span>{item}</span>
+            </li>
+          ))
+        }
+      </ol>
+      <div class="mt-10">
+        <Button href={seoPaths.home[locale]} variant="secondary">
+          {ui.backHome}
+        </Button>
+      </div>
+    </Container>
+  </Section>
+</PageLayout>

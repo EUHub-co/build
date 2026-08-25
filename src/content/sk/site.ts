@@ -26,6 +26,7 @@ const site: SiteContent = {
     description:
       'Rýchle, bezpečné weby, webové aplikácie a AI rozhrania pre európske firmy—technicky precízne, s ohľadom na GDPR a dlhodobou údržbou.',
     ogImage: '/sk/og.png',
+    updatedAt: '2026-08-25',
   },
 };
 
