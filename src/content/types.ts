@@ -83,8 +83,6 @@ export interface UiContent {
     project: string;
     ongoing: string;
     priceOrientation: string;
-    tableCaption: string;
-    tableHeaders: [string, string, string, string, string];
     requestAudit: string;
     startConversation: string;
   };
