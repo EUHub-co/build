@@ -14,6 +14,7 @@
 // routes bound hostnames to the app), so host-based redirects are the app's
 // job — the legacy hostnames are bound to this same container app.
 import http from 'node:http';
+import { securityHeaders } from './security-headers.mjs';
 
 // Must be set before dist/server/entry.mjs is imported: in `standalone` mode
 // that module auto-starts its own http.Server as an import side effect
@@ -29,6 +30,10 @@ const LEGACY_HOSTS = new Set([
 ]);
 
 const server = http.createServer((req, res) => {
+  for (const [name, value] of Object.entries(securityHeaders)) {
+    res.setHeader(name, value);
+  }
+
   const hostHeader = req.headers.host ?? '';
   const hostname = hostHeader.split(':')[0].toLowerCase();
 
