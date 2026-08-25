@@ -9,6 +9,7 @@ import { engagementModelsBundle as enEngagement } from '../content/en/engagement
 import { faqBundle as enFaq } from '../content/en/faq';
 import { ecosystemBundle as enEcosystem } from '../content/en/ecosystem';
 import { legalBundle as enLegal } from '../content/en/legal';
+import { uiBundle as enUi } from '../content/en/ui';
 import { siteBundle as skSite } from '../content/sk/site';
 import { problemBundle as skProblem } from '../content/sk/problem';
 import { servicesBundle as skServices } from '../content/sk/services';
@@ -19,6 +20,7 @@ import { engagementModelsBundle as skEngagement } from '../content/sk/engagement
 import { faqBundle as skFaq } from '../content/sk/faq';
 import { ecosystemBundle as skEcosystem } from '../content/sk/ecosystem';
 import { legalBundle as skLegal } from '../content/sk/legal';
+import { uiBundle as skUi } from '../content/sk/ui';
 
 const enBundle = {
   site: enSite,
@@ -31,6 +33,7 @@ const enBundle = {
   faq: enFaq,
   ecosystem: enEcosystem,
   legal: enLegal,
+  ui: enUi,
 };
 
 const skBundle = {
@@ -44,6 +47,7 @@ const skBundle = {
   faq: skFaq,
   ecosystem: skEcosystem,
   legal: skLegal,
+  ui: skUi,
 };
 
 export type ContentBundle = typeof enBundle;

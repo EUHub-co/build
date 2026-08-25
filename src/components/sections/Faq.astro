@@ -21,6 +21,7 @@ interface Props {
 }
 const { locale = 'en' } = Astro.props;
 const { faq } = getContent(locale).faq;
+const { faq: faqUi } = getContent(locale).ui;
 
 const faqJsonLd = {
   '@context': 'https://schema.org',
@@ -39,14 +40,14 @@ const faqJsonLd = {
 <Section id="faq" bg="canvas">
   <Container size="md">
     <div class="mx-auto max-w-3xl text-center" data-reveal>
-      <Eyebrow index={10} label="FAQ" class="mb-4" />
+      <Eyebrow index={10} label={faqUi.eyebrow} class="mb-4" />
       <h2
         class="font-heading text-h2 font-bold tracking-tight text-(--color-text-primary)"
       >
-        Frequently asked questions
+        {faqUi.heading}
       </h2>
       <p class="mt-4 text-lead text-(--color-text-secondary)">
-        Direct answers. No agency-speak.
+        {faqUi.lead}
       </p>
     </div>
 

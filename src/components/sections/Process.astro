@@ -15,6 +15,7 @@ interface Props {
 }
 const { locale = 'en' } = Astro.props;
 const { eyebrow, processSteps } = getContent(locale).process;
+const { process } = getContent(locale).ui;
 ---
 
 <Section id="process" bg="canvas">
@@ -24,11 +25,10 @@ const { eyebrow, processSteps } = getContent(locale).process;
       <h2
         class="font-heading text-h2 font-bold tracking-tight text-(--color-text-primary)"
       >
-        From audit to launch without chaos
+        {process.heading}
       </h2>
       <p class="mt-4 text-lead text-(--color-text-secondary)">
-        A defined process that reduces risk. You know what happens, when it
-        happens, and what you get at each step.
+        {process.lead}
       </p>
     </div>
 

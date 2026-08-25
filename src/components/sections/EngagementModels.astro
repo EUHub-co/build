@@ -18,6 +18,7 @@ const { locale = 'en' } = Astro.props;
 const { engagementModels, pricingOrientationCopy } =
   getContent(locale).engagement;
 const { primaryCta } = getContent(locale).site;
+const { engagement } = getContent(locale).ui;
 ---
 
 <Section id="pricing" bg="surface-2">
@@ -26,7 +27,7 @@ const { primaryCta } = getContent(locale).site;
       <h2
         class="font-heading text-h2 font-bold tracking-tight text-(--color-text-primary)"
       >
-        How you can work with us
+        {engagement.heading}
       </h2>
       <p class="mt-4 text-lead text-(--color-text-secondary)">
         {pricingOrientationCopy}
@@ -45,7 +46,7 @@ const { primaryCta } = getContent(locale).site;
           >
             {i === 1 && (
               <div class="absolute -top-3 left-1/2 -translate-x-1/2">
-                <Badge variant="brand">Most common</Badge>
+                <Badge variant="brand">{engagement.mostCommon}</Badge>
               </div>
             )}
 
@@ -55,7 +56,11 @@ const { primaryCta } = getContent(locale).site;
                 size={14}
                 class="text-primary-500"
               />
-              {i === 0 ? 'Entry point' : i === 1 ? 'Project' : 'Ongoing'}
+              {i === 0
+                ? engagement.entryPoint
+                : i === 1
+                  ? engagement.project
+                  : engagement.ongoing}
             </div>
 
             <h3 class="mt-4 font-heading text-xl font-semibold text-(--color-text-primary)">
@@ -68,7 +73,7 @@ const { primaryCta } = getContent(locale).site;
 
             <div class="mt-6 border-t border-(--color-border-subtle) pt-6">
               <div class="text-xs font-medium uppercase tracking-wider text-(--color-text-secondary)">
-                Price orientation
+                {engagement.priceOrientation}
               </div>
               <div class="mt-1 text-lg font-bold text-primary-500">
                 {model.priceOrientation}
@@ -86,7 +91,9 @@ const { primaryCta } = getContent(locale).site;
                 class="w-full"
                 data-umami-event="cta_primary_click"
               >
-                {i === 0 ? 'Request audit' : 'Start a conversation'}
+                {i === 0
+                  ? engagement.requestAudit
+                  : engagement.startConversation}
               </Button>
             </div>
           </div>

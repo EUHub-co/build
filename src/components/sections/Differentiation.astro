@@ -7,59 +7,52 @@ import Container from '../ui/Container.astro';
 import Section from '../ui/Section.astro';
 import Icon from '../ui/Icon.astro';
 import Eyebrow from '../ui/Eyebrow.astro';
+import { getContent } from '../../lib/i18n';
 import type { Locale } from '../../content/types';
 
 interface Props {
   locale?: Locale;
 }
 const { locale = 'en' } = Astro.props;
-
-/**
- * No content file backs this section (see src/content/en|sk/*.ts) — the
- * layer copy below matches the design spec verbatim and isn't otherwise
- * localized. This eyebrow is new copy, so it gets a real SK translation
- * (mirroring grow/euhub-marketing's own "The stack" -> "Vrstvy systému")
- * rather than being left English-only.
- */
-const eyebrowLabel = locale === 'sk' ? 'Vrstvy systému' : 'The stack';
+const { differentiation } = getContent(locale).ui;
 
 const layers = [
   {
     n: 1,
-    title: 'Visual interface',
-    desc: 'UX design, UI patterns, responsive layout, accessibility',
+    title: differentiation.layers[0].title,
+    desc: differentiation.layers[0].description,
     icon: 'layout',
     color: 'text-primary-500',
     bg: 'bg-primary-50',
   },
   {
     n: 2,
-    title: 'Business logic',
-    desc: 'Workflows, rules, validation, user flows, conversion structure',
+    title: differentiation.layers[1].title,
+    desc: differentiation.layers[1].description,
     icon: 'code',
     color: 'text-accent-cyan',
     bg: 'bg-accent-cyan/10',
   },
   {
     n: 3,
-    title: 'API integrations',
-    desc: 'CRM, ERP, payment, email, logistics, internal databases',
+    title: differentiation.layers[2].title,
+    desc: differentiation.layers[2].description,
     icon: 'plug',
     color: 'text-accent-violet',
     bg: 'bg-accent-violet/10',
   },
   {
     n: 4,
-    title: 'Data and automation',
-    desc: 'Analytics, tracking, automation pipelines, AI-ready infrastructure',
+    title: differentiation.layers[3].title,
+    desc: differentiation.layers[3].description,
     icon: 'zap',
     color: 'text-status-warning',
     bg: 'bg-status-warning-bg',
   },
   {
     n: 5,
-    title: 'Hosting, monitoring, security',
-    desc: 'CI/CD, uptime, backups, GDPR-aware architecture, EU data residency',
+    title: differentiation.layers[4].title,
+    desc: differentiation.layers[4].description,
     icon: 'shield',
     color: 'text-status-success',
     bg: 'bg-status-success-bg',
@@ -70,16 +63,14 @@ const layers = [
 <Section id="differentiation" bg="surface-2">
   <Container>
     <div class="mx-auto max-w-3xl text-center" data-reveal>
-      <Eyebrow index={4} label={eyebrowLabel} class="mb-4" />
+      <Eyebrow index={4} label={differentiation.eyebrow} class="mb-4" />
       <h2
         class="font-heading text-h2 font-bold tracking-tight text-(--color-text-primary)"
       >
-        Design is only the visible layer.
+        {differentiation.heading}
       </h2>
       <p class="mt-4 text-lead text-(--color-text-secondary)">
-        A serious website is not a brochure. It is part of your business
-        infrastructure. We engineer all five layers, not just the one visitors
-        see.
+        {differentiation.lead}
       </p>
     </div>
 
@@ -121,8 +112,7 @@ const layers = [
       class="mx-auto mt-12 max-w-2xl rounded-lg border border-primary-500/20 bg-primary-50 p-6 text-center"
     >
       <p class="text-lg font-medium text-primary-500">
-        UX design + front-end engineering + API integration + AI-readiness +
-        DevOps. One team, five layers, one system.
+        {differentiation.conclusion}
       </p>
     </div>
   </Container>

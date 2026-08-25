@@ -19,6 +19,7 @@ interface Props {
 const { locale = 'en' } = Astro.props;
 const { site } = getContent(locale).site;
 const { ecosystem } = getContent(locale).ecosystem;
+const { footer } = getContent(locale).ui;
 
 const year = new Date().getFullYear();
 ---
@@ -40,8 +41,7 @@ const year = new Date().getFullYear();
         <p
           class="mt-4 max-w-xs text-sm leading-relaxed text-(--color-text-secondary)"
         >
-          Fast, secure, conversion-focused web platforms for European
-          businesses. Engineering-led, GDPR-aware, maintained long-term.
+          {footer.description}
         </p>
       </div>
 
@@ -50,7 +50,7 @@ const year = new Date().getFullYear();
         <h2
           class="text-xs font-semibold uppercase tracking-wider text-(--color-text-secondary)"
         >
-          Navigation
+          {footer.navigation}
         </h2>
         <ul class="mt-4 space-y-3">
           {
@@ -73,7 +73,7 @@ const year = new Date().getFullYear();
         <h2
           class="text-xs font-semibold uppercase tracking-wider text-(--color-text-secondary)"
         >
-          EUHUB Ecosystem
+          {footer.ecosystem}
         </h2>
         <ul class="mt-4 space-y-3">
           {
@@ -105,7 +105,7 @@ const year = new Date().getFullYear();
         <h2
           class="text-xs font-semibold uppercase tracking-wider text-(--color-text-secondary)"
         >
-          Contact
+          {footer.contact}
         </h2>
         <ul class="mt-4 space-y-3">
           <li>
@@ -128,7 +128,7 @@ const year = new Date().getFullYear();
         <h2
           class="mt-6 text-xs font-semibold uppercase tracking-wider text-(--color-text-secondary)"
         >
-          Legal
+          {footer.legal}
         </h2>
         <ul class="mt-4 space-y-3">
           <li>
@@ -136,7 +136,7 @@ const year = new Date().getFullYear();
               href="/privacy/"
               class="text-sm text-(--color-text-secondary) hover:text-primary-500 transition-colors"
             >
-              Privacy Policy
+              {footer.privacy}
             </a>
           </li>
           <li>
@@ -144,7 +144,7 @@ const year = new Date().getFullYear();
               href="/cookies/"
               class="text-sm text-(--color-text-secondary) hover:text-primary-500 transition-colors"
             >
-              Cookie Policy
+              {footer.cookies}
             </a>
           </li>
           <li>
@@ -152,7 +152,7 @@ const year = new Date().getFullYear();
               href="/terms/"
               class="text-sm text-(--color-text-secondary) hover:text-primary-500 transition-colors"
             >
-              Terms of Service
+              {footer.terms}
             </a>
           </li>
         </ul>

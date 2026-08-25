@@ -28,17 +28,7 @@ interface Props {
 const { locale = 'en' } = Astro.props;
 const { primaryCta, secondaryCta, trustLine, heroStats } =
   getContent(locale).site;
-
-/**
- * No content file carries this eyebrow (SiteContent has no field for it) —
- * this is new copy from the numbered-eyebrow pass, so it gets a real SK
- * translation (mirroring Differentiation's "The stack" -> "Vrstvy systému")
- * rather than being left English-only.
- */
-const heroEyebrow =
-  locale === 'sk'
-    ? 'Webové inžinierske štúdio · EUHUB'
-    : 'Web engineering studio · EUHUB';
+const { hero } = getContent(locale).ui;
 ---
 
 <Section bg="canvas" padding="lg" class="relative overflow-hidden">
@@ -58,26 +48,18 @@ const heroEyebrow =
 
   <Container class="relative grid gap-14 lg:grid-cols-[1.5fr_0.5fr]">
     <div>
-      <Eyebrow index={1} label={heroEyebrow} />
+      <Eyebrow index={1} label={hero.eyebrow} />
 
       <h1
         class="mt-6 font-heading text-h1 leading-[1.1] font-extrabold tracking-tight text-(--color-text-primary)"
       >
-        Premium websites, web apps, and{' '}
-        <span
-          class="bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent"
-        >
-          AI-ready interfaces
-        </span>{' '}
-        for European businesses.
+        {hero.heading}
       </h1>
 
       <p
         class="mt-6 max-w-xl text-lead leading-relaxed text-(--color-text-secondary)"
       >
-        Build with EUHub designs and engineers modern websites, landing pages,
-        dashboards, client portals, and AI-integrated web applications with
-        performance, security, and business logic built in from day one.
+        {hero.description}
       </p>
 
       <div class="mt-8 flex flex-col gap-5 sm:flex-row sm:items-center">

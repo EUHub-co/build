@@ -18,6 +18,7 @@ interface Props {
 }
 const { locale = 'en' } = Astro.props;
 const { site } = getContent(locale).site;
+const { contact } = getContent(locale).ui;
 ---
 
 <Section id="contact" bg="surface-2" padding="lg">
@@ -25,26 +26,19 @@ const { site } = getContent(locale).site;
     <div class="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
       {/* Copy side */}
       <div>
-        <Eyebrow index={11} label="Contact" class="mb-4" />
+        <Eyebrow index={11} label={contact.eyebrow} class="mb-4" />
         <h2
           class="font-heading text-h2 font-bold tracking-tight text-(--color-text-primary)"
         >
-          Start with a technical web audit.
+          {contact.heading}
         </h2>
         <p class="mt-6 text-lead leading-relaxed text-(--color-text-secondary)">
-          We will review your current website, positioning, speed, structure,
-          conversion flow, integrations, and technical risks. You get a clear
-          list of what to fix, what to rebuild, and what is not worth touching.
+          {contact.lead}
         </p>
 
         <div class="mt-8 space-y-4">
           {
-            [
-              'Performance, SEO, and accessibility baseline',
-              'Conversion structure and UX review',
-              'Technical stack and integration assessment',
-              'Prioritized action list — what to fix, rebuild, or ignore',
-            ].map((item) => (
+            contact.auditItems.map((item) => (
               <div class="flex items-start gap-3">
                 <div class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-status-success-bg text-status-success">
                   <Icon name="check" size={14} />
@@ -61,7 +55,7 @@ const { site } = getContent(locale).site;
           class="mt-8 rounded-lg border border-(--color-border-subtle) bg-surface-raised p-5"
         >
           <p class="text-sm text-(--color-text-secondary)">
-            Prefer email? Write to us directly at{' '}
+            {contact.emailLead}{' '}
             <a
               href={`mailto:${site.contactEmail}`}
               class="font-medium text-primary-500 hover:underline"
@@ -88,11 +82,9 @@ const { site } = getContent(locale).site;
 
           {/* Privacy notice (Art. 13 point-of-collection) */}
           <p class="mt-4 text-xs leading-relaxed text-(--color-text-secondary)">
-            By submitting this form, you agree that we may process your data to
-            respond to your request. We use cookieless analytics and do not sell
-            your data. See our{' '}
+            {contact.privacyNotice}{' '}
             <a href="/privacy/" class="text-primary-500 hover:underline">
-              Privacy Policy
+              {contact.privacyLabel}
             </a>
             .
           </p>

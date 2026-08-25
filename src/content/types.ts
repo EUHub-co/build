@@ -42,6 +42,73 @@ export interface SiteContent {
   };
 }
 
+/**
+ * Copy owned by shared presentation components. Keeping it here prevents a
+ * translated route from silently inheriting English literals from a layout.
+ */
+export interface UiContent {
+  hero: {
+    eyebrow: string;
+    heading: string;
+    description: string;
+  };
+  faq: {
+    eyebrow: string;
+    heading: string;
+    lead: string;
+  };
+  problem: { heading: string; lead: string };
+  services: { heading: string; cardCta: string };
+  differentiation: {
+    eyebrow: string;
+    heading: string;
+    lead: string;
+    conclusion: string;
+    layers: Array<{ title: string; description: string }>;
+  };
+  process: { heading: string; lead: string };
+  techStack: { heading: string; lead: string };
+  examples: {
+    heading: string;
+    lead: string;
+    illustrativeLabel: string;
+    problemLabel: string;
+    solutionLabel: string;
+    resultLabel: string;
+  };
+  engagement: {
+    heading: string;
+    mostCommon: string;
+    entryPoint: string;
+    project: string;
+    ongoing: string;
+    priceOrientation: string;
+    requestAudit: string;
+    startConversation: string;
+  };
+  proof: { eyebrow: string; heading: string; lead: string; pending: string };
+  ecosystem: { heading: string; lead: string; visit: string };
+  contact: {
+    eyebrow: string;
+    heading: string;
+    lead: string;
+    auditItems: string[];
+    emailLead: string;
+    privacyNotice: string;
+    privacyLabel: string;
+  };
+  footer: {
+    description: string;
+    navigation: string;
+    ecosystem: string;
+    contact: string;
+    legal: string;
+    privacy: string;
+    cookies: string;
+    terms: string;
+  };
+}
+
 export interface ProblemItem {
   /** Short title (2-4 words) */
   title: string;
