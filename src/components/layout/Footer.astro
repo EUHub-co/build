@@ -12,11 +12,13 @@ import Icon from '../ui/Icon.astro';
 import LanguageSwitch from '../ui/LanguageSwitch.astro';
 import { getContent } from '../../lib/i18n';
 import type { Locale } from '../../content/types';
+import type { LocalizedPaths } from '../../lib/seo/types';
 
 interface Props {
   locale?: Locale;
+  paths: LocalizedPaths;
 }
-const { locale = 'en' } = Astro.props;
+const { locale = 'en', paths } = Astro.props;
 const { site } = getContent(locale).site;
 const { ecosystem } = getContent(locale).ecosystem;
 const { footer } = getContent(locale).ui;
@@ -166,7 +168,7 @@ const year = new Date().getFullYear();
       >
         <p>&copy; {year} {site.footerRights}</p>
         <div class="flex items-center gap-6">
-          <LanguageSwitch locale={locale} />
+          <LanguageSwitch locale={locale} paths={paths} />
         </div>
       </div>
     </div>

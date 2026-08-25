@@ -55,12 +55,3 @@ export type ContentBundle = typeof enBundle;
 export function getContent(locale: Locale): ContentBundle {
   return locale === 'sk' ? skBundle : enBundle;
 }
-
-export function getAlternatePath(url: URL, targetLocale: Locale): string {
-  const path = url.pathname;
-  const stripped = path.replace(/^\/sk(?=\/|$)/, '');
-  if (targetLocale === 'sk') {
-    return stripped === '' || stripped === '/' ? '/sk/' : `/sk${stripped}`;
-  }
-  return stripped === '' ? '/' : stripped;
-}

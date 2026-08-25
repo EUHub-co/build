@@ -2,9 +2,8 @@
 /**
  * LanguageSwitch — EN | SK language toggle, styled to match grow's/deploy's
  * pill-group pattern exactly (rounded border + background, active option
- * highlighted). Links point to the same page in the other locale (via
- * getAlternatePath). Clicking sets localStorage('i18n-choice') to override
- * auto-detection.
+ * highlighted). Links point to explicit localized path records. Clicking
+ * records the visitor's explicit language choice for future navigation.
  *
  * Placement:
  *  - Desktop: Header next to ThemeSelector
@@ -12,13 +11,14 @@
  *  - Also in Footer
  */
 import type { Locale } from '../../content/types';
-import { getAlternatePath } from '../../lib/i18n';
+import type { LocalizedPaths } from '../../lib/seo/types';
 
 interface Props {
   locale?: Locale;
+  paths: LocalizedPaths;
 }
 
-const { locale = 'en' } = Astro.props;
+const { locale = 'en', paths } = Astro.props;
 
 /**
  * Language names are locale-invariant literal text (a language's own name
@@ -38,11 +38,7 @@ const options: { code: Locale; label: string; name: string }[] = [
   {
     options.map((option) => (
       <a
-        href={
-          option.code === locale
-            ? Astro.url.pathname
-            : getAlternatePath(Astro.url, option.code)
-        }
+        href={paths[option.code]}
         aria-current={option.code === locale ? 'true' : undefined}
         aria-label={option.name}
         title={option.name}
