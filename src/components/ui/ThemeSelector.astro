@@ -1,5 +1,12 @@
 ---
 import Icon from './Icon.astro';
+import type { Locale } from '../../content/types';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
 
 /**
  * ThemeSelector — accessible auto/light/dark appearance switcher.
@@ -14,24 +21,35 @@ import Icon from './Icon.astro';
  * - No FOUC: BaseLayout's inline pre-paint script sets html[data-theme]
  *   synchronously before first paint.
  *
- * Labels are plain English for now — build has no `a11y` content bundle
- * (unlike grow's `site.a11y.appearance`) to source SK translations from;
- * the old ThemeToggle this replaces also only ever rendered English
- * aria-labels regardless of locale, so this preserves that behavior rather
- * than introducing new i18n content scaffolding as a side effect of a
- * design-token port.
+ * Labels are localized for the active page, while the control remains a
+ * shared presentation component.
  */
+const labels =
+  locale === 'sk'
+    ? {
+        group: 'Vzhľad',
+        auto: 'Použiť vzhľad zariadenia',
+        light: 'Použiť svetlý vzhľad',
+        dark: 'Použiť tmavý vzhľad',
+      }
+    : {
+        group: 'Appearance',
+        auto: 'Use device appearance',
+        light: 'Use light appearance',
+        dark: 'Use dark appearance',
+      };
+
 const options = [
-  { mode: 'auto', label: 'Use device appearance', icon: 'monitor' },
-  { mode: 'light', label: 'Use light appearance', icon: 'sun' },
-  { mode: 'dark', label: 'Use dark appearance', icon: 'moon' },
+  { mode: 'auto', label: labels.auto, icon: 'monitor' },
+  { mode: 'light', label: labels.light, icon: 'sun' },
+  { mode: 'dark', label: labels.dark, icon: 'moon' },
 ] as const;
 ---
 
 <div
   class="inline-flex rounded-full border border-(--color-border-subtle) bg-(--color-surface-raised) p-0.5"
   role="radiogroup"
-  aria-label="Appearance"
+  aria-label={labels.group}
   data-theme-selector
 >
   {

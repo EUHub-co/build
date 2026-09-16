@@ -108,7 +108,7 @@ const sk: FormTranslations = {
   submittingButton: 'Odosielanie…',
   successTitle: 'Požiadavka prijatá',
   successMessage:
-    'Preveríme vašu submission a ozveme sa vám do 1 pracovného dňa.',
+    'Preveríme vašu požiadavku a ozveme sa vám do 1 pracovného dňa.',
   errorMessage: 'Niečo sa pokazilo. Skúste to znova alebo nám napíšte email.',
   networkError: 'Chyba siete. Skúste to znova alebo nám napíšte email.',
   errorFallback: 'Môžete nám napísať aj priamo:',

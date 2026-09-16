@@ -11,6 +11,7 @@ import Container from '../ui/Container.astro';
 import Icon from '../ui/Icon.astro';
 import LanguageSwitch from '../ui/LanguageSwitch.astro';
 import { getContent } from '../../lib/i18n';
+import { seoPaths } from '../../lib/seo/paths';
 import type { Locale } from '../../content/types';
 import type { LocalizedPaths } from '../../lib/seo/types';
 
@@ -135,7 +136,7 @@ const year = new Date().getFullYear();
         <ul class="mt-4 space-y-3">
           <li>
             <a
-              href="/privacy/"
+              href={seoPaths.privacy[locale]}
               class="text-sm text-(--color-text-secondary) hover:text-primary-500 transition-colors"
             >
               {footer.privacy}
@@ -143,7 +144,7 @@ const year = new Date().getFullYear();
           </li>
           <li>
             <a
-              href="/cookies/"
+              href={seoPaths.cookies[locale]}
               class="text-sm text-(--color-text-secondary) hover:text-primary-500 transition-colors"
             >
               {footer.cookies}
@@ -151,7 +152,7 @@ const year = new Date().getFullYear();
           </li>
           <li>
             <a
-              href="/terms/"
+              href={seoPaths.terms[locale]}
               class="text-sm text-(--color-text-secondary) hover:text-primary-500 transition-colors"
             >
               {footer.terms}

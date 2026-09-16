@@ -28,6 +28,8 @@ interface Props {
 
 const { seo, schema = [] } = Astro.props;
 const { locale, title, description, noindex = false, ogImage } = seo;
+const skipLinkLabel =
+  locale === 'sk' ? 'Preskočiť na obsah' : 'Skip to content';
 
 const siteUrl = Astro.site ?? new URL('https://build.euhub.co');
 const canonical = new URL(pathFor(seo.paths, locale), siteUrl).href;
@@ -149,7 +151,7 @@ const jsonLd = {
       href="#main"
       class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:rounded-md focus:bg-(--color-surface-raised) focus:px-4 focus:py-2 focus:shadow-card focus:ring-2 focus:ring-(--color-primary-500)"
     >
-      Skip to content
+      {skipLinkLabel}
     </a>
     <slot />
 

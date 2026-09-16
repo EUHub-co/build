@@ -16,12 +16,8 @@
  * defined but unused rather than deleted (same "leave unused content,
  * don't delete" approach used for deploy's now-dead `site.badge`).
  *
- * Accessibility labels below are plain English literals, not sourced from
- * a `site.a11y` bundle — build has no such bundle (see ThemeSelector.astro,
- * which made the same call for its own labels), and these strings are
- * carried over unchanged from the previous single-tier header rather than
- * inventing new copy or new i18n scaffolding as a side effect of this
- * structural port.
+ * Accessibility labels are localized at the shared component boundary so the
+ * English and Slovak routes do not mix visible copy and assistive text.
  */
 import Container from '../ui/Container.astro';
 import Button from '../ui/Button.astro';
@@ -39,6 +35,14 @@ interface Props {
 const { locale = 'en', paths } = Astro.props;
 const { site, primaryCta, trustLine } = getContent(locale).site;
 const homeHref = paths[locale];
+const homeAriaLabel =
+  locale === 'sk' ? 'Build with EUHub — domov' : 'Build with EUHub — home';
+const primaryNavLabel =
+  locale === 'sk' ? 'Hlavná navigácia' : 'Primary navigation';
+const mobileNavLabel =
+  locale === 'sk' ? 'Mobilná navigácia' : 'Mobile navigation';
+const menuOpenLabel = locale === 'sk' ? 'Otvoriť menu' : 'Open menu';
+const menuCloseLabel = locale === 'sk' ? 'Zavrieť menu' : 'Close menu';
 ---
 
 <div
@@ -50,7 +54,7 @@ const homeHref = paths[locale];
     </span>
     <div class="flex items-center gap-2 sm:gap-4">
       <LanguageSwitch locale={locale} paths={paths} />
-      <ThemeSelector />
+      <ThemeSelector locale={locale} />
     </div>
   </Container>
 </div>
@@ -63,7 +67,7 @@ const homeHref = paths[locale];
   >
     <a
       href={homeHref}
-      aria-label="Build with EUHub — home"
+      aria-label={homeAriaLabel}
       class="flex min-w-0 items-center gap-2.5 whitespace-nowrap justify-self-start"
     >
       <span
@@ -92,7 +96,7 @@ const homeHref = paths[locale];
     </a>
 
     <nav
-      aria-label="Primary navigation"
+      aria-label={primaryNavLabel}
       class="hidden items-center gap-7 justify-self-center md:flex"
     >
       {
@@ -128,7 +132,9 @@ const homeHref = paths[locale];
         class="inline-flex items-center justify-center rounded-md p-2 md:hidden"
         aria-expanded="false"
         aria-controls="mobile-menu"
-        aria-label="Open menu"
+        aria-label={menuOpenLabel}
+        data-menu-open-label={menuOpenLabel}
+        data-menu-close-label={menuCloseLabel}
       >
         <Icon name="menu" class="menu-icon-open" />
         <Icon name="close" class="menu-icon-close hidden" />
@@ -141,8 +147,9 @@ const homeHref = paths[locale];
     class="hidden border-t border-(--color-border-subtle) bg-(--color-surface-raised) md:hidden"
   >
     <Container class="flex flex-col gap-4 py-4">
+      <LanguageSwitch locale={locale} paths={paths} />
       <nav
-        aria-label="Mobile navigation"
+        aria-label={mobileNavLabel}
         class="flex flex-col gap-3"
         data-mobile-nav
       >
@@ -168,9 +175,12 @@ const homeHref = paths[locale];
   if (toggle && menu) {
     const openIcon = toggle.querySelector('.menu-icon-open');
     const closeIcon = toggle.querySelector('.menu-icon-close');
+    const openLabel = toggle.dataset.menuOpenLabel ?? 'Open menu';
+    const closeLabel = toggle.dataset.menuCloseLabel ?? 'Close menu';
 
     const setOpen = (open: boolean) => {
       toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? closeLabel : openLabel);
       menu.classList.toggle('hidden', !open);
       openIcon?.classList.toggle('hidden', open);
       closeIcon?.classList.toggle('hidden', !open);

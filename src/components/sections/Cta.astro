@@ -11,6 +11,7 @@ import Icon from '../ui/Icon.astro';
 import Eyebrow from '../ui/Eyebrow.astro';
 import AuditRequestForm from '../forms/AuditRequestForm.tsx';
 import { getContent } from '../../lib/i18n';
+import { seoPaths } from '../../lib/seo/paths';
 import type { Locale } from '../../content/types';
 
 interface Props {
@@ -86,7 +87,10 @@ const { contact } = getContent(locale).ui;
           {/* Privacy notice (Art. 13 point-of-collection) */}
           <p class="mt-4 text-xs leading-relaxed text-(--color-text-secondary)">
             {contact.privacyNotice}{' '}
-            <a href="/privacy/" class="text-primary-500 hover:underline">
+            <a
+              href={seoPaths.privacy[locale]}
+              class="text-primary-500 hover:underline"
+            >
               {contact.privacyLabel}
             </a>
             .
