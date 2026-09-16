@@ -6,7 +6,6 @@ export const uiBundle: UiContent = {
     primaryNavigation: 'Hlavná navigácia',
     mobileNavigation: 'Mobilná navigácia',
     openMenu: 'Otvoriť menu',
-    closeMenu: 'Zavrieť menu',
     appearance: 'Vzhľad',
     deviceAppearance: 'Použiť vzhľad zariadenia',
     lightAppearance: 'Použiť svetlý vzhľad',

@@ -16,8 +16,12 @@ import type { Locale } from '../../content/types';
  * - No FOUC: BaseLayout's inline pre-paint script sets html[data-theme]
  *   synchronously before first paint.
  *
- * Labels are localized through the active locale's typed UI bundle while the
- * control remains a shared presentation component.
+ * Labels are plain English for now — build has no `a11y` content bundle
+ * (unlike grow's `site.a11y.appearance`) to source SK translations from;
+ * the old ThemeToggle this replaces also only ever rendered English
+ * aria-labels regardless of locale, so this preserves that behavior rather
+ * than introducing new i18n content scaffolding as a side effect of a
+ * design-token port.
  */
 interface Props {
   locale?: Locale;

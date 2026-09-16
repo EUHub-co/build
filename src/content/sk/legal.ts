@@ -24,7 +24,7 @@ const privacyPolicy: LegalContent = {
 };
 
 const cookiePolicy: LegalContent = {
-  title: 'Zásady používania cookies',
+  title: 'Cookie Policy',
   lastUpdated,
   body: [
     'Tento web nenastavuje non-essential cookies. Consent banner sa nezobrazuje, pretože sa nepoužívajú tracking cookies.',
