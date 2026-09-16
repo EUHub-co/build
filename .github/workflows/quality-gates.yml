@@ -147,7 +147,7 @@ jobs:
           TURNSTILE_SECRET_KEY: 1x0000000000000000000000000000000AA
 
       - name: Install Playwright browsers
-        run: bunx playwright install --with-deps chromium
+        run: npx playwright@1.52 install --with-deps chromium
 
       - name: Run smoke tests
         run: |
@@ -186,7 +186,6 @@ jobs:
           [ "$STATUS" = "200" ] || { echo "FAIL: sitemap $STATUS"; kill $SERVER_PID; exit 1; }
 
           echo "All smoke tests passed."
-          bun run test:browser
           kill $SERVER_PID
 
   i18n:

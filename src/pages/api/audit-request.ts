@@ -31,8 +31,6 @@ const messages = {
     webhook: 'Something went wrong on our end. Please try again or email us.',
     timeout: 'The request timed out. Please try again or email us directly.',
     rateLimited: 'Too many requests. Please try again later.',
-    invalidJson: 'Invalid request body.',
-    devSuccess: 'Request received (dev mode — no webhook).',
   },
   sk: {
     validation: 'Skontrolujte polia formulára a skúste to znova.',
@@ -40,9 +38,6 @@ const messages = {
     webhook: 'Niečo sa pokazilo. Skúste to znova alebo nám napíšte email.',
     timeout: 'Požiadavka vypršala. Skúste to znova alebo nám napíšte email.',
     rateLimited: 'Príliš veľa požiadaviek. Skúste to neskôr.',
-    invalidJson: 'Neplatný obsah požiadavky.',
-    devSuccess:
-      'Požiadavka prijatá (vývojový režim — bez pripojenia na webhook).',
   },
 } as const;
 
@@ -157,18 +152,13 @@ export async function POST(context: {
 }): Promise<Response> {
   const { request } = context;
   const ip = getClientIp(request);
-  const requestLocale: Locale = /^sk(?:-|,|;|$)/i.test(
-    request.headers.get('accept-language') ?? '',
-  )
-    ? 'sk'
-    : 'en';
 
   // Rate limit check
   if (!checkRateLimit(ip)) {
     return jsonResponse(
       {
         error: 'rate_limited',
-        message: messages[requestLocale].rateLimited,
+        message: messages.en.rateLimited,
       },
       429,
     );
@@ -180,7 +170,7 @@ export async function POST(context: {
     body = await request.json();
   } catch {
     return jsonResponse(
-      { error: 'invalid_json', message: messages[requestLocale].invalidJson },
+      { error: 'invalid_json', message: 'Invalid request body.' },
       400,
     );
   }
@@ -190,8 +180,7 @@ export async function POST(context: {
   if (!result.success) {
     // Try to extract locale from raw body for message localization
     const rawLocale = (body as Record<string, unknown>)?.locale;
-    const locale: Locale =
-      rawLocale === 'sk' ? 'sk' : rawLocale === 'en' ? 'en' : requestLocale;
+    const locale: Locale = rawLocale === 'sk' ? 'sk' : 'en';
     return jsonResponse(
       {
         error: 'validation_error',
@@ -246,7 +235,7 @@ export async function POST(context: {
       {
         success: true,
         dev: true,
-        message: messages[locale].devSuccess,
+        message: 'Request received (dev mode — no webhook).',
       },
       200,
     );

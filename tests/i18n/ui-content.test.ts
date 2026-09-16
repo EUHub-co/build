@@ -35,7 +35,7 @@ test('keeps every required homepage heading in the Slovak locale record', () => 
   expect(headings).toEqual([
     'Prémiové weby, webové aplikácie a AI rozhrania pre európske firmy.',
     'Váš web pravdepodobne nie je skutočný problém. Problém je systém za ním.',
-    'Každá služba rieši konkrétnu podnikateľskú potrebu — nie je to šablóna doplnená vaším logom.',
+    'Každá služba rieši konkrétnu biznis potrebu — nie je to šablóna doplnená vaším logom.',
     'Dizajn je len viditeľná vrstva.',
     'Od auditu po spustenie bez chaosu',
     'Postavené podľa moderných technických štandardov',

@@ -3,32 +3,32 @@ import type { EngagementModel } from '../types';
 const engagementModels: EngagementModel[] = [
   {
     id: 'audit',
-    shape: 'Technický audit webu',
+    shape: 'Technický Web Audit',
     howItWorks:
       'Fixná cena, jednotýždňová diagnostika vášho súčasného webu, výkonu, štruktúry, integrácií a technických rizík. Dostanete jasný zoznam, čo opraviť, čo prebudovať a čo sa neoplatí riešiť.',
-    priceOrientation: '€500–€1,500 (jednorazovo)',
-    typicalScope: '1 týždeň · správa z auditu + zoznam krokov podľa priority',
+    priceOrientation: '€500–€1,500 (jednorázovo)',
+    typicalScope: '1 týždeň · audit report + prioritizovaný zoznam akcií',
   },
   {
     id: 'project',
-    shape: 'Projekt s pevným rozsahom',
+    shape: 'Fixný projekt',
     howItWorks:
-      'Vývoj s jasným rozsahom a dohodnutými výstupmi, časovým harmonogramom a cenou. Vstupná stránka, firemný web, webová aplikácia alebo AI rozhranie. Rozsah je pevne stanovený pred začiatkom vývoja.',
+      'Definovaný build s dohodnutými deliverables, časovým harmonogramom a cenou. Landing page, firemný web, web app alebo AI rozhranie. Scope je uzamknutý pred štartom engineeringu.',
     priceOrientation: '€3,000–€25,000+ (projekt)',
-    typicalScope: '2–10 týždňov · dizajn, vývoj, spustenie',
+    typicalScope: '2–10 týždňov · dizajn, engineering, launch',
   },
   {
     id: 'retainer',
-    shape: 'Mesačná spolupráca',
+    shape: 'Mesačný retainer',
     howItWorks:
-      'Dlhodobá starostlivosť: údržba, DevOps, monitoring, bezpečnostné aktualizácie, iterácie a nové funkcie podľa toho, ako sa vaše podnikanie vyvíja.',
+      'Dlhodobá starostlivosť: údržba, DevOps, monitoring, bezpečnostné updaty, iterácie a nové funkcie podľa toho, ako sa váš biznis vyvíja.',
     priceOrientation: '€500–€3,000 / mesiac',
-    typicalScope: 'Priebežné · hosting, monitoring, iterácie, podpora',
+    typicalScope: 'Priebežné · hosting, monitoring, iterácie, support',
   },
 ];
 
 const pricingOrientationCopy =
-  'Ceny odvodzujeme od rozsahu, integrácií, časového harmonogramu a dlhodobej údržby. Väčšina serióznych projektov začína technickým auditom alebo úvodnou analýzou.';
+  'Ceny odvodzujeme od scopu, integrácií, časového harmonogramu a dlhodobej údržby. Väčšina serióznych projektov začína technickým auditom alebo discovery fázou.';
 
 export const engagementModelsBundle = {
   engagementModels,

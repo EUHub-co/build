@@ -70,39 +70,6 @@ const jsonLd = {
     <meta name="generator" content={Astro.generator} />
 
     {
-      /* Only the neutral homepage uses a saved preference. Explicit URLs win. */
-    }
-    <script is:inline>
-      (() => {
-        const url = new URL(window.location.href);
-        const explicit = url.searchParams.get('lang');
-        try {
-          if (url.pathname !== '/') {
-            localStorage.setItem('i18n-choice', document.documentElement.lang);
-            return;
-          }
-          if (explicit === 'en') {
-            localStorage.setItem('i18n-choice', 'en');
-            return;
-          }
-          if (
-            explicit === 'sk' ||
-            localStorage.getItem('i18n-choice') === 'sk'
-          ) {
-            url.pathname = '/sk/';
-            window.location.replace(url.href);
-          }
-        } catch {
-          // Explicit links still work when browser storage is unavailable.
-          if (url.pathname === '/' && explicit === 'sk') {
-            url.pathname = '/sk/';
-            window.location.replace(url.href);
-          }
-        }
-      })();
-    </script>
-
-    {
       /* No-FOUC theme bootstrap — ported from grow (euhub-marketing)'s
         BaseLayout.astro. Runs before paint to set html[data-theme]
         synchronously (avoids flash-of-wrong-theme). 'auto' resolves against

@@ -17,7 +17,7 @@ export const uiBundle: UiContent = {
     heading:
       'Prémiové weby, webové aplikácie a AI rozhrania pre európske firmy.',
     description:
-      'Build with EUHub navrhuje a vyvíja moderné weby, vstupné stránky, prehľadové panely, klientske portály a webové aplikácie s AI integráciami. Výkon, bezpečnosť a firemnú logiku riešime od prvého dňa.',
+      'Build with EUHub navrhuje a vyvíja moderné weby, landing pages, dashboardy, klientske portály a webové aplikácie s AI integráciami. Výkon, bezpečnosť a biznis logiku riešime od prvého dňa.',
   },
   faq: {
     eyebrow: 'FAQ',
@@ -31,7 +31,7 @@ export const uiBundle: UiContent = {
   },
   services: {
     heading:
-      'Každá služba rieši konkrétnu podnikateľskú potrebu — nie je to šablóna doplnená vaším logom.',
+      'Každá služba rieši konkrétnu biznis potrebu — nie je to šablóna doplnená vaším logom.',
     cardCta: 'Preskúmať službu',
   },
   servicePages: {
@@ -58,7 +58,7 @@ export const uiBundle: UiContent = {
     allServices: 'Zobraziť všetky služby',
     contactHeading: 'Začnite technickou diagnostikou.',
     contactLead:
-      'Pred rozhodnutím o vývoji identifikujeme najhodnotnejší rozsah, integračné riziká a potrebné dôkazy.',
+      'Pred záväzkom k buildu identifikujeme najhodnotnejší rozsah, integračné riziká a potrebné dôkazy.',
     contactCta: 'Vyžiadať web audit',
     homeBreadcrumb: 'Domov',
     servicesBreadcrumb: 'Služby',
@@ -67,7 +67,7 @@ export const uiBundle: UiContent = {
   differentiation: {
     eyebrow: 'Vrstvy systému',
     heading: 'Dizajn je len viditeľná vrstva.',
-    lead: 'Seriózny web nie je brožúra. Je súčasťou vašej firemnej infraštruktúry. Navrhujeme všetkých päť vrstiev, nie iba tú, ktorú vidia návštevníci.',
+    lead: 'Seriózny web nie je brožúra. Je súčasťou vašej biznis infraštruktúry. Navrhujeme všetkých päť vrstiev, nie iba tú, ktorú vidia návštevníci.',
     conclusion:
       'UX dizajn + front-endové inžinierstvo + API integrácia + pripravenosť na AI + DevOps. Jeden tím, päť vrstiev, jeden systém.',
     layers: [
@@ -76,7 +76,7 @@ export const uiBundle: UiContent = {
         description: 'UX dizajn, UI vzory, responzívne rozloženie, prístupnosť',
       },
       {
-        title: 'Firemná logika',
+        title: 'Biznis logika',
         description:
           'Pracovné postupy, pravidlá, validácia, používateľské cesty, konverzná štruktúra',
       },
@@ -164,13 +164,13 @@ export const uiBundle: UiContent = {
   contact: {
     eyebrow: 'Kontakt',
     heading: 'Začnite technickým auditom webu.',
-    lead: 'Preskúmame váš aktuálny web, pozicionovanie, rýchlosť, štruktúru, konverznú cestu, integrácie a technické riziká. Dostanete jasný zoznam toho, čo opraviť, čo prestavať a do čoho sa neoplatí investovať.',
+    lead: 'Preskúmame váš aktuálny web, pozicioning, rýchlosť, štruktúru, konverznú cestu, integrácie a technické riziká. Dostanete jasný zoznam toho, čo opraviť, čo prestavať a do čoho sa neoplatí investovať.',
     definition:
       'Technický audit webu je týždňové posúdenie výkonu webu, základov pre vyhľadávanie, prístupnosti, konverznej cesty, integrácií a technických rizík. Výsledkom je plán podložený dôkazmi, ktorý oddeľuje naliehavé opravy od príležitostí na prestavbu a práce, ktorá nemá zmysel.',
     auditItems: [
       'Východiskový stav výkonu, SEO a prístupnosti',
       'Kontrola konverznej štruktúry a UX',
-      'Posúdenie technologického základu a integrácií',
+      'Posúdenie technického stacku a integrácií',
       'Prioritizovaný zoznam: čo opraviť, prestavať alebo ignorovať',
     ],
     emailLead: 'Uprednostňujete e-mail? Napíšte nám priamo na',

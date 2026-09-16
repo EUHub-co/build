@@ -20,11 +20,11 @@ const site: SiteContent = {
   ],
   contactEmail: 'hello@euhub-ai.com',
   location: 'Slovensko · Európska únia',
-  footerRights: 'Build with EUHub · Sídlo v EÚ · zohľadnenie GDPR',
+  footerRights: 'Build with EUHub · Sídlo v EÚ · GDPR-aware',
   seo: {
     title: 'Vývoj webov a AI rozhraní pre firmy v EÚ | EUHub',
     description:
-      'Rýchle, bezpečné weby, webové aplikácie a AI rozhrania pre európske firmy — technicky precízne, s ohľadom na GDPR a dlhodobou údržbou.',
+      'Rýchle, bezpečné weby, webové aplikácie a AI rozhrania pre európske firmy—technicky precízne, s ohľadom na GDPR a dlhodobou údržbou.',
     ogImage: '/sk/og.png',
     updatedAt: '2026-08-25',
   },
@@ -46,7 +46,7 @@ const tertiaryCta: NavItem = {
 };
 
 const trustLine =
-  'Sídlo na Slovensku · Postavené pre firmy v EÚ · zohľadnenie GDPR v základe';
+  'Sídlo na Slovensku · Postavené pre firmy v EÚ · GDPR-aware v základe';
 
 /** Merania zverejňujeme až z overeného záznamu dôkazov. */
 const heroStats: HeroStat[] = [];
