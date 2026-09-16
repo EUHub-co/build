@@ -6,6 +6,7 @@ export const uiBundle: UiContent = {
     primaryNavigation: 'Primary navigation',
     mobileNavigation: 'Mobile navigation',
     openMenu: 'Open menu',
+    closeMenu: 'Close menu',
     appearance: 'Appearance',
     deviceAppearance: 'Use device appearance',
     lightAppearance: 'Use light appearance',

@@ -53,6 +53,7 @@ export interface UiContent {
     primaryNavigation: string;
     mobileNavigation: string;
     openMenu: string;
+    closeMenu: string;
     appearance: string;
     deviceAppearance: string;
     lightAppearance: string;

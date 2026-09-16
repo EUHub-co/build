@@ -125,6 +125,8 @@ const homeHref = seoPaths.home[locale];
         aria-expanded="false"
         aria-controls="mobile-menu"
         aria-label={accessibility.openMenu}
+        data-menu-open-label={accessibility.openMenu}
+        data-menu-close-label={accessibility.closeMenu}
       >
         <Icon name="menu" class="menu-icon-open" />
         <Icon name="close" class="menu-icon-close hidden" />
@@ -137,6 +139,7 @@ const homeHref = seoPaths.home[locale];
     class="hidden border-t border-(--color-border-subtle) bg-(--color-surface-raised) md:hidden"
   >
     <Container class="flex flex-col gap-4 py-4">
+      <LanguageSwitch locale={locale} paths={paths} />
       <nav
         aria-label={accessibility.mobileNavigation}
         class="flex flex-col gap-3"
@@ -164,9 +167,12 @@ const homeHref = seoPaths.home[locale];
   if (toggle && menu) {
     const openIcon = toggle.querySelector('.menu-icon-open');
     const closeIcon = toggle.querySelector('.menu-icon-close');
+    const openLabel = toggle.dataset.menuOpenLabel ?? 'Open menu';
+    const closeLabel = toggle.dataset.menuCloseLabel ?? 'Close menu';
 
     const setOpen = (open: boolean) => {
       toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? closeLabel : openLabel);
       menu.classList.toggle('hidden', !open);
       openIcon?.classList.toggle('hidden', open);
       closeIcon?.classList.toggle('hidden', !open);
