@@ -19,6 +19,10 @@ interface Props {
 }
 
 const { locale = 'en', paths } = Astro.props;
+const discardWarning =
+  locale === 'sk'
+    ? 'Zmenou jazyka sa vymažú vyplnené údaje vo formulári. Chcete pokračovať?'
+    : 'Changing language will clear the information entered in the form. Continue?';
 
 /**
  * Language names are locale-invariant literal text (a language's own name
@@ -34,13 +38,18 @@ const options: { code: Locale; label: string; name: string }[] = [
 <div
   class="inline-flex items-center gap-0.5 rounded-full border border-(--color-border-subtle) bg-(--color-surface-raised) p-0.5"
   data-language-switch
+  data-discard-warning={discardWarning}
 >
   {
     options.map((option) => (
       <a
-        href={paths[option.code]}
+        href={`${paths[option.code]}?lang=${option.code}`}
         aria-current={option.code === locale ? 'true' : undefined}
         title={option.name}
+        aria-label={`${option.label} — ${option.name}`}
+        lang={option.code}
+        hreflang={option.code}
+        data-language-path={paths[option.code]}
         data-locale={option.code}
         class="inline-flex h-8 min-w-8 items-center justify-center rounded-full px-2 font-mono text-sm font-medium text-(--color-text-secondary) transition-colors hover:text-primary-500 aria-[current]:bg-(--color-surface-sunken) aria-[current]:font-semibold aria-[current]:text-primary-500"
       >
@@ -51,10 +60,51 @@ const options: { code: Locale; label: string; name: string }[] = [
 </div>
 
 <script>
-  // Delegated on `document` (not per-instance) — this component can render
-  // more than once per page (header desktop + mobile panel + footer); Astro
-  // dedupes the identical inline script to one copy, and delegation still
-  // catches clicks from every rendered instance.
+  // Keep plain links usable without JS; enhance them with the current context.
+  function syncLinks() {
+    document
+      .querySelectorAll<HTMLAnchorElement>('[data-language-path]')
+      .forEach((link) => {
+        const target = new URL(link.dataset.languagePath!, location.origin);
+        target.search = location.search;
+        target.searchParams.set('lang', link.dataset.locale!);
+        target.hash = location.hash;
+        link.href = target.href;
+      });
+  }
+
+  function hasEnteredFormData() {
+    const form = document.querySelector('#audit-form-container form');
+    if (!form) return false;
+    return Array.from(
+      form.querySelectorAll<
+        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      >('input, textarea, select'),
+    ).some((field) => {
+      if (field.disabled || field.closest('[aria-hidden="true"]')) return false;
+      if (field instanceof HTMLInputElement) {
+        if (['hidden', 'submit', 'button'].includes(field.type)) return false;
+        if (['checkbox', 'radio'].includes(field.type))
+          return field.checked !== field.defaultChecked;
+        return field.value !== field.defaultValue;
+      }
+      if (field instanceof HTMLTextAreaElement)
+        return field.value !== field.defaultValue;
+      return (
+        field.value !==
+        (Array.from(field.options).find((option) => option.defaultSelected)
+          ?.value ??
+          field.options[0]?.value ??
+          '')
+      );
+    });
+  }
+
+  syncLinks();
+  window.addEventListener('hashchange', syncLinks);
+  window.addEventListener('pageshow', syncLinks);
+  document.addEventListener('pointerdown', syncLinks);
+  document.addEventListener('focusin', syncLinks);
   document.addEventListener('click', (event) => {
     const target = event.target;
     if (!(target instanceof Element)) return;
@@ -64,6 +114,35 @@ const options: { code: Locale; label: string; name: string }[] = [
     if (!link) return;
     const targetLocale = link.dataset.locale;
     if (!targetLocale) return;
+    syncLinks();
+    // Opening a new tab does not discard the form in this tab.
+    if (
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey ||
+      event.button !== 0
+    )
+      return;
+    if (targetLocale === document.documentElement.lang) {
+      event.preventDefault();
+      return;
+    }
+    const warning = link.closest<HTMLElement>('[data-language-switch]')?.dataset
+      .discardWarning;
+    if (hasEnteredFormData() && warning && !window.confirm(warning)) {
+      event.preventDefault();
+      return;
+    }
+    // Back returns to the explicit language that was visible before switching.
+    if (
+      location.pathname === '/' &&
+      !new URL(location.href).searchParams.has('lang')
+    ) {
+      const current = new URL(location.href);
+      current.searchParams.set('lang', 'en');
+      history.replaceState(history.state, '', current.href);
+    }
     try {
       localStorage.setItem('i18n-choice', targetLocale);
     } catch {

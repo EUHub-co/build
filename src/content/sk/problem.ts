@@ -9,11 +9,11 @@ const problems: ProblemItem[] = [
   },
   {
     title: 'Slabá konverzná štruktúra',
-    body: 'Žiadna jasná cesta od návštevníka ku kvalifikovanému leadu.',
+    body: 'Žiadna jasná cesta od návštevníka ku kvalifikovanému záujemcovi.',
   },
   {
     title: 'Žiadna CRM/ERP integrácia',
-    body: 'Leady uväznené v emailových vláknach, stratené medzi systémami.',
+    body: 'Dopyty uväznené v e-mailových vláknach, stratené medzi systémami.',
   },
   {
     title: 'Žiadna analytická disciplína',
@@ -41,7 +41,7 @@ const problems: ProblemItem[] = [
   },
   {
     title: 'Krehký WordPress',
-    body: 'Náhodné pluginy, jeden update od zrútenia.',
+    body: 'Náhodné doplnky, jedna aktualizácia od zlyhania.',
   },
 ];
 

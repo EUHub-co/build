@@ -4,62 +4,63 @@ const faq: FaqItem[] = [
   {
     question: 'Robíte iba weby?',
     answer:
-      'Nie. Staviame weby, landing pages, custom webové aplikácie, dashboardy, portály a AI-integrované rozhrania — plus integrácie a infraštruktúru, ktorá za nimi stojí.',
+      'Nie. Staviame weby, vstupné stránky, webové aplikácie na mieru, prehľadové panely, portály a rozhrania s integrovanou AI — plus integrácie a infraštruktúru, ktorá za nimi stojí.',
   },
   {
-    question: 'Môžete postaviť custom web app alebo dashboard?',
+    question:
+      'Môžete postaviť webovú aplikáciu na mieru alebo prehľadový panel?',
     answer:
-      'Áno. Interné nástroje, rezervačné systémy, operačné dashboardy a klientske portály sú jadrom toho, čo robíme. Sú engineeringované pre vaše biznis workflowy, nie narazené na šablónu.',
+      'Áno. Interné nástroje, rezervačné systémy, prevádzkové prehľadové panely a klientske portály sú jadrom toho, čo robíme. Vyvíjame ich podľa vašich firemných pracovných postupov, bez obmedzení hotovej šablóny.',
   },
   {
     question: 'Môžete integrovať náš CRM/ERP?',
     answer:
-      'Áno. Integrujeme s CRM, ERP, platobnými, emailovými, analytickými a logistickými systémami cez REST, GraphQL a legacy SOAP, keď je to potrebné — s webhookmi, event flow a poriadnym error handlingom.',
+      'Áno. Integrujeme s CRM, ERP, platobnými, e-mailovými, analytickými a logistickými systémami cez REST, GraphQL a SOAP v starších systémoch, keď je to potrebné — s webhookmi, tokmi udalostí a dôsledným spracovaním chýb.',
   },
   {
-    question: 'Viete pracovať s legacy SOAP API?',
+    question: 'Viete pracovať s SOAP API starších systémov?',
     answer:
-      'Áno. Ak máte legacy systémy, ktoré exposesujú len SOAP endpointy, postavíme integračnú vrstvu, ktorá translátuje medzi SOAP a moderným REST/GraphQL. Nenútime vás vyhodiť fungujúcu infraštruktúru.',
+      'Áno. Ak máte staršie systémy, ktoré sprístupňujú iba koncové body SOAP, postavíme integračnú vrstvu, ktorá prevádza komunikáciu medzi SOAP a moderným REST/GraphQL. Nenútime vás vyhodiť fungujúcu infraštruktúru.',
   },
   {
     question: 'Robíte AI funkcie?',
     answer:
-      'Áno — frontendy pre AI asistentov a RAG systémy, automatizačné workflow a interné copiloty, so streamovanými odpoveďami, bezpečným spracovaním dokumentov a human-in-the-loop kontrolou.',
+      'Áno — používateľské rozhrania pre AI asistentov a RAG systémy, automatizované pracovné postupy a interných AI pomocníkov, so streamovanými odpoveďami, bezpečným spracovaním dokumentov a kontrolou človekom.',
   },
   {
     question: 'Môžete hostovať a udržiavať web?',
     answer:
-      'Áno. Ponúkame mesačné retainery pokrývajúce hosting, CI/CD, monitoring, bezpečnostné updaty, backupy a iterácie. Dlhodobé technické vlastníctvo je súčasťou ponuky, nie dodatočná myšlienka.',
+      'Áno. Ponúkame mesačnú spoluprácu pokrývajúcu hosting, CI/CD, monitoring, bezpečnostné aktualizácie, zálohy a iterácie. Dlhodobé technické vlastníctvo je súčasťou ponuky od začiatku.',
   },
   {
-    question: 'Ste GDPR-aware?',
+    question: 'Zohľadňujete GDPR?',
     answer:
-      'Áno. GDPR-aware architektúra je štandard: možnosti EU data residency, cookieless analytika tam, kde je to možné, bezpečné formuláre, role-based prístup a audit-friendly logovanie.',
+      'Áno. Architektúra zohľadňujúca GDPR je štandard: možnosti umiestnenia dát v EÚ, analytika bez cookies tam, kde je to možné, bezpečné formuláre, prístup podľa používateľských rolí a logovanie vhodné na audit.',
   },
   {
     question: 'Pracujete s firmami mimo Slovenska?',
     answer:
-      'Áno. Sídlime na Slovensku a pracujeme s firmami po celej EÚ. Lokácia vám dáva EU data residency a GDPR alignment bez extra námahy.',
+      'Áno. Sídlime na Slovensku a pracujeme s firmami po celej EÚ. Naše pôsobisko vám poskytuje umiestnenie dát v EÚ a zosúladenie s GDPR bez dodatočnej námahy.',
   },
   {
     question: 'Ako dlho trvá projekt webu?',
     answer:
-      'Cielená landing page vie byť hotová za pár týždňov; kompletný web s integráciami zvyčajne trvá 6–12 týždňov. Diagnostika vám dá konkrétny harmonogram ešte pred začiatkom samotnej stavby.',
+      'Cielená vstupná stránka môže byť hotová za pár týždňov; kompletný web s integráciami zvyčajne trvá 6–12 týždňov. Diagnostika vám dá konkrétny harmonogram ešte pred začiatkom samotného vývoja.',
   },
   {
     question: 'Čo potrebujete od nás na štart?',
     answer:
-      'Technický web audit je bežný štartovací bod. Potrebujeme prístup k vášmu súčasnému webu, analytike (ak nejakú máte) a krátky call o vašich biznis cieľoch. Zvyšok zvládneme my.',
+      'Technický audit webu je bežný štartovací bod. Potrebujeme prístup k vášmu súčasnému webu, analytike (ak nejakú máte) a krátky rozhovor o vašich podnikateľských cieľoch. Zvyšok zvládneme my.',
   },
   {
     question: 'Ako oceňujete projekty?',
     answer:
-      'Ceny odvodzujeme od scopu, integrácií, časového harmonogramu a dlhodobej údržby. Väčšina projektov začína fixným technickým auditom (€500–€1,500), potom prechádza na fixný projekt alebo mesačný retainer.',
+      'Ceny odvodzujeme od rozsahu, integrácií, časového harmonogramu a dlhodobej údržby. Väčšina projektov začína technickým auditom s pevnou cenou (€500–€1,500), potom prechádza na projekt s pevným rozsahom alebo mesačnú spoluprácu.',
   },
   {
-    question: 'Ponúkate priebežnú podporu po launche?',
+    question: 'Ponúkate priebežnú podporu po spustení?',
     answer:
-      'Áno. Retainery údržby a DevOps pokrývajú monitoring, security patching, backupy, sledovanie výkonu a nové funkcie podľa toho, ako sa váš biznis vyvíja. Web, ktorý nikto neudržiava, sa stáva záťažou.',
+      'Áno. Mesačná údržba a DevOps pokrývajú monitoring, bezpečnostné opravy, zálohy, sledovanie výkonu a nové funkcie podľa toho, ako sa vaše podnikanie vyvíja. Web, ktorý nikto neudržiava, sa stáva záťažou.',
   },
 ];
 

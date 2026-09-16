@@ -123,6 +123,7 @@ export default function AuditRequestForm({
     }
 
     data.turnstileToken = turnstileToken;
+    data.locale = locale;
 
     // Validate with shared Zod schema
     const result = auditRequestSchema.safeParse(data);
@@ -144,7 +145,10 @@ export default function AuditRequestForm({
     try {
       const response = await fetch('/api/audit-request', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept-Language': locale,
+        },
         body: JSON.stringify(result.data),
       });
 

@@ -7,33 +7,33 @@ const exampleScenarios: ExampleScenario[] = [
     id: 'logistics',
     sector: 'Logistická firma',
     problem:
-      'Zastaraný web s manuálnymi požiadavkami na cenovú ponuku. Žiadna CRM integrácia. Leady sa strácali v emailoch.',
+      'Zastaraný web s manuálnymi požiadavkami na cenovú ponuku. Žiadna CRM integrácia. Dopyty sa strácali v e-mailoch.',
     solution:
-      'Moderný landing page, štruktúrovaný formulár cenovej ponuky, CRM integrácia a interný dashboard na sledovanie požiadaviek.',
+      'Moderná vstupná stránka, štruktúrovaný formulár cenovej ponuky, CRM integrácia a interný prehľadový panel na sledovanie požiadaviek.',
     result:
-      'Rýchlejšie spracovanie leadov, čistejšie operácie a jeden zdroj pravdy pre sales tím.',
+      'Rýchlejšie spracovanie dopytov, prehľadnejšie procesy a jeden spoľahlivý zdroj informácií pre obchodný tím.',
     isExample: true,
   },
   {
     id: 'medical-services',
     sector: 'Medicínske / logistické služby',
     problem:
-      'Fragmentovaná interná komunikácia medzi tímami. Dokumenty spracovávané manuálne bez audit trailu.',
+      'Roztrieštená interná komunikácia medzi tímami. Dokumenty spracovávané manuálne bez auditnej stopy.',
     solution:
-      'Bezpečný portál s role-based dashboardmi, AI-asistovaným spracovaním dokumentov a human-in-the-loop kontrolou.',
+      'Bezpečný portál s prehľadovými panelmi podľa používateľských rolí, AI podporovaným spracovaním dokumentov a kontrolou človekom.',
     result:
-      'Menej manuálnej koordinácie, jasnejšia zodpovednosť a defenzibilný audit trail.',
+      'Menej manuálnej koordinácie, jasnejšia zodpovednosť a auditná stopa, ktorú možno doložiť.',
     isExample: true,
   },
   {
     id: 'b2b-services',
     sector: 'B2B služby',
     problem:
-      'Nízka dôvera a slabá konverzia. Žiadna analytika. Žiadna jasná cesta od návštevníka k kvalifikovanému leadu.',
+      'Nízka dôvera a slabá konverzia. Nesystematická práca s analytikou. Žiadna jasná cesta od návštevníka k kvalifikovanému záujemcovi.',
     solution:
-      'Premium web so SEO štruktúrou, analytikou, lead funnel a kvalifikačným kontaktným formulárom.',
+      'Prémiový web so SEO štruktúrou, analytikou, procesom získavania záujemcov a kvalifikačným kontaktným formulárom.',
     result:
-      'Lepšie kvalifikované inbound požiadavky a merateľná cesta od trafficu do pipeline.',
+      'Lepšie kvalifikované prichádzajúce dopyty a merateľná cesta od návštevnosti po obchodné príležitosti.',
     isExample: true,
   },
 ];

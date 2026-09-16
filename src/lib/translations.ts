@@ -83,7 +83,7 @@ const en: FormTranslations = {
 
 const sk: FormTranslations = {
   nameLabel: 'Meno',
-  emailLabel: 'Pracovný email',
+  emailLabel: 'Pracovný e-mail',
   projectTypeLabel: 'Typ projektu',
   messageLabel: 'Čo potrebujete?',
   companyLabel: 'Firma',
@@ -95,7 +95,7 @@ const sk: FormTranslations = {
   mainProblemLabel: 'Hlavný problém, ktorý riešite',
   websitePlaceholder: 'https://',
   messagePlaceholder:
-    'Povedzte nám o svojom projekte, súčasnej situácii a čo sa snažíte dosiahnuť.',
+    'Opíšte svoj projekt, súčasnú situáciu a to, čo chcete dosiahnuť.',
   companySizePlaceholder: 'napr. 10–50 zamestnancov',
   selectProjectType: 'Vyberte typ projektu',
   selectPlaceholder: 'Vyberte…',
@@ -109,11 +109,11 @@ const sk: FormTranslations = {
   successTitle: 'Požiadavka prijatá',
   successMessage:
     'Preveríme vašu požiadavku a ozveme sa vám do 1 pracovného dňa.',
-  errorMessage: 'Niečo sa pokazilo. Skúste to znova alebo nám napíšte email.',
-  networkError: 'Chyba siete. Skúste to znova alebo nám napíšte email.',
+  errorMessage: 'Niečo sa pokazilo. Skúste to znova alebo nám napíšte e-mail.',
+  networkError: 'Chyba siete. Skúste to znova alebo nám napíšte e-mail.',
   errorFallback: 'Môžete nám napísať aj priamo:',
   privacyNotice:
-    'Odoslaním tohto formulára súhlasíte, že môžeme spracovávať vaše dáta na odpoveď na vašu požiadavku. Používame cookieless analytiku a nepredávame vaše dáta. Pozrite našu',
+    'Odoslaním tohto formulára súhlasíte, že môžeme spracúvať vaše údaje na odpoveď na vašu požiadavku. Používame analytiku bez cookies a vaše údaje nepredávame. Pozrite si našu',
   privacyLink: 'Ochranu osobných údajov',
 };
 

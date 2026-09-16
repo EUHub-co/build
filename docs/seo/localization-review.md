@@ -1,9 +1,9 @@
 # Slovak localization review
 
-Date: 2026-08-25
+Date: 2026-09-16
 
-The English/SK UI records now contain complete localized homepage headings and shared component copy. Automated tests assert the required Slovak headings and ensure the built Slovak homepage does not retain the checked English primary headings.
+An AI editorial review covered all Slovak content bundles, shared form translations, and Slovak form-option and validation labels against their English counterparts. It corrected untranslated fragments, unnatural mixed-language wording, spelling, and grammar. Brand names, technology names, identifiers, numeric ranges, and the existing factual and legal claims remain unchanged. The translation completeness checker passed; its record and array checks do not constitute linguistic or legal approval.
 
-## Publication gate
+## Review and publication status
 
-Native-speaker editorial sign-off is still required before asserting a completed human review. No reviewer identity or date has been supplied to this repository, so neither has been invented here. A designated Slovak editor must record their name, review date, and approval of the final built pages in this file before the localization checkpoint is closed.
+The user authorized publication through CI/CD without an additional human approval. This records completion of the AI editorial correction, not a human or native-speaker sign-off. No human reviewer identity, approval date, or legal approval is claimed. The legal text remains interim copy; this language review does not verify its claims against the actual deployment or provide legal advice.

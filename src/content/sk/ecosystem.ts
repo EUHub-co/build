@@ -8,7 +8,7 @@ const ecosystem: EcosystemBrand[] = [
     name: 'Grow with EUHub',
     role: 'Marketing a rast',
     description:
-      'Full-funnel marketingové systémy — platená reklama, SEO, obsah a automatizácia — postavené inžinierskym štúdiom, s GDPR-aware trackingom a reálnou atribúciou.',
+      'Marketingové systémy pre celú cestu zákazníka — platená reklama, SEO, obsah a automatizácia — postavené inžinierskym štúdiom, s meraním zohľadňujúcim GDPR a reálnou atribúciou.',
     url: 'https://grow.euhub.co',
   },
   {
@@ -16,15 +16,15 @@ const ecosystem: EcosystemBrand[] = [
     name: 'EUHub AI',
     role: 'AI implementácia',
     description:
-      'Agentic AI implementácia, automatizácia, workflow audity, AI systémy a custom web appky.',
+      'Implementácia AI agentov, automatizácia, audity pracovných postupov, AI systémy a webové aplikácie na mieru.',
     url: 'https://ai.euhub.co',
   },
   {
     id: 'euhub-co',
     name: 'EUHub',
-    role: 'Mateřská spoločnosť',
+    role: 'Materská spoločnosť',
     description:
-      'Európske AI a softvér consulting. GDPR-first, EU-resident infraštruktúra, custom engineering.',
+      'Európske poradenstvo v oblasti AI a softvéru. Dôraz na GDPR, infraštruktúra umiestnená v EÚ a vývoj na mieru.',
     url: 'https://euhub.co',
   },
   {
@@ -32,7 +32,7 @@ const ecosystem: EcosystemBrand[] = [
     name: 'EUHub Community',
     role: 'Slovenská komunita',
     description:
-      'Slovenská IT komunita, inkubátor, coworking, biznis podpora, relocácia a právne/účtovné služby.',
+      'Slovenská IT komunita, inkubátor, coworking, podpora podnikania, relokácia a právne/účtovné služby.',
     url: 'https://community.euhub.co',
   },
   {
@@ -40,7 +40,7 @@ const ecosystem: EcosystemBrand[] = [
     name: 'Deploy with EUHub',
     role: 'DevOps, FinOps a DevSecOps agentúra',
     description:
-      'Automatizované delivery pipelines, kontrola cloudových nákladov a bezpečnosť v každom release, s EU data residency.',
+      'Automatizované procesy dodávania softvéru, kontrola cloudových nákladov a bezpečnosť v každom vydaní, s dátami umiestnenými v EÚ.',
     url: 'https://deploy.euhub.co',
   },
 ];

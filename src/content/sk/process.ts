@@ -7,11 +7,11 @@ const processSteps: ProcessStep[] = [
     step: 1,
     title: 'Diagnostika',
     summary:
-      'Preveríme váš web, ponuku, používateľov, technický stack, analytiku a úzke miesta.',
+      'Preveríme váš web, ponuku, používateľov, technologický základ, analytiku a úzke miesta.',
     deliverables: [
-      'Technický audit report',
-      'Review konverznej štruktúry',
-      'Performance a SEO baseline',
+      'Správa z technického auditu',
+      'Posúdenie konverznej štruktúry',
+      'Východiskové meranie výkonu a SEO',
       'Zoznam rizík a príležitostí',
     ],
   },
@@ -19,7 +19,7 @@ const processSteps: ProcessStep[] = [
     step: 2,
     title: 'Architektúra',
     summary:
-      'Definujeme sitemap, štruktúru obsahu, integrácie, dátové toky a technologické voľby.',
+      'Definujeme mapu webu, štruktúru obsahu, integrácie, dátové toky a technologické voľby.',
     deliverables: [
       'Informačná architektúra',
       'Mapa integrácií',
@@ -29,37 +29,38 @@ const processSteps: ProcessStep[] = [
   },
   {
     step: 3,
-    title: 'Dizajn systém',
+    title: 'Dizajnový systém',
     summary:
-      'Vytvoríme vizuálny jazyk, komponenty, UI patterny a responzívnu štruktúru.',
+      'Vytvoríme vizuálny jazyk, komponenty, vzory používateľského rozhrania a responzívnu štruktúru.',
     deliverables: [
       'Knižnica komponentov',
-      'Responzívne layouty',
+      'Responzívne rozloženia',
       'Prístupnosť v základe',
-      'Brand-aligned vizuály',
+      'Vizuály v súlade so značkou',
     ],
   },
   {
     step: 4,
-    title: 'Engineering',
+    title: 'Vývoj',
     summary:
-      'Staviame frontend, backend/API integrácie, CMS/obsahový model, analytiku a deployment pipeline.',
+      'Staviame frontend, backend/API integrácie, CMS/obsahový model, analytiku a proces nasadzovania.',
     deliverables: [
-      'Produkčný codebase',
+      'Zdrojový kód pre produkciu',
       'API integrácie',
       'Analytika a sledovanie',
-      'CI/CD pipeline',
+      'Proces CI/CD',
     ],
   },
   {
     step: 5,
-    title: 'Launch a zlepšovanie',
-    summary: 'Deployujeme, monitorujeme, meriame, iterujeme a udržiavame.',
+    title: 'Spustenie a zlepšovanie',
+    summary:
+      'Nasadzujeme, monitorujeme, meriame, priebežne zlepšujeme a udržiavame.',
     deliverables: [
-      'Produkčný deployment',
-      'Monitoring a alerty',
+      'Produkčné nasadenie',
+      'Monitoring a upozornenia',
       'Sledovanie výkonu',
-      'Backlog iterácií',
+      'Zoznam plánovaných zlepšení',
     ],
   },
 ];

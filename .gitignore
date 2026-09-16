@@ -1,6 +1,8 @@
 # build output
 dist/
 .lighthouseci/
+test-results/
+playwright-report/
 # generated types
 .astro/
 

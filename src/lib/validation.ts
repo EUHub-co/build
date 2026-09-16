@@ -13,24 +13,24 @@ export const projectTypes = [
     id: 'website-redesign',
     label: {
       en: 'Website redesign/migration',
-      sk: 'Redesign/migrácia webu',
+      sk: 'Redizajn/migrácia webu',
     },
   },
-  { id: 'landing-page', label: { en: 'Landing page', sk: 'Landing page' } },
+  { id: 'landing-page', label: { en: 'Landing page', sk: 'Vstupná stránka' } },
   {
     id: 'custom-web-app',
-    label: { en: 'Custom web application', sk: 'Custom webová aplikácia' },
+    label: { en: 'Custom web application', sk: 'Webová aplikácia na mieru' },
   },
   {
     id: 'ai-interface',
     label: {
       en: 'AI-integrated interface',
-      sk: 'AI-integrované rozhranie',
+      sk: 'Rozhranie s integrovanou AI',
     },
   },
   {
     id: 'api-integration',
-    label: { en: 'API/business integration', sk: 'API/biznis integrácia' },
+    label: { en: 'API/business integration', sk: 'API/firemná integrácia' },
   },
   {
     id: 'maintenance-devops',
@@ -52,29 +52,29 @@ export const budgetRanges = [
 ] as const;
 
 export const timelines = [
-  { id: 'asap', label: { en: 'ASAP', sk: 'ASAP' } },
+  { id: 'asap', label: { en: 'ASAP', sk: 'Čo najskôr' } },
   { id: 'within-a-month', label: { en: 'Within a month', sk: 'Do mesiaca' } },
   { id: 'this-quarter', label: { en: 'This quarter', sk: 'Tento štvrťrok' } },
   {
     id: 'just-exploring',
-    label: { en: 'Just exploring', sk: 'Iba prieskum' },
+    label: { en: 'Just exploring', sk: 'Zatiaľ zisťujeme možnosti' },
   },
 ] as const;
 
 export const decisionRoles = [
   {
     id: 'founder-owner',
-    label: { en: 'Founder-owner', sk: 'Founder-owner' },
+    label: { en: 'Founder-owner', sk: 'Zakladateľ/majiteľ' },
   },
   {
     id: 'marketing-lead',
-    label: { en: 'Marketing lead', sk: 'Marketing lead' },
+    label: { en: 'Marketing lead', sk: 'Vedúci marketingu' },
   },
   {
     id: 'product-operations',
-    label: { en: 'Product-operations', sk: 'Product-operations' },
+    label: { en: 'Product-operations', sk: 'Produkt/prevádzka' },
   },
-  { id: 'engineering', label: { en: 'Engineering', sk: 'Engineering' } },
+  { id: 'engineering', label: { en: 'Engineering', sk: 'Technický vývoj' } },
   { id: 'other', label: { en: 'Other', sk: 'Iné' } },
 ] as const;
 
@@ -181,8 +181,8 @@ export const validationMessages = {
   sk: {
     name_min: 'Meno je povinné (aspoň 2 znaky).',
     name_max: 'Meno je príliš dlhé (max 100 znakov).',
-    email_required: 'Pracovný email je povinný.',
-    email_invalid: 'Zadajte platný email.',
+    email_required: 'Pracovný e-mail je povinný.',
+    email_invalid: 'Zadajte platnú e-mailovú adresu.',
     project_type_required: 'Vyberte typ projektu.',
     message_min: 'Povedzte nám viac (aspoň 10 znakov).',
     message_max: 'Správa je príliš dlhá (max 2000 znakov).',
